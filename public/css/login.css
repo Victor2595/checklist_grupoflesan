@@ -1,0 +1,143 @@
+	/* Coded with love by Mutiullah Samim */
+		html, body {
+                background-image: url("/img/login.jpg");
+                background-color: #ec2a3c;
+                background-repeat: no-repeat;
+                background-size: cover;
+                overflow-x: hidden;
+                overflow-y: hidden;
+                color: #FFFFFF;
+                font-family: 'Nunito', sans-serif;
+                font-weight: 200;
+                height: 100vh;
+                width: 100%;
+                margin: 0;
+            }
+		.user_card {
+			height:	100%;
+			width: 100%;
+			margin-top: auto;
+			margin-bottom: auto;
+			background: #ffffff;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 35px;
+
+		}
+		.brand_logo_container {
+			position: absolute;
+			height: 170px;
+			width: 170px;
+			top: -75px;
+			border-radius: 50%;
+			padding: 10px;
+			text-align: center;
+		}
+		.brand_logo {
+			height: 150px;
+			width: 150px;
+			border-radius: 50%;
+			border: 0px solid white;
+		}
+		.logo_grupo_flesan_container{
+			position: absolute;
+			height: 10%;
+			width: 10%;
+			top: 65%;
+			right: 52%;
+			text-align: center;
+		}
+		.logo_grupo_flesan{
+			height: 90px;
+			width: 355px;
+		}
+		.form_container {
+			margin-top: 100px;
+		}
+		.btn_google{
+			width: 83%;
+			background: #4b8df8;
+			border-color: #4b8df8;
+			height: 100%;
+			text-align: right;
+			color: #ffffff;
+			display: inline-block;
+			vertical-align: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			padding: 0.16rem 0.16rem;
+		  	line-height: 1.5;
+		}
+		.btn_google:hover{
+			color: #ffffff;
+  			text-decoration: none;
+		}
+		.btn_g{
+			float: left;
+			background-color: #ffffff;
+			width: 16%;
+		}
+		.login_btn {
+			width: 100%;
+			background: #d82435 !important;
+			color: white !important;
+		}
+		.login_btn:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.login_container {
+			padding: 0 2rem;
+		}
+		.input-group-text {
+			background: #d82435 !important;
+			color: white !important;
+			border: 0 !important;
+		#d82435	border-radius: 0.25rem 0 0 0.25rem !important;
+		}
+		.input_user,
+		.input_pass:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+			background-color: #d82435 !important;
+		}
+		.brand_logo_container3{
+			position: absolute;
+			height: 170px;
+			width: 200px;
+			top: 70%;
+			right: 47%;
+			border-radius: 0%;	
+			padding: 80px;
+			text-align: center;
+		}
+
+		@media (max-width: 767px) {
+			body {
+				background-image: url("/img/login.jpg");
+                background-repeat: no-repeat;
+                background-repeat: no-repeat;
+                background-size: cover;
+                overflow-x: hidden;
+                overflow-y: hidden;
+                height: 100vh;
+                width: 100%;
+			}
+		}
+
+		@media (min-width: 1024px) {
+			body {
+				background-image: url("/img/login.jpg");
+			}
+
+
