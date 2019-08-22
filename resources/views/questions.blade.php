@@ -91,4 +91,9 @@
 
 @section('script')
 <script type="text/javascript" src="{{asset('js/question.js')}}"></script>
+<script>
+  $(document).ready(function () {
+    $(".preloader-wrapper").removeClass('active');
+  });
+</script>
 @endsection

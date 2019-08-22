@@ -64,7 +64,7 @@
                                 <label>Cumplimiento:</label>
                                 <br>
                                 <?php 
-                                    if($checklist[0]->clbod_cumplimiento >= 75){
+                                    if($checklist[0]->clbod_cumplimiento <= 100 && $checklist[0]->clbod_cumplimiento >= 75){
                                         $color = 'btn-flesan-table-ok';
                                         $textcolor = 'text-white';
                                     }else if($checklist[0]->clbod_cumplimiento < 75 && $checklist[0]->clbod_cumplimiento >= 50){
@@ -159,6 +159,8 @@
 @section('script')
 <script>
 $(document).ready(function () {
+    $(".preloader-wrapper").removeClass('active');
+    $("#nav-ad").addClass('menu-active');
     $('#form_bodega_edit').bind("submit",function(e) {
         e.preventDefault();
         var formData = new FormData(this);

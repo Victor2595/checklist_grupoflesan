@@ -119,6 +119,8 @@
 $('#comboObra').selectpicker();
 
 $(document).ready(function () {
+    $(".preloader-wrapper").removeClass('active');
+    $("#nav-ad").addClass('menu-active');
     $('#form_bodega').bind("submit",function(e) {
         e.preventDefault();
         var formData = new FormData(this);

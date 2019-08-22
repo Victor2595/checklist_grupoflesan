@@ -141,7 +141,7 @@
                                         ?>
                                     <td class="text-center" <?php echo $color; ?>><?php echo $fecha_v;?></td>
                                     <?php 
-                                        if($tabla->clbod_cumplimiento >= 75){
+                                        if($tabla->clbod_cumplimiento <= 100 && $tabla->clbod_cumplimiento >= 75){
                                             $color = 'btn-flesan-table-ok';
                                             $textcolor = 'text-white';
                                         }else if($tabla->clbod_cumplimiento < 75 && $tabla->clbod_cumplimiento >= 50){
@@ -249,9 +249,9 @@
                                 user = '';
                             }
                             if(item.clbod_tipo == 1){
-                                url = 'URL::route(\'editOldBodega\',[\'id\' => '+item.clbod_obra_id+',\'week\'=> '+item.clbod_obra_semana+',\'año\'=> '+item.clbod_obra_ano+'])' ;
+                                url = 'http://127.0.0.1:8000/editOldBodega/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano ;
                             }else{
-                                url = '';
+                                url = 'http://127.0.0.1:8000/editOldVisita/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano;
                             }
                             etiqueta = '<a class="btn btn-sm mr-1 text-left bg-info" href="'+url+'" title="Ver Checklist Semanal"><i class="glyphicon glyphicon-eye-open"></i></a>'+user;
                         }else if(perfil == 10){
@@ -266,7 +266,13 @@
                                 icon = 'remove-sign';
                                 user = '';
                             }
-                            etiqueta = '<a class="btn btn-sm text-left '+clas+' mr-1" href="" title="'+title+'"><i class="glyphicon glyphicon-'+icon+'"></i></a>'+user;
+                            if(item.clbod_tipo == 1){
+                                url = 'http://127.0.0.1:8000/editOldBodega/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano ;
+                            }else{
+                                url = 'http://127.0.0.1:8000/editOldVisita/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano;
+                            }
+
+                            etiqueta = '<a class="btn btn-sm text-left '+clas+' mr-1" href="'+url+'" title="'+title+'"><i class="glyphicon glyphicon-'+icon+'"></i></a>'+user;
                         }
 
                         if(item.clbod_validate_date != null) {
@@ -276,10 +282,10 @@
                             fecha_valida = '<b>No Validado</b>'
                         }
 
-                        if(item.clbod_cumplimiento == 100){
+                        if(item.clbod_cumplimiento <= 100 && item.clbod_cumplimiento >= 75){
                             color = 'btn-flesan-table-ok';
                             textcolor = 'text-white';
-                        }else if(item.clbod_cumplimiento < 100 && item.clbod_cumplimiento >= 90){
+                        }else if(item.clbod_cumplimiento < 75 && item.clbod_cumplimiento >= 50){
                             color = 'btn-flesan-table-warning';
                             textcolor = 'text-black';
                         }else{

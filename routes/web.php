@@ -54,6 +54,10 @@ Route::post('/validateBodegaWeekItem','AbastecimientoController@validateWeekBode
 Route::get('/newvisita','AbastecimientoController@visita')->name('visita');
 Route::post('/savevisita','AbastecimientoController@saveCheckListVisita')->name('save_visita');
 Route::post('/verificateVisitaWeek','AbastecimientoController@verificateWeekV')->name('verificateVisita');
-
+Route::get('/editOldVisita/{array}','AbastecimientoController@editOldVisita')->name('editOldVisita');
+Route::get('/editVisita','AbastecimientoController@editVisita')->name('editVisita');
+Route::post('/savevisitaItem','AbastecimientoController@saveCheckListVisitaItem')->name('save_visita_item');
+Route::post('/verificateVisitaWeekItem','AbastecimientoController@verificateWeekVItem')->name('verificateVisitaItem');
+Route::post('/validateVisitaWeekItem','AbastecimientoController@validateWeekVisita')->name('validateVisita');
 
 

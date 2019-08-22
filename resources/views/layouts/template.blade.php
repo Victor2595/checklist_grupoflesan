@@ -41,12 +41,12 @@
 
     </head>
     <body class="hold-transition skin-red fixed sidebar-mini sidebar-collapse">
-        <!--<div class="preloader-wrapper active">
+        <div class="preloader-wrapper active">
           <div class="preloader">           
             <img class="center-block" src="https://www.gestionflesan.cl/controlflujo/images/grupo_flesan.png" style="width: 250px;">
             <p><img src="https://www.gestionflesan.cl/controlflujo/images/preloader_2019.gif" style="width: 25px;"> <strong>OBTENIENDO DATOS</strong></p>       
           </div>
-        </div>-->
+        </div>
         <div class="content-wrapper" style="margin: 0 !important;padding: 0 !important">
             <section class="content-header">
                 @include('layouts.nav')
@@ -72,8 +72,5 @@
         @include('sweet::alert')
     </body>
 
-    <footer class="main-footer text-center" style="margin: 0;">
-        <div style="font-size:8pt;padding-top: 2px;text-transform: uppercase;font-weight: bold;letter-spacing: 1px;">Desarrollado por el Área de Procesos y Tecnologías de Información </div>
-        <div style="font-size:7pt;padding-top: 2px;text-transform: uppercase;font-weight: bold;letter-spacing: 1px;">Todos los Derechos Reservados. v.1.0.0 © 2019 </div>
-  </footer>
+    @include('layouts.footer')
 </html>
