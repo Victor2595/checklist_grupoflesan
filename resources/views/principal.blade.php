@@ -15,16 +15,16 @@
             <section id="contact" class="section-bg wow">
                 <div class="container">
                     <header class="section-header">
-                        <h3>Checklist semanal - logistíca</h3>
+                        <h3>Checklist semanal - logística</h3>
                         <div class="row">
                             <div class="col-md-3">
                                 <small style="text-transform: uppercase;display: block;font-weight: bold;color:#e8000a;">semana de evaluación: {{ $week }}</small>
                             </div>
                             <div class="col-md-9">
                                 <div class="pull-right" >
-                                    <div style="position: relative;float: left;margin-right: 3px;">
+                                    <!--<div style="position: relative;float: left;margin-right: 3px;">
                                         <small style="margin-top: .9em;text-transform: uppercase;display: block;font-weight: bold;">{{ $rol }}</small>
-                                    </div>
+                                    </div>-->
                                     @if($perfil == 11)
                                     <a class="btn btn-sm btn-default" href="{{ route('bodega') }}"><i class="glyphicon glyphicon-plus"></i> Bodega</a>
                                     @endif
@@ -34,7 +34,7 @@
                                     <!--@if($perfil == 10)
                                     <a class="btn btn-sm btn-default" href=""><i class="glyphicon glyphicon-user"></i></a>
                                     @endif-->
-                                    <a class="btn btn-sm btn-default" onclick="javascript:location.reload()"><i class="glyphicon glyphicon-refresh"></i></a>               
+                                                 
                                 </div>
                             </div>
                         </div>
@@ -123,9 +123,17 @@
                                     </td>
                                     <td class="text-center">                                
                                         @if($perfil <> 10)
-                                        <a class="btn btn-sm mr-1 text-left bg-info" href="{{ URL::route('editOldBodega',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="Ver Checklist Semanal"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                            @if($tabla->clbod_tipo == 1)
+                                                <a class="btn btn-sm mr-1 text-left bg-info" href="{{ URL::route('editOldBodega',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="Ver Checklist Semanal"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                            @else
+                                                <a class="btn btn-sm mr-1 text-left bg-info" href="{{ URL::route('editOldVisita',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="Ver Checklist Semanal"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                            @endif
                                         @elseif($perfil == 10)
-                                        <a class="btn btn-sm text-left <?php echo (isset($tabla->clbod_validate_user))?'btn-success':'btn-danger';?> mr-1" href="{{ URL::route('editOldBodega',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="<?php echo (isset($tabla->clbod_validate_user))?'Checklist Semanal Validado':'Validar Checklist Semanal';?>"><i class="glyphicon glyphicon-<?php echo (isset($tabla->clbod_validate_user))?'ok':'remove-sign'; ?>"></i></a>    
+                                            @if($tabla->clbod_tipo == 1)
+                                            <a class="btn btn-sm text-left <?php echo (isset($tabla->clbod_validate_user))?'btn-success':'btn-danger';?> mr-1" href="{{ URL::route('editOldBodega',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="<?php echo (isset($tabla->clbod_validate_user))?'Checklist Semanal Validado':'Validar Checklist Semanal';?>"><i class="glyphicon glyphicon-<?php echo (isset($tabla->clbod_validate_user))?'ok':'remove-sign'; ?>"></i></a>
+                                            @else
+                                            <a class="btn btn-sm text-left <?php echo (isset($tabla->clbod_validate_user))?'btn-success':'btn-danger';?> mr-1" href="{{ URL::route('editOldVisita',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="<?php echo (isset($tabla->clbod_validate_user))?'Checklist Semanal Validado':'Validar Checklist Semanal';?>"><i class="glyphicon glyphicon-<?php echo (isset($tabla->clbod_validate_user))?'ok':'remove-sign'; ?>"></i></a>
+                                            @endif    
                                         @endif
                                         <?php echo $tabla->clbod_validate_user; ?>   
                                     </td>
@@ -320,7 +328,7 @@
                         autoWidth   : true,
                         order       : [[1, "desc"]],
                         pageLength  : 50,
-                        responsive  : true,
+                        responsive  : false,
                         data        : dataSet,
                         columns     : [{ "title": 'Tipo', "className":"text-center" },{ "title": 'Unidad', "className":"text-center", "width":"8%" },{ "title": 'Obra', "className":"text-center" },{ "title": 'Creador', "className":"text-center" },{ "title": 'Fecha', "className":"text-center","width":"8%"},{ "title": 'Validador', "className":"text-center"},{ "title": 'Fecha', "className":"text-center"},{ "title": 'Porcentaje', "className":"text-center","width":"8%"}]
                      });

@@ -38,7 +38,7 @@ class AbastecimientoController extends Controller
                     $rol = $perf[0]->nombre;
                 }
 
-                if(!empty($perf[0]->objeto_permitido)){
+                if(!empty($accesos_permitidos[0]->objeto_permitido)){
                     foreach($accesos_permitidos as $accesos){
                         $obj_permitido = explode(';',$accesos->objeto_permitido);
                         foreach($obj_permitido as $obj){
@@ -77,7 +77,7 @@ class AbastecimientoController extends Controller
                                 array_push($array_proyec, $pry);    
                             }
                         }
-                        $tabla_bodega = DB::select("select p.clbod_id,p.clbod_obra_id,p.clbod_tipo,p.clbod_semana,p.clbod_ano,p.clbod_create_date,a.username clbod_create_user,p.clbod_validate_date,b.username clbod_validate_user,p.clbod_cumplimiento FROM abastecimiento.clbod p left join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = CAST( p.clbod_create_user AS integer) left join seguridadapp.aplicacion_usuario b on b.id_aplicacion_usuario = CAST( p.clbod_validate_user AS integer ) WHERE clbod_ano=$año AND clbod_semana=$week AND clbod_obra_id IN ($obras_listas') AND clbod_tipo= 1 ORDER BY clbod_ano DESC,clbod_semana DESC,clbod_create_date DESC");
+                        $tabla_bodega = DB::select("select p.clbod_id,p.clbod_obra_id,p.clbod_tipo,p.clbod_semana,p.clbod_ano,p.clbod_create_date,a.username clbod_create_user,p.clbod_validate_date,b.username clbod_validate_user,p.clbod_cumplimiento FROM abastecimiento.clbod p left join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = CAST( p.clbod_create_user AS integer) left join seguridadapp.aplicacion_usuario b on b.id_aplicacion_usuario = CAST( p.clbod_validate_user AS integer ) WHERE clbod_ano=$año AND clbod_semana=$week AND clbod_obra_id IN ($obras_listas') /*AND clbod_tipo= 1*/ ORDER BY clbod_ano DESC,clbod_semana DESC,clbod_create_date DESC");
                     }else{
                         $client = new CLient([
                             'base_uri' => 'http://10.0.0.14:1337/datos_maestros/',
@@ -100,7 +100,7 @@ class AbastecimientoController extends Controller
                             }
                             array_push($array_proyec, $pry);    
                         }
-                        $tabla_bodega = DB::select("select p.clbod_id,p.clbod_obra_id,p.clbod_tipo,p.clbod_semana,p.clbod_ano,p.clbod_create_date,a.username clbod_create_user,p.clbod_validate_date,b.username clbod_validate_user,p.clbod_cumplimiento FROM abastecimiento.clbod p left join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = CAST( p.clbod_create_user AS integer) left join seguridadapp.aplicacion_usuario b on b.id_aplicacion_usuario = CAST( p.clbod_validate_user AS integer ) WHERE clbod_ano=$año AND clbod_semana=$week AND clbod_tipo= 1 ORDER BY clbod_ano DESC,clbod_semana DESC,clbod_create_date DESC");
+                        $tabla_bodega = DB::select("select p.clbod_id,p.clbod_obra_id,p.clbod_tipo,p.clbod_semana,p.clbod_ano,p.clbod_create_date,a.username clbod_create_user,p.clbod_validate_date,b.username clbod_validate_user,p.clbod_cumplimiento FROM abastecimiento.clbod p left join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = CAST( p.clbod_create_user AS integer) left join seguridadapp.aplicacion_usuario b on b.id_aplicacion_usuario = CAST( p.clbod_validate_user AS integer ) WHERE clbod_ano=$año AND clbod_semana=$week /*AND clbod_tipo= 1*/ ORDER BY clbod_ano DESC,clbod_semana DESC,clbod_create_date DESC");
                     }
 
                 }else{
@@ -125,11 +125,12 @@ class AbastecimientoController extends Controller
                         }
                         array_push($array_proyec, $pry);    
                     }
-                    $tabla_bodega = DB::select("select p.clbod_id,p.clbod_obra_id,p.clbod_tipo,p.clbod_semana,p.clbod_ano,p.clbod_create_date,a.username clbod_create_user,p.clbod_validate_date,b.username clbod_validate_user,p.clbod_cumplimiento FROM abastecimiento.clbod p left join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = CAST( p.clbod_create_user AS integer) left join seguridadapp.aplicacion_usuario b on b.id_aplicacion_usuario = CAST( p.clbod_validate_user AS integer ) WHERE clbod_ano=$año AND clbod_semana=$week AND clbod_tipo= 1 ORDER BY clbod_ano DESC,clbod_semana DESC,clbod_create_date DESC");
+                    $tabla_bodega = DB::select("select p.clbod_id,p.clbod_obra_id,p.clbod_tipo,p.clbod_semana,p.clbod_ano,p.clbod_create_date,a.username clbod_create_user,p.clbod_validate_date,b.username clbod_validate_user,p.clbod_cumplimiento FROM abastecimiento.clbod p left join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = CAST( p.clbod_create_user AS integer) left join seguridadapp.aplicacion_usuario b on b.id_aplicacion_usuario = CAST( p.clbod_validate_user AS integer ) WHERE clbod_ano=$año AND clbod_semana=$week /*AND clbod_tipo= 1*/ ORDER BY clbod_ano DESC,clbod_semana DESC,clbod_create_date DESC");
                 }
             }else{
                 $rol = 'INVITADO';
-                $tabla_bodega = DB::select("select p.clbod_id,p.clbod_obra_id,p.clbod_tipo,p.clbod_semana,p.clbod_ano,p.clbod_create_date,a.username clbod_create_user,p.clbod_validate_date,b.username clbod_validate_user,p.clbod_cumplimiento FROM abastecimiento.clbod p left join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = CAST( p.clbod_create_user AS integer) left join seguridadapp.aplicacion_usuario b on b.id_aplicacion_usuario = CAST( p.clbod_validate_user AS integer ) WHERE clbod_ano=$año AND clbod_semana=$week AND clbod_tipo= 1 ORDER BY clbod_ano DESC,clbod_semana DESC,clbod_create_date DESC");
+                $tabla_bodega = DB::select("select p.clbod_id,p.clbod_obra_id,p.clbod_tipo,p.clbod_semana,p.clbod_ano,p.clbod_create_date,a.username clbod_create_user,p.clbod_validate_date,b.username clbod_validate_user,p.clbod_cumplimiento FROM abastecimiento.clbod p left join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = CAST( p.clbod_create_user AS integer) left join seguridadapp.aplicacion_usuario b on b.id_aplicacion_usuario = CAST( p.clbod_validate_user AS integer ) WHERE clbod_ano=$año AND clbod_semana=$week /*AND clbod_tipo= 1*/ ORDER BY clbod_ano DESC,clbod_semana DESC,clbod_create_date DESC");
+
             }
 
             foreach($tabla_bodega as $bod){
@@ -573,7 +574,7 @@ class AbastecimientoController extends Controller
 
          $checklist = DB::select("select clbod_create_user,clbod_create_date,clbod_cumplimiento,clbod_validate_user from abastecimiento.clbod i where clbod_obra_id='$id_obra' and clbod_semana=$semana and clbod_ano=$year and clbod_tipo = 1");
 
-        $checklist_padre = DB::select("select p.clbod_preguntas_item_id, p.clbod_preguntas_item_padre,clbod_preguntas_nombre,p.clbod_preguntas_estado, p.clbod_preguntas_tipo,r.clbod_item_cumple from abastecimiento.clbod_preguntas p left join( select clbod_preguntas_item_id,clbod_preguntas_item_padre,clbod_item_preguntas_id,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id and p.clbod_preguntas_item_padre = 0)r on r.clbod_preguntas_item_id = p.clbod_preguntas_item_id where p.clbod_preguntas_tipo = 1 and p.clbod_preguntas_item_padre = 0 and p.clbod_preguntas_estado = 1 order by p.clbod_preguntas_item_id asc");
+        $checklist_padre = DB::select("select p.clbod_preguntas_item_id, p.clbod_preguntas_item_padre,clbod_preguntas_nombre,p.clbod_preguntas_estado, p.clbod_preguntas_tipo,r.clbod_item_cumple from abastecimiento.clbod_preguntas p left join( select clbod_preguntas_item_id,clbod_preguntas_item_padre,clbod_item_preguntas_id,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id and p.clbod_preguntas_item_padre = 0 where i.clbod_item_obra_id='$id_obra' and i.clbod_item_semana=$semana and i.clbod_item_ano = $year)r on r.clbod_preguntas_item_id = p.clbod_preguntas_item_id where p.clbod_preguntas_tipo = 1 and p.clbod_preguntas_item_padre = 0 and p.clbod_preguntas_estado = 1 order by p.clbod_preguntas_item_id asc");
 
          foreach ($checklist_padre as $chk_p) {
              $detalle = (object) array(
@@ -922,7 +923,7 @@ class AbastecimientoController extends Controller
 
          $checklist = DB::select("select clbod_create_user,clbod_create_date,clbod_cumplimiento,clbod_validate_user from abastecimiento.clbod i where clbod_obra_id='$id_obra' and clbod_semana=$semana and clbod_ano=$year and clbod_tipo = 2");
 
-        $checklist_padre = DB::select("select p.clbod_preguntas_item_id, p.clbod_preguntas_item_padre,clbod_preguntas_nombre,p.clbod_preguntas_estado, p.clbod_preguntas_tipo,r.clbod_item_cumple from abastecimiento.clbod_preguntas p left join( select clbod_preguntas_item_id,clbod_preguntas_item_padre,clbod_item_preguntas_id,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id and p.clbod_preguntas_item_padre = 0)r on r.clbod_preguntas_item_id = p.clbod_preguntas_item_id where p.clbod_preguntas_tipo = 2 and p.clbod_preguntas_item_padre = 0 and p.clbod_preguntas_estado = 1 order by p.clbod_preguntas_item_id asc");
+        $checklist_padre = DB::select("select p.clbod_preguntas_item_id, p.clbod_preguntas_item_padre,clbod_preguntas_nombre,p.clbod_preguntas_estado, p.clbod_preguntas_tipo,r.clbod_item_cumple from abastecimiento.clbod_preguntas p left join( select clbod_preguntas_item_id,clbod_preguntas_item_padre,clbod_item_preguntas_id,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id and p.clbod_preguntas_item_padre = 0 where i.clbod_item_obra_id='$id_obra' and i.clbod_item_semana=$semana and i.clbod_item_ano = $year)r on r.clbod_preguntas_item_id = p.clbod_preguntas_item_id where p.clbod_preguntas_tipo = 2 and p.clbod_preguntas_item_padre = 0 and p.clbod_preguntas_estado = 1 order by p.clbod_preguntas_item_id asc");
 
          foreach ($checklist_padre as $chk_p) {
              $detalle = (object) array(
@@ -935,7 +936,6 @@ class AbastecimientoController extends Controller
             );
             array_push($arreglo,$detalle);
         }
-        //print(json_encode($arreglo));
         return view('editvisita',compact('semana','arreglo','checklist','proyectos'));
     }
     

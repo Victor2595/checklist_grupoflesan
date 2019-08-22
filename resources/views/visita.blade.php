@@ -29,7 +29,7 @@
                                             <small style="margin-top: .9em;text-transform: uppercase;display: block;font-weight: bold;"></small>
                                         </div>
                                         <a class="btn btn-sm btn-default" href="{{ route('principal') }}"><i class="glyphicon glyphicon-chevron-left"></i> Volver</a>
-                                        <button type="submit" class="btn btn-sm btn-default"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
+                                        <button type="submit" class="btn btn-sm btn-default showAjaxModal"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
                                     </div>
                                 </div>
                             </div>
@@ -124,6 +124,16 @@
         </div>
     </div>
 </section>
+<section>
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_ajax" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg" role="document" style="overflow-y: initial !important; margin: 0px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+          <div class="modal-content">
+              <div class="modal-body" id="contenedor_validacion" style="max-height: 71vh;overflow-y: auto;overflow-x: hidden;">
+              </div>            
+          </div>
+        </div>
+    </div>
+</section>
 @endsection
 
 @section('script')
@@ -143,6 +153,9 @@ $(document).ready(function () {
         $('.id-question').each(function(){
             formData.append('id['+count++ +']', $(this).attr('data-id'));
         });
+        $('#modal_ajax .modal-body').html('<div class="preloader text-center"><br><br><img class="center-block" src="https://www.gestionflesan.cl/controlflujo/images/grupo_flesan.png" style="width: 250px;"><br><br><p><img src="https://www.gestionflesan.cl/controlflujo/images/preloader_2019.gif" style="width: 25px;"><strong style="color: #adadad!important;font-size:13px;"> OBTENIENDO DATOS</strong></p></div>');
+
+        $('#modal_ajax').modal('show', {backdrop: 'static', keyboard: true});
         $.ajax({
             url:'/verificateVisitaWeek',
             data:formData,
@@ -181,29 +194,36 @@ $(document).ready(function () {
                                             type: 'POST',
                                             datatype: 'JSON',
                                             success: function (response) {
+                                                $('#modal_ajax').modal('hide');
                                                 location.href="/principal";
                                                 swal('¡Exito!','Se registro el ChekList Visita de la semana '+response.clbod_item_semana,'success');
                                             },error: function(jqXHR, text, error){
+                                                $('#modal_ajax').modal('hide');
                                                 swal('Error!','No se pudo registrar ningun ChecList Visita para esta semana para el Proyecto seleccionado.','error');
                                             }
                                         });
                                     }else{
+                                        $('#modal_ajax').modal('hide');
                                         swal('Error!','Ya existe Checklist Visita para el Proyecto seleccionado.','error');
                                         $('#comboObra').focus();
                                     }
                                 },error: function(jqXHR, text, error){
+                                    $('#modal_ajax').modal('hide');
                                     swal('Error!','No se pudo registrar ningun CheckList Visita para esta semana para el Proyecto seleccionado.','error');
                                 }
                             });
                         },error: function(jqXHR, text, error){
+                            $('#modal_ajax').modal('hide');
                             swal('Error!','No se pudo registrar ningun ChecList Visita para esta semana para el Proyecto seleccionado.','error');
                         }
                     });
                 }else{
+                    $('#modal_ajax').modal('hide');
                     swal('Error!','Ya existe Checklist Visita para el proyecto seleccionado.','error');
                     $('#comboObra').focus();
                 }
             },error: function(jqXHR, text, error){
+                $('#modal_ajax').modal('hide');
                 swal('Error!','No se pudo registrar ningun ChecList Visita para esta semana para el Proyecto seleccionado.','error');
             }
         });

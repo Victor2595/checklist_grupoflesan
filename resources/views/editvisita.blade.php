@@ -139,15 +139,15 @@
                                                 <td style="text-align: left;" ><b><?php echo $contador.'. ' ?></b>{{ $tbl_h->clbod_preguntas_nombre }}</td>
                                                 <td>
                                                     <select name="rev[<?php echo $tbl_h->clbod_item_preguntas_id ?>]" disabled="true" id="{{ $tbl_h->clbod_item_preguntas_id }}" class="form-control id-question" data-id="<?php echo $tbl_h->clbod_item_preguntas_id ?>" >
-                                                        <option value="S" >SI</option>
-                                                        <option value="N" >NO</option>
+                                                        <option value="S" <?php echo ($tbl_h->clbod_item_cumple == 'S')?'selected':'' ?>>SI</option>
+                                                        <option value="N" <?php echo ($tbl_h->clbod_item_cumple == 'N')?'selected':'' ?>>NO</option>
                                                     </select>
                                                 </td>
                                             </tr>
                                         <?php $contador++; ?>
                                             @endforeach
                                             @else
-                                                <td><input type="number" name="rev[<?php echo $tbl_p->id_cabecera ?>]" id="{{ $tbl_p->id_cabecera }}" disabled="true" required="true" class="form-control req id-question" data-id="<?php echo $tbl_p->id_cabecera ?>" value="" min="1" max="5"></td>
+                                                <td><input type="number" name="rev[<?php echo $tbl_p->id_cabecera ?>]" id="{{ $tbl_p->id_cabecera }}" disabled="true" required="true" class="form-control req id-question" data-id="<?php echo $tbl_p->id_cabecera ?>" value="{{ $tbl_p->value }}" min="1" max="5"></td>
                                             @endif
                                         </tr>
                                         @endforeach

@@ -15,7 +15,7 @@
 		var c = {
 				bcClass: 'sf-breadcrumb',
 				menuClass: 'sf-js-enabled',
-				anchorClass: 'sf-with-ul',
+				//anchorClass: 'sf-with-ul',
 				menuArrowClass: 'sf-arrows'
 			},
 			ios = (function () {

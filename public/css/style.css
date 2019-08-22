@@ -2122,3 +2122,57 @@ ul.bullets{list-style:inside disc}
 ul.numerics{list-style:inside decimal}
 .ul.kas-icon-aero{}
 ul.kas-icon-aero li a:before{font-family: 'Glyphicons Halflings'; font-size:1px; content: "\e258"; padding-left:8px; }
+
+.navbar-nav>.user-menu>.dropdown-menu>li.user-header {
+    height: 175px;
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > img {
+  z-index: 5;
+  height: 90px;
+  width: 90px;
+  border: 3px solid;
+  border-color: transparent;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > p {
+  z-index: 5;
+  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 17px;
+  margin-top: 10px;
+}
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > p > small {
+  display: block;
+  font-size: 12px;
+}
+
+.widget-user .widget-user-header {
+  padding: 20px;
+  height: 120px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.user-image{
+  float: left;
+  width: 25px;
+  height: 25px;    
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-top: -8px;
+}
+
+.navbar-nav>.user-menu>.dropdown-menu>.user-footer:before, .navbar-nav>.user-menu>.dropdown-menu>.user-footer:after {
+    content: " ";
+    display: table;
+}
+
+.navbar-nav>.user-menu>.dropdown-menu>.user-footer:before, .navbar-nav>.user-menu>.dropdown-menu>.user-footer:after {
+    content: " ";
+    display: table;
+}
+
