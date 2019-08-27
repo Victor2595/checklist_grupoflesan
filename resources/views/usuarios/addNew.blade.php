@@ -61,7 +61,10 @@
         <div class="section-select hidden">
             <select id="selectObra" name="selectObra[]" class="form-control"  multiple="multiple">
             @foreach($proyectos as $proy)
-                <option  style="font-size: 90%" value="{{ $proy->id_proyecto }}">{{ $proy->cod_empresa }} - {{ $proy->nombre_proyecto }}</option>
+                @if(array_search($proy->id_proyecto, $array_cod)==false)
+                
+                <option style="font-size: 90%" value="{{ $proy->id_proyecto }}">{{ $proy->cod_empresa }} - {{ $proy->nombre_proyecto }}</option>
+                @endif
             @endforeach
             </select>
         </div>

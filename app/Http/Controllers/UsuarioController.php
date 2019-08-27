@@ -48,7 +48,26 @@ class UsuarioController extends Controller
                 $pry->cod_empresa = 'FT';
             }
         }
-        return view('usuarios/addNew',compact('perfil','empresa','unidades_negocio','proyectos'));
+        $list_proy_exi = DB::select('select distinct(u.objeto_permitido) from seguridadapp.usuario_rol u inner join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = u.id_aplicacion_usuario where a.id_aplicacion = 4 and u.objeto_permitido is not null');
+        $array_cod = '';
+        if(!empty($list_proy_exi)){
+            $codigos = '';               
+            foreach($list_proy_exi as $list){
+                $item_list = explode(";",$list->objeto_permitido);          
+                foreach($item_list as $rl){
+                    $codigos .= $rl.';';
+                }
+            }
+            if ($codigos != '') {
+                $array_cod = explode(";",substr($codigos,0,-1));
+            }
+        }
+        foreach($array_cod as $cod){
+            $en_uso = array_search($cod, array_column($proyectos, 'id_proyecto'));
+            unset($proyectos[$en_uso]);
+            $proyectos = array_values($proyectos);
+        }
+        return view('usuarios/addNew',compact('perfil','empresa','unidades_negocio','proyectos','array_cod'));
     }
 
     public function setEstado($id){
@@ -184,6 +203,8 @@ class UsuarioController extends Controller
             $usuario_rol->id_empresa = $empresa;
             $usuario_rol->fecha_ini = $aplicacion_usuario->fecha_ini;
             if($radioEleccion == 1){
+               
+
                 $objeto_permitido = $request->selectObra;
                 $obj_permitido = '';
                 foreach ($objeto_permitido as $rl) {

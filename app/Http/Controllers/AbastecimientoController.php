@@ -939,5 +939,9 @@ class AbastecimientoController extends Controller
         return view('editvisita',compact('semana','arreglo','checklist','proyectos'));
     }
     
+
+    public function reportWeek(){
+        return view('reports');
+    }
     
 }

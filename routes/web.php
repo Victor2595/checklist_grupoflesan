@@ -60,4 +60,6 @@ Route::post('/savevisitaItem','AbastecimientoController@saveCheckListVisitaItem'
 Route::post('/verificateVisitaWeekItem','AbastecimientoController@verificateWeekVItem')->name('verificateVisitaItem');
 Route::post('/validateVisitaWeekItem','AbastecimientoController@validateWeekVisita')->name('validateVisita');
 
+//KPIS
+Route::get('/reportesweek','AbastecimientoController@reportWeek')->name('reports');
 
