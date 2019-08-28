@@ -91,13 +91,19 @@ function buscarUser(){
     }
 } 
 
-$(document).on('change', '#funidad_negocio', function() {
-    var codigo_perfil = $( "#selectPerfil option:selected" ).val();
-    if (codigo_perfil == 1 || codigo_perfil == 5) {
-      $('#cont_objeto_permitido').removeClass('hidden');
-      if (codigo_perfil == 1) {filtrar_objetos(codigo_perfil);}          
-    }else{
-      $('#fobjeto_permitido').html('<option value="0">Sin uso</option>'); 
-      $('#cont_objeto_permitido').addClass('hidden');
+
+
+jQuery(document).on("change", "#selectPerfil", function(){
+  $id = $(this).val();
+  if($id == 12){
+    $(".rd_visit").addClass('hidden');
+    $('.section-select').addClass('hidden');
+    $('#selectObra').val(null).trigger('change');
+    if($(".rd_obra").val() == 0){
+      $("#radioT").prop('checked',true);
     }
+
+  }else{
+    $(".rd_visit").removeClass('hidden');
+  }
 });

@@ -47,7 +47,7 @@
                                 <select id="comboObra" required="true" class="form-control" name="comboObra" data-live-search="true">
                                     <option value="" selected="selected">Seleccione</option>
                                     @foreach($proyectos as $pry)
-                                    <option value="{{ $pry->id_proyecto }}">{{ $pry->cod_empresa.' - '.$pry->nombre_proyecto }}</option>
+                                    <option value="{{ $pry->cod_proyecto }}">{{ $pry->id_unidad_negocio.' - '.strtoupper($pry->nombre_proyecto) }}</option>
                                     @endforeach
                                 </select>
                             </div>

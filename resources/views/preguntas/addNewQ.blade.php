@@ -3,7 +3,7 @@
         <label for="selectTipo">Tipo Checklist</label>
         <select id="selectTipo" required readonly name="selectTipo" class="form-control" autofocus="autofocus">
             <option value="" selected>Seleccione Perfil</option>
-            <option value="1">Checklist Bodega</option>
+            <option value="1">Checklist Almacén</option>
             <option value="2">Checklist Visita</option>
         </select>
     </div>

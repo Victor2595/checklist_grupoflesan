@@ -43,7 +43,7 @@
     <div class=" align-self-center col col-md-6 col-lg-6 col-sm-12 col-xs-12">
         <label for="selectPerfil">Perfil</label>
         <select id="selectPerfil" required="true" name="selectPerfil" class="form-control" autofocus="autofocus">
-        <option value="-1" required="true" selected>Seleccione Perfil</option>
+        <option value="" required="true" selected>Seleccione Perfil</option>
         @foreach($perfil as $perf)
         <option  style="font-size: 90%" value="{{ $perf->id_rol }}">{{ $perf->nombre }}</option>
         @endforeach
@@ -55,15 +55,15 @@
     <div class=" align-self-center col col-md-6 col-lg-6 col-sm-12 col-xs-12">
         <label for="selectObra">Obra</label>
         <div class="radio">
-            <label><input class="rd_obra" type="radio" name="optradio" value="0" checked>Todas</label>
-            <label><input class="rd_obra" type="radio" name="optradio" value="1">Especificar</label>
+            <label><input class="rd_obra" type="radio" id="radioT" name="optradio" value="0" checked>Todas</label>
+            <label class="rd_visit"><input class="rd_obra" id="radioE" type="radio" name="optradio" value="1">Especificar</label>
         </div>
         <div class="section-select hidden">
             <select id="selectObra" name="selectObra[]" class="form-control"  multiple="multiple">
             @foreach($proyectos as $proy)
-                @if(array_search($proy->id_proyecto, $array_cod)==false)
+                @if(array_search($proy->cod_proyecto, $array_cod)==false)
                 
-                <option style="font-size: 90%" value="{{ $proy->id_proyecto }}">{{ $proy->cod_empresa }} - {{ $proy->nombre_proyecto }}</option>
+                <option style="font-size: 90%;text-transform: uppercase;" value="{{ trim($proy->cod_proyecto) }}">{{ $proy->id_unidad_negocio }} - {{ strtoupper($proy->nombre_proyecto) }}</option>
                 @endif
             @endforeach
             </select>

@@ -37,9 +37,9 @@
   <div class=" align-self-center col col-md-6 col-lg-6 col-sm-12 col-xs-12">
     <label for="selectPerfil">Perfil</label>
       <select id="selectPerfil" required="true" name="selectPerfil" class="form-control" style="background: white" autofocus="autofocus">
-        <option value="-1" required="true" selected>Seleccione Perfil</option>
+        <option value="" required="true" selected>Seleccione Perfil</option>
           @foreach($perfil as $perf)
-          <option @if($usuario_app[0]->id_rol == $perf->id_rol)selected @endif  style="font-size: 90%;" value="{{ $perf->id_rol }}">{{ $perf->nombre }}</option>
+          <option <?php if($usuario_app[0]->id_rol == $perf->id_rol) echo 'selected' ?>  style="font-size: 90%;" value="{{ $perf->id_rol }}">{{ $perf->nombre }}</option>
           @endforeach
       </select>
   </div>
@@ -49,16 +49,19 @@
     <div class=" align-self-center col col-md-6 col-lg-6 col-sm-12 col-xs-12">
         <label for="selectObra">Obra</label>
         <?php 
-            if($obj_permitido == '0'){
-              $checkedTodas = 'checked';http://127.0.0.1:8000/gestion_usuarios#
-              $hidden = 'hidden'; 
-            }else{
-              $checkedEsp = 'checked';
-            }
+                    
+              if($obj_permitido == '0'){
+                $checkedTodas = 'checked';
+                $hidden = 'hidden'; 
+              }else{
+                $checkedEsp = 'checked';
+                $hidden = '';
+              }
+
         ?>
         <div class="radio">
-            <label><input class="rd_obra" type="radio" name="optradio" value="0" <?php if(isset($checkedTodas)){ echo $checkedTodas; } ?> >Todas</label>
-            <label><input class="rd_obra" type="radio" name="optradio" value="1" <?php if(isset($checkedEsp)){ echo $checkedEsp; } ?> >Especificar</label>
+            <label ><input class="rd_obra" type="radio" name="optradio" value="0"  id="radioT"<?php if(isset($checkedTodas)){ echo $checkedTodas; } ?>>Todas</label>
+            <label class="rd_visit <?php if($usuario_app[0]->id_rol == 12){echo 'hidden';}  ?>"><input class="rd_obra" id="radioE" type="radio" name="optradio" value="1" <?php if(isset($checkedEsp)){ echo $checkedEsp; } ?>>Especificar</label>
         </div>
         <div class="section-select <?php  if(isset($checkedTodas)){ echo $hidden; } ?>">
             <select id="selectObra"  name="selectObra[]" class="form-control "  multiple="multiple">
@@ -66,13 +69,13 @@
                 @if(!empty($contenido_objeto))
                   <?php 
                       $selected = '';
-                      if (array_search($proy->id_proyecto, array_column($contenido_objeto, 'id_proyecto')) !== FALSE ) {
+                      if (array_search($proy->cod_proyecto, array_column($contenido_objeto, 'cod_proyecto')) !== FALSE ) {
                           $selected = 'selected';
                       }
                   ?>
-                  <option <?php echo $selected;?> style="font-size: 90%" value="{{ $proy->id_proyecto }}">{{ $proy->cod_empresa }} - {{ $proy->nombre_proyecto }}</option>
+                  <option <?php echo $selected;?> style="font-size: 90%;text-transform: uppercase;" value="{{ $proy->cod_proyecto }}">{{ $proy->id_unidad_negocio }} - {{ strtoupper($proy->nombre_proyecto) }}</option>
                 @else
-                  <option style="font-size: 90%" value="{{ $proy->id_proyecto }}">{{ $proy->cod_empresa }} - {{ $proy->nombre_proyecto }}</option>
+                  <option style="font-size: 90%;text-transform: uppercase;" value="{{ $proy->cod_proyecto }}">{{ $proy->id_unidad_negocio }} - {{ strtoupper($proy->nombre_proyecto) }}</option>
                 @endif  
             @endforeach
             </select>

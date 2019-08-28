@@ -19,22 +19,25 @@
                     @endif
                     </a>
                     <div class="dropdown-menu" style="position: absolute;right: 0;left: auto;border-top-right-radius: 0;border-top-left-radius: 0;padding: 1px 0 0 0;    border-color: #444242;;width: 280px;">
-                        <div class="user-header" style="height: 175px;padding: 10px;text-align: center;-webkit-box-sizing: border-box;white-space: normal">
+                        <div class="user-header " style="height: 175px;text-align: center;-webkit-box-sizing: border-box;white-space: normal;background-color: #444242;">
                             @if(is_array(request()->session()->get('avatar')))
                             <img src="{{ asset(implode(request()->session()->get('avatar'))) }}" class="img-circle" alt="User Image" style="z-index: 5;height: 90px;width: 90px;border: 3px solid;border-color: transparent;border-color: rgba(255,255,255,0.2);border-radius: 50%;vertical-align: middle;">
                             @else
                             <img src="{{ asset('img/login-icono.png') }}" class="img-circle" alt="User Image" style="z-index: 5;height: 90px;width: 90px;border: 3px solid;border-color: transparent;border-color: rgba(255,255,255,0.2);    border-radius: 50%;vertical-align: middle;">
                             @endif
-                            <p style="z-index: 5;color: #000;font-size: 17px;margin-top: 10px;-webkit-box-sizing: border-box;display:block;text-transform: inherit;font-weight: inherit;padding-right: 0;padding-left: 0;"> {{  Auth::user()->name }}  - <span class="nombreSide" style="font-style: inherit;"><?php 
+                            <p class="text-white" style="z-index: 5;color: #000;font-size: 17px;margin-top: 10px;-webkit-box-sizing: border-box;display:block;text-transform: inherit;font-weight: inherit;padding-right: 0;padding-left: 0;"> {{  Auth::user()->name }}  - <span class="nombreSide" style="font-style: inherit;">
+                            <?php 
                                 if(Auth::user()->rol[0]->id_rol == 10){
                                     $rol = 'Administrador Logística';
-                                }else if(Auth::user()->rol[0]->id_rol == 10){
-                                    $rol = 'Encargado Bodega';
+                                }else if(Auth::user()->rol[0]->id_rol == 11){
+                                    $rol = 'Jefe/Asistente Almacén';
+                                }else{
+                                    $rol = 'Visitador';
                                 }
                             ?>
-                            <?php echo $rol; ?></span></p>
+                            <?php echo strtoupper($rol); ?></span></p>
                         </div>
-                        <div class="user-footer text-right" style="background-color: #dd4b39;padding: 10px;">
+                        <div class="user-footer text-right" style="padding: 10px;">
                             
                               <a href="{{ route('logout') }}" class="btn btn-default btn-flat" style="padding-top: 10px" onclick="event.preventDefault();document.getElementById('logout-form').submit();" ><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

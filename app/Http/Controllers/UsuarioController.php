@@ -18,7 +18,6 @@ class UsuarioController extends Controller
 {
 	public function usuariosListing(){
     	$table_usuario = UsuarioModel::rol_aplicacion();
-        //print(json_encode($table_usuario));
         return view('usuario',compact('table_usuario'));
     }
 
@@ -31,21 +30,24 @@ class UsuarioController extends Controller
         $empresa = json_decode($response->getBody( )->getContents());
         $response1 = $client->request('GET','unidades_negocio');
         $unidades_negocio = json_decode($response1->getBody( )->getContents());
-        $response2 = $client->request('GET','proyectos?estado=A');
-        $proyectos = json_decode($response2->getBody()->getContents());
+        $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto');
         foreach($proyectos as $pry){
-            if($pry->cod_empresa == '0004'){
-                $pry->cod_empresa = 'DVC';
-            }else if($pry->cod_empresa == '0006'){
-                $pry->cod_empresa = 'FE';
-            }else if($pry->cod_empresa == '0010'){
-                $pry->cod_empresa = 'FA';
-            }else if($pry->cod_empresa == '0018'){
-                $pry->cod_empresa = 'FP';
-            }else if($pry->cod_empresa == '0019'){
-                $pry->cod_empresa = 'FAI';
-            }else if($pry->cod_empresa == '0020'){
-                $pry->cod_empresa = 'FT';
+            if($pry->id_unidad_negocio == '0004'){
+                $pry->id_unidad_negocio = 'DVC';
+            }else if($pry->id_unidad_negocio == '0006'){
+                $pry->id_unidad_negocio = 'FE';
+            }else if($pry->id_unidad_negocio == '0010'){
+                $pry->id_unidad_negocio = 'FA';
+            }else if($pry->id_unidad_negocio == '0018'){
+                $pry->id_unidad_negocio = 'FP';
+            }else if($pry->id_unidad_negocio == '0018-OP'){
+                $pry->id_unidad_negocio = 'FOP';
+            }else if($pry->id_unidad_negocio == '0018-OC'){
+                $pry->id_unidad_negocio = 'FOC';
+            }else if($pry->id_unidad_negocio == '0019'){
+                $pry->id_unidad_negocio = 'FAI';
+            }else if($pry->id_unidad_negocio == '0020'){
+                $pry->id_unidad_negocio = 'FT';
             }
         }
         $list_proy_exi = DB::select('select distinct(u.objeto_permitido) from seguridadapp.usuario_rol u inner join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = u.id_aplicacion_usuario where a.id_aplicacion = 4 and u.objeto_permitido is not null');
@@ -63,7 +65,7 @@ class UsuarioController extends Controller
             }
         }
         foreach($array_cod as $cod){
-            $en_uso = array_search($cod, array_column($proyectos, 'id_proyecto'));
+            $en_uso = array_search($cod, array_column($proyectos, 'cod_proyecto'));
             unset($proyectos[$en_uso]);
             $proyectos = array_values($proyectos);
         }
@@ -87,7 +89,7 @@ class UsuarioController extends Controller
         try {
             $perfil = DB::select('select id_rol,upper(nombre) as nombre from seguridadapp.rol_aplicacion where id_aplicacion = 4');
             $usuario_app = DB::select("select id_aplicacion_usuario, username, id_rol, id_empresa, objeto_permitido, id_unidad_negocio from seguridadapp.edit_user($id)");
-            
+            $id_usuario = $usuario_app[0]->id_aplicacion_usuario;
             $client = new CLient([
                 'base_uri' => 'http://10.0.0.14:1337/datos_maestros/',
             ]);
@@ -99,27 +101,26 @@ class UsuarioController extends Controller
             $sr_proyectos = '';
             $obj_permitido = '';
 
-
             if($usuario_app[0]->objeto_permitido != null){
                 $objeto_permitido =  explode(';', $usuario_app[0]->objeto_permitido);
                 foreach($objeto_permitido as $obj){
-                    $response5 = $client->request('GET','proyectos?estado=A&&id_proyecto='.$obj);
-                    $sr_proyectos = json_decode($response5->getBody( )->getContents());
+                    $sr_proyectos = DB::connection('pgsqlProye')->select("select * from ggo.ggo_proyecto where cod_proyecto='$obj'");
+
                         foreach($sr_proyectos as $sr_proyectos){
-                            if($sr_proyectos->cod_empresa == '0004'){
-                                $sr_proyectos->cod_empresa = 'DVC';
-                            }else if($sr_proyectos->cod_empresa == '0006'){
-                                $sr_proyectos->cod_empresa = 'FE';
-                            }else if($sr_proyectos->cod_empresa == '0010'){
-                                $sr_proyectos->cod_empresa = 'FA';
-                            }else if($sr_proyectos->cod_empresa == '0018'){
-                                $sr_proyectos->cod_empresa = 'FP';
-                            }else if($sr_proyectos->cod_empresa == '0019'){
-                                $sr_proyectos->cod_empresa = 'FAI';
-                            }else if($sr_proyectos->cod_empresa == '0020'){
-                                $sr_proyectos->cod_empresa = 'FT';
+                            if($sr_proyectos->id_unidad_negocio == '0004'){
+                                $sr_proyectos->id_unidad_negocio = 'DVC';
+                            }else if($sr_proyectos->id_unidad_negocio == '0006'){
+                                $sr_proyectos->id_unidad_negocio = 'FE';
+                            }else if($sr_proyectos->id_unidad_negocio == '0010'){
+                                $sr_proyectos->id_unidad_negocio = 'FA';
+                            }else if($sr_proyectos->id_unidad_negocio == '0018'){
+                                $sr_proyectos->id_unidad_negocio = 'FP';
+                            }else if($sr_proyectos->id_unidad_negocio == '0019'){
+                                $sr_proyectos->id_unidad_negocio = 'FAI';
+                            }else if($sr_proyectos->id_unidad_negocio == '0020'){
+                                $sr_proyectos->id_unidad_negocio = 'FT';
                             }
-                            $obj_permitido .= $sr_proyectos->cod_empresa .' - '. $sr_proyectos->nombre_proyecto.';';
+                            $obj_permitido .= $sr_proyectos->id_unidad_negocio .' - '. $sr_proyectos->nombre_proyecto.';';
 
                         }
                         $contenido_objeto[] = ($sr_proyectos);
@@ -127,33 +128,43 @@ class UsuarioController extends Controller
             }else{
                 $obj_permitido = '0';
             }
-
-            $response5 = $client->request('GET','proyectos?estado=A');
-            $proyectos = json_decode($response5->getBody( )->getContents());
+            $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto');
             foreach($proyectos as $pry){
-                if($pry->cod_empresa == '0004'){
-                    $pry->cod_empresa = 'DVC';
-                }else if($pry->cod_empresa == '0006'){
-                    $pry->cod_empresa = 'FE';
-                }else if($pry->cod_empresa == '0010'){
-                    $pry->cod_empresa = 'FA';
-                }else if($pry->cod_empresa == '0018'){
-                    $pry->cod_empresa = 'FP';
-                }else if($pry->cod_empresa == '0019'){
-                    $pry->cod_empresa = 'FAI';
-                }else if($pry->cod_empresa == '0020'){
-                    $pry->cod_empresa = 'FT';
+                if($pry->id_unidad_negocio == '0004'){
+                    $pry->id_unidad_negocio = 'DVC';
+                }else if($pry->id_unidad_negocio == '0006'){
+                    $pry->id_unidad_negocio = 'FE';
+                }else if($pry->id_unidad_negocio == '0010'){
+                    $pry->id_unidad_negocio = 'FA';
+                }else if($pry->id_unidad_negocio == '0018'){
+                    $pry->id_unidad_negocio = 'FP';
+                }else if($pry->id_unidad_negocio == '0019'){
+                    $pry->id_unidad_negocio = 'FAI';
+                }else if($pry->id_unidad_negocio == '0020'){
+                    $pry->id_unidad_negocio = 'FT';
                 }
             }
-           /*$contenido_objeto = array();
-            foreach ($sr_proyectos as $rl) {
-                $detalle = "";
-                $detalle = (object) array(
-                    'id_objeto'=>$rl->id_proyecto,
-                    'descripcion'=>$rl->nombre_proyecto);
-                array_push($contenido_objeto,$detalle);
-            }*/
-            //print(json_encode($contenido_objeto));
+
+            $list_proy_exi = DB::select("select distinct(u.objeto_permitido) from seguridadapp.usuario_rol u inner join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = u.id_aplicacion_usuario where a.id_aplicacion = 4 and u.objeto_permitido is not null and a.id_aplicacion_usuario <> $id_usuario");
+            $array_cod = '';
+            if(!empty($list_proy_exi)){
+                $codigos = '';               
+                foreach($list_proy_exi as $list){
+                    $item_list = explode(";",$list->objeto_permitido);          
+                    foreach($item_list as $rl){
+                        $codigos .= $rl.';';
+                    }
+                }
+                if ($codigos != '') {
+                    $array_cod = explode(";",substr($codigos,0,-1));
+                }
+            }
+            foreach($array_cod as $cod){
+                $en_uso = array_search($cod, array_column($proyectos, 'cod_proyecto'));
+                unset($proyectos[$en_uso]);
+                $proyectos = array_values($proyectos);
+            }
+
             if (!empty($usuario_directorio)) {
                 return view('usuarios/editOld',compact('usuario_app','usuario_directorio','perfil','empresa','contenido_objeto','proyectos','obj_permitido'));
             }else {
@@ -167,7 +178,6 @@ class UsuarioController extends Controller
     public function cargaUser($email){
         $client = new CLient([
         'base_uri' => 'http://10.0.0.14:1337/datos_maestros/',
-        //'timeout' => 4.0,
         ]);
         $response2 = $client->request('GET','directorio?userPrincipalName='.$email);
         $usuario = json_decode($response2->getBody( )->getContents());
@@ -214,9 +224,7 @@ class UsuarioController extends Controller
             }
             $usuario_rol->save();
 
-            //print(json_encode($usuario_rol));
-
-            Mail::to($correo)->send(new CorreoConfirmacion($nombre));
+            //Mail::to($correo)->send(new CorreoConfirmacion($nombre));
             Alert::success('El usuario se guardo correctamente','Guardado');
             return redirect()->route("gestion_user");
         }else {

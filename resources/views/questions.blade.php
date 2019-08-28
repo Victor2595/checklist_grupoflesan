@@ -43,7 +43,7 @@
                             @foreach($tbl_p->hijo as $tbl_h)
                               <tr class="{{ $tbl_h->clbod_preguntas_item_id }}">
                                 <td style="font-size:80%;" class="text-left">{{ $count.'. '.$tbl_h->clbod_preguntas_nombre }}</td>
-                                <td style="font-size:80%;text-transform: uppercase;"><?php echo ($tbl_h->clbod_preguntas_tipo == 1)?'Checklist Bodega':'Checklist Visita' ?></td>
+                                <td style="font-size:80%;text-transform: uppercase;"><?php echo ($tbl_h->clbod_preguntas_tipo == 1)?'Checklist Almacén':'Checklist Visita' ?></td>
                                 <td style="font-size:80%;"><?php echo ($tbl_h->clbod_preguntas_estado == 1)?'ACTIVO':'INACTIVO' ?></td>
                                 <td>
                                   <a href="#" class="btn btn-info btn-sm showAjaxModal" data-titulo="Editar Pregunta" data-tipo="1" title="Editar" data-action="editPregunta" data-enlace="/editOldPregunta/{{ $tbl_h->clbod_preguntas_item_id  }}" data-select="{{ $tbl_h->clbod_preguntas_tipo }}" style="font-size: 90%;"><i class="fas fa-pen"></i></a>

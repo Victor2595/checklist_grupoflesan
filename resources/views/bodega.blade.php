@@ -17,7 +17,7 @@
                     <form id="form_bodega" method="POST">
                     <meta name="csrf-token" content="{{ csrf_token() }}" />
                         <header class="section-header">
-                            <h3>Checklist de autocontrol en Bodega</h3>
+                            <h3>Checklist de autocontrol en Almacén</h3>
                             <div class="row">
                                 <div class="col-md-3">
                                     <small id="week" style="text-transform: uppercase;display: block;font-weight: bold;color:#e8000a;">semana de evaluación: {{ $week }}</small>
@@ -47,7 +47,7 @@
                                 <select id="comboObra" required="true" class="form-control" name="comboObra" data-live-search="true">
                                     <option value="" selected="selected">Seleccione</option>
                                     @foreach($proyectos as $pry)
-                                    <option value="{{ $pry->id_proyecto }}">{{ $pry->cod_empresa.' - '.$pry->nombre_proyecto }}</option>
+                                    <option value="{{ $pry->cod_proyecto }}">{{ $pry->id_unidad_negocio.' - '.$pry->nombre_proyecto }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -155,7 +155,7 @@ $(document).ready(function () {
             success: function (response) {
                 if(response.length == 0){
                     $.ajax({
-                        url:'/savebodega',
+                        url:'/savealmacen',
                         data:formData,
                         cache:false,
                         contentType:false,
@@ -164,7 +164,7 @@ $(document).ready(function () {
                         datatype: 'JSON',
                         success: function (response) {
                             $.ajax({
-                                url:'/verificateBodegaWeekItem',
+                                url:'/verificateAlmacenWeekItem',
                                 data:formData,
                                 cache:false,
                                 contentType:false,
@@ -174,7 +174,7 @@ $(document).ready(function () {
                                 success: function (response) {
                                     if(response.length == 0){
                                         $.ajax({
-                                            url:'/savebodegaItem',
+                                            url:'/savealmacenItem',
                                             data:formData,
                                             cache:false,
                                             contentType:false,
@@ -184,35 +184,35 @@ $(document).ready(function () {
                                             success: function (response) {
                                                 $('#modal_ajax').modal('hide');
                                                 location.href="/principal";
-                                                swal('¡Exito!','Se registro el ChekList Bodega de la semana '+response.clbod_item_semana,'success');
+                                                swal('¡Exito!','Se registro el ChekList Almacén de la semana '+response.clbod_item_semana,'success');
                                             },error: function(jqXHR, text, error){
                                                 $('#modal_ajax').modal('hide');
-                                                swal('Error!','No se pudo registrar ningun ChecList Bodega para esta semana para el proyecto seleccionado.','error');
+                                                swal('Error!','No se pudo registrar ningun ChecList Almacén para esta semana para el proyecto seleccionado.','error');
                                             }
                                         });
                                     }else{
                                         $('#modal_ajax').modal('hide');
-                                        swal('Error!','Ya existe Checklist Bodega para el Proyecto seleccionado.','error');
+                                        swal('Error!','Ya existe Checklist Almacén para el Proyecto seleccionado.','error');
                                         $('#comboObra').focus();
                                     }
                                 },error: function(jqXHR, text, error){
                                     $('#modal_ajax').modal('hide');
-                                    swal('Error!','No se pudo registrar ningun CheckList para esta semana para el proyecto seleccionado.','error');
+                                    swal('Error!','No se pudo registrar ningun CheckList Almacén para esta semana para el proyecto seleccionado.','error');
                                 }
                             });
                         },error: function(jqXHR, text, error){
                             $('#modal_ajax').modal('hide');
-                            swal('Error!','No se pudo registrar ningun ChecList Bodega para esta semana para el proyecto seleccionado.','error');
+                            swal('Error!','No se pudo registrar ningun ChecList Almacén para esta semana para el proyecto seleccionado.','error');
                         }
                     });
                 }else{
                     $('#modal_ajax').modal('hide');
-                    swal('Error!','Ya existe Checklist Bodega para el proyecto seleccionado.','error');
+                    swal('Error!','Ya existe Checklist Almacén para el proyecto seleccionado.','error');
                     $('#comboObra').focus();
                 }
             },error: function(jqXHR, text, error){
                 $('#modal_ajax').modal('hide');
-                swal('Error!','No se pudo registrar ningun ChecList para esta semana para el proyecto seleccionado.','error');
+                swal('Error!','No se pudo registrar ningun ChecList Almacén para esta semana para el proyecto seleccionado.','error');
             }
         });
     });

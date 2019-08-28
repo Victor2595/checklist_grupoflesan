@@ -13,7 +13,7 @@ class PreguntasController extends Controller
 {
 	public function generateQuestions(){
         $arreglo = array();
-        $tabla_padre = DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_item_padre = 0");
+        $tabla_padre = DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_item_padre = 0 order by clbod_preguntas_item_id asc");
         foreach ($tabla_padre as $rl) {
             $detalle = (object) array(
                 'id_cabecera' => $rl->clbod_preguntas_item_id,
@@ -62,6 +62,7 @@ class PreguntasController extends Controller
     public function editOldPregunta($id){
         try {
             $preguntas = Preguntas::where('clbod_preguntas_item_id',$id)->first();
+            //print(json_encode($preguntas));
             if (!empty($preguntas)) {
                 return view('preguntas/editOldQ',compact('preguntas'));
             }else {
@@ -121,7 +122,7 @@ class PreguntasController extends Controller
                 $title = 'Desactivado';  
             }
         }else{
-            $preguntas->estado = 1;
+            $preguntas->clbod_preguntas_estado = 1;
             if($preguntas->clbod_preguntas_item_padre == 1){
                 $mensaje = 'La pregunta fue activada';
                 $title = 'Activada';  

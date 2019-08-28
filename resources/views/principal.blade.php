@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-   <br><br>
+<br><br>
 </section>
 <section class="content" style="">
     <div class="col-xs-12">
@@ -26,14 +26,11 @@
                                         <small style="margin-top: .9em;text-transform: uppercase;display: block;font-weight: bold;">{{ $rol }}</small>
                                     </div>-->
                                     @if($perfil == 11)
-                                    <a class="btn btn-sm btn-default" href="{{ route('bodega') }}"><i class="glyphicon glyphicon-plus"></i> Bodega</a>
+                                    <a class="btn btn-sm btn-default" href="{{ route('almacen') }}"><i class="glyphicon glyphicon-plus"></i> Almacén</a>
                                     @endif
-                                    @if($perfil == 11)
+                                    @if($perfil == 12)
                                     <a class="btn btn-sm btn-default" href="{{ route('visita') }}"><i class="glyphicon glyphicon-plus"></i> Visita</a>
                                     @endif
-                                    <!--@if($perfil == 10)
-                                    <a class="btn btn-sm btn-default" href=""><i class="glyphicon glyphicon-user"></i></a>
-                                    @endif-->
                                                  
                                 </div>
                             </div>
@@ -44,9 +41,9 @@
                         <meta name="csrf-token" content="{{ csrf_token() }}">
                         <div class="form-grou row">
                             <div class="col col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                <select id="combobox_tipo" class="form-control" name="tipo_check" data-live-search="true">
-                                    <option value="1" selected="selected">Checklist de Bodega</option>
-                                    <option value="2">Checklist de Visita</option>
+                                 <select id="combobox_tipo" class="form-control" name="tipo_check" data-live-search="true">
+                                    <option class="<?php echo (Auth::user()->rol[0]->id_rol == 12)?'hidden':'' ?>" value="1" <?php if(Auth::user()->rol[0]->id_rol == 10){ echo 'selected';}elseif (Auth::user()->rol[0]->id_rol == 11) {echo 'selected';}?>>Checklist de Almacén</option>
+                                    <option class="<?php echo (Auth::user()->rol[0]->id_rol == 11)?'hidden':'' ?>" value="2" <?php if (Auth::user()->rol[0]->id_rol == 12) {echo 'selected';}?>>Checklist de Visita</option>
                                 </select>
                             </div>
                             <div class="col col-md-6 col-lg-6 col-sm-12 col-xs-12 input-group input-group-sm">
@@ -87,7 +84,7 @@
                                 <tr class="{{ $tabla->clbod_obra_id }}">      
                                     <td class="text-left">
                                         <?php 
-                                            echo ($tabla->clbod_tipo == 1)?'Checklist de Bodega':'Checklist de Visita'; 
+                                            echo ($tabla->clbod_tipo == 1)?'Checklist de Almacén':'Checklist de Visita'; 
                                         ?>
                                         </td>
                                     <td class="text-center">{{ $tabla->unidad_negocio }}</td>
@@ -149,10 +146,10 @@
                                         ?>
                                     <td class="text-center" <?php echo $color; ?>><?php echo $fecha_v;?></td>
                                     <?php 
-                                        if($tabla->clbod_cumplimiento <= 100 && $tabla->clbod_cumplimiento >= 75){
+                                        if($tabla->clbod_cumplimiento <= 100 && $tabla->clbod_cumplimiento >= 93){
                                             $color = 'btn-flesan-table-ok';
                                             $textcolor = 'text-white';
-                                        }else if($tabla->clbod_cumplimiento < 75 && $tabla->clbod_cumplimiento >= 50){
+                                        }else if($tabla->clbod_cumplimiento <= 92 && $tabla->clbod_cumplimiento >= 71){
                                             $color = 'btn-flesan-table-warning';
                                             $textcolor = 'text-black';
                                         } else {
@@ -224,7 +221,7 @@
                     $.each(response, function(i,item){
                         var dataTD = [];
                         if(item.clbod_tipo == 1){
-                            tipo = 'Checklist de Bodega';
+                            tipo = 'Checklist de Almacén';
                         }else{
                             tipo = 'Checklist de Visita';
                         }
@@ -257,7 +254,7 @@
                                 user = '';
                             }
                             if(item.clbod_tipo == 1){
-                                url = 'http://127.0.0.1:8000/editOldBodega/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano ;
+                                url = 'http://127.0.0.1:8000/editOldAlmacen/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano ;
                             }else{
                                 url = 'http://127.0.0.1:8000/editOldVisita/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano;
                             }
@@ -275,7 +272,7 @@
                                 user = '';
                             }
                             if(item.clbod_tipo == 1){
-                                url = 'http://127.0.0.1:8000/editOldBodega/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano ;
+                                url = 'http://127.0.0.1:8000/editOldAlmacen/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano ;
                             }else{
                                 url = 'http://127.0.0.1:8000/editOldVisita/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano;
                             }
@@ -290,10 +287,10 @@
                             fecha_valida = '<b>No Validado</b>'
                         }
 
-                        if(item.clbod_cumplimiento <= 100 && item.clbod_cumplimiento >= 75){
+                        if(item.clbod_cumplimiento <= 100 && item.clbod_cumplimiento >= 93){
                             color = 'btn-flesan-table-ok';
                             textcolor = 'text-white';
-                        }else if(item.clbod_cumplimiento < 75 && item.clbod_cumplimiento >= 50){
+                        }else if(item.clbod_cumplimiento <= 92 && item.clbod_cumplimiento >= 71){
                             color = 'btn-flesan-table-warning';
                             textcolor = 'text-black';
                         }else{

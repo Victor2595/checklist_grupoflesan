@@ -40,14 +40,14 @@ Route::post("/editPregunta","PreguntasController@editPregunta")->name('editPregu
 Route::get("/preguntas_checklist/{id}/setEstado","PreguntasController@setEstado")->name('states_preguntas');
 
 //BODEGAS
-Route::get('/newbodega','AbastecimientoController@bodega')->name('bodega');
-Route::post('/savebodega','AbastecimientoController@saveCheckList')->name('save_bodega');
-Route::post('/verificateBodegaWeek','AbastecimientoController@verificateWeekB')->name('verificateBodega');
-Route::get('/editOldBodega/{array}','AbastecimientoController@editOldBodega')->name('editOldBodega');
-Route::get('/editBodega','AbastecimientoController@editBodega')->name('editBodega');
-Route::post('/savebodegaItem','AbastecimientoController@saveCheckListBodegaItem')->name('save_bodega_item');
-Route::post('/verificateBodegaWeekItem','AbastecimientoController@verificateWeekBItem')->name('verificateBodegaItem');
-Route::post('/validateBodegaWeekItem','AbastecimientoController@validateWeekBodega')->name('validateBodega');
+Route::get('/newalmacen','AbastecimientoController@bodega')->name('almacen');
+Route::post('/savealmacen','AbastecimientoController@saveCheckList')->name('save_almacen');
+Route::post('/verificateAlmacenWeek','AbastecimientoController@verificateWeekB')->name('verificateAlmacen');
+Route::get('/editOldAlmacen/{array}','AbastecimientoController@editOldBodega')->name('editOldAlmacen');
+Route::get('/editAlmacen','AbastecimientoController@editBodega')->name('editAlmacen');
+Route::post('/savealmacenItem','AbastecimientoController@saveCheckListBodegaItem')->name('save_balmacen_item');
+Route::post('/verificateAlmacenWeekItem','AbastecimientoController@verificateWeekBItem')->name('verificateAlmacenItem');
+Route::post('/validateAlmacenWeekItem','AbastecimientoController@validateWeekBodega')->name('validateAlmacen');
 
 
 //VISITAS

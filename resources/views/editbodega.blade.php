@@ -17,7 +17,7 @@
                     <form id="form_bodega_edit" method="POST">
                     <meta name="csrf-token" content="{{ csrf_token() }}" />
                         <header class="section-header">
-                            <h3>Checklist de autocontrol en Bodega</h3>
+                            <h3>Checklist de autocontrol en Almacén</h3>
                             <div class="row">
                                 <div class="col-md-3">
                                     <small id="week" style="text-transform: uppercase;display: block;font-weight: bold;color:#e8000a;">semana de evaluación: {{ $semana }}</small>
@@ -55,19 +55,19 @@
                             <div class="col col-md-9 col-lg-9 col-sm-12 col-xs-12">
                                 <label for="inputOb">Obra: </label>
                                 <span>
-                                    <input type="text" name="obra_id" id="obra_id" class="sr-only" value="{{ $proyectos[0]->id_proyecto }}">
-                                    <input type="hidden"  id="obra_name" name="obra_name" value="{{ $proyectos[0]->cod_empresa }}">
-                                    <br><b><strong  style="color:#000;" id="obra_nombre">{{ $proyectos[0]->cod_empresa }}</strong></b>
+                                    <input type="text" name="obra_id" id="obra_id" class="sr-only" value="{{ $proyectos[0]->cod_proyecto }}">
+                                    <input type="hidden"  id="obra_name" name="obra_name" value="{{ $proyectos[0]->id_unidad_negocio }}">
+                                    <br><b><strong  style="color:#000;" id="obra_nombre">{{ strtoupper($proyectos[0]->id_unidad_negocio) }}</strong></b>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label>Cumplimiento:</label>
                                 <br>
                                 <?php 
-                                    if($checklist[0]->clbod_cumplimiento <= 100 && $checklist[0]->clbod_cumplimiento >= 75){
+                                    if($checklist[0]->clbod_cumplimiento <= 100 && $checklist[0]->clbod_cumplimiento >= 93){
                                         $color = 'btn-flesan-table-ok';
                                         $textcolor = 'text-white';
-                                    }else if($checklist[0]->clbod_cumplimiento < 75 && $checklist[0]->clbod_cumplimiento >= 50){
+                                    }else if($checklist[0]->clbod_cumplimiento <= 92 && $checklist[0]->clbod_cumplimiento >= 71){
                                         $color = 'btn-flesan-table-warning';
                                         $textcolor = 'text-black';
                                     }else{
@@ -175,10 +175,10 @@ $(document).ready(function () {
             datatype: 'JSON',
             success: function (response) {
                 
-                swal('¡Exito!','Se valido el ChekList Bodega de la semana '+response.clbod_semana,'success');
+                swal('¡Exito!','Se valido el ChekList Almacén de la semana '+response.clbod_semana,'success');
                 location.reload();
             },error: function(jqXHR, text, error){
-                swal('Error!','No se pudo validar ningún ChecList Bodega para esta semana para el proyecto seleccionado.','error');
+                swal('Error!','No se pudo validar ningún ChecList Almacén para esta semana para el proyecto seleccionado.','error');
             }
         });
     });

@@ -24,7 +24,7 @@
                           <tr>
                             <th scope="col" class="text-center">Obra</th>
                             <th scope="col" class="text-center">Correo</th>
-                            <th scope="col" class="text-center">Jerarquía</th>
+                            <th scope="col" class="text-center">Perfil</th>
                             <th scope="col" class="text-center">Estado</th>  
                             <th scope="col" class="text-center">Acción</th>     
                           </tr>
@@ -38,7 +38,7 @@
                                     }
                                 ?>
                                 <tr class="{{ $table->id_usuario_rol }}">
-                                    <td style="font-size:80%;"><?php echo $obj_permitido ?></td>
+                                    <td style="font-size:80%;text-transform: uppercase;"><?php echo $obj_permitido ?></td>
                                     <td style="font-size:80%;">{{ $table->username }}</td>
                                     <td style="font-size:80%;text-transform: uppercase;">{{ $table->nombre }}</td>
                                     <td style="font-size:80%;">{{ $table->estado }}</td>
