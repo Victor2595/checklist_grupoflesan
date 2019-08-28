@@ -145,7 +145,7 @@ $(document).ready(function () {
 
         $('#modal_ajax').modal('show', {backdrop: 'static', keyboard: true});
         $.ajax({
-            url:'/verificateBodegaWeek',
+            url:'/verificateAlmacenWeek',
             data:formData,
             cache:false,
             contentType:false,
