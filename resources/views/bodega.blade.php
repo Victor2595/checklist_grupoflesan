@@ -28,7 +28,7 @@
                                         <div style="position: relative;float: left;margin-right: 3px;">
                                             <small style="margin-top: .9em;text-transform: uppercase;display: block;font-weight: bold;"></small>
                                         </div>
-                                        <a class="btn btn-sm btn-default" href="javascript: history.go(-1)"><i class="glyphicon glyphicon-chevron-left"></i> Volver</a>
+                                        <a class="btn btn-sm btn-default" href="{{ route('principal') }}"><i class="glyphicon glyphicon-chevron-left"></i> Volver</a>
                                         <button type="submit" id="guardar_chckbdg" class="btn btn-sm btn-default"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
                                     </div>
                                 </div>
@@ -47,7 +47,9 @@
                                 <select id="comboObra" required="true" class="form-control" name="comboObra" data-live-search="true">
                                     <option value="" selected="selected">Seleccione</option>
                                     @foreach($proyectos as $pry)
-                                    <option value="{{ $pry->cod_proyecto }}">{{ $pry->id_unidad_negocio.' - '.$pry->nombre_proyecto }}</option>
+                                        @if(array_search(trim($pry->cod_proyecto), array_column($proyectos_realizados, 'clbod_obra_id'))=== false)
+                                            <option value="{{ $pry->cod_proyecto }}">{{ $pry->id_unidad_negocio.' - '.$pry->nombre_proyecto }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>

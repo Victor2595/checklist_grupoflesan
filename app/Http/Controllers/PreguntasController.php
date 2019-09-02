@@ -45,8 +45,9 @@ class PreguntasController extends Controller
             $preguntas->clbod_preguntas_estado = 1;
             $mnj_alerta = 'El Tópico fue registrado exictosamente';
         }else{
+            $padre = Preguntas::where('clbod_preguntas_item_id',$request->inputId)->first();
             $preguntas->clbod_preguntas_item_padre = $request->inputId;
-            $preguntas->clbod_preguntas_tipo = $request->selectTipo;
+            $preguntas->clbod_preguntas_tipo = $padre->clbod_preguntas_tipo;
             $preguntas->clbod_preguntas_nombre = $request->inputNombre;
             $preguntas->clbod_preguntas_usuario_creacion = auth()->user()->id_aplicacion_usuario;
             $preguntas->clbod_preguntas_fecha_creacion = $dia->format('d-m-y');
@@ -54,7 +55,6 @@ class PreguntasController extends Controller
             $mnj_alerta = 'La Pregunta fue registrada exictosamente';
         }
         $preguntas->save();
-
         Alert::success($mnj_alerta,'GUARDADO');
         return redirect('/preguntas_checklist');
     }
@@ -62,7 +62,6 @@ class PreguntasController extends Controller
     public function editOldPregunta($id){
         try {
             $preguntas = Preguntas::where('clbod_preguntas_item_id',$id)->first();
-            //print(json_encode($preguntas));
             if (!empty($preguntas)) {
                 return view('preguntas/editOldQ',compact('preguntas'));
             }else {
@@ -82,7 +81,6 @@ class PreguntasController extends Controller
 
             if($request->inputId == 0){
                 $preguntas->clbod_preguntas_item_padre = $request->inputId;
-                $preguntas->clbod_preguntas_tipo = $request->selectTipo;
                 $preguntas->clbod_preguntas_nombre = $request->inputNombre;
                 $preguntas->clbod_preguntas_usuario_modificacion = auth()->user()->id_aplicacion_usuario;
                 $preguntas->clbod_preguntas_fecha_modificacion = $dia->format('d-m-y');
@@ -90,7 +88,6 @@ class PreguntasController extends Controller
                 $mnj_alerta = 'El Tópico fue actualizado exictosamente';
             }else{
                 $preguntas->clbod_preguntas_item_padre = $request->inputId;
-                $preguntas->clbod_preguntas_tipo = $request->selectTipo;
                 $preguntas->clbod_preguntas_nombre = $request->inputNombre;
                 $preguntas->clbod_preguntas_usuario_modificacion = auth()->user()->id_aplicacion_usuario;
                 $preguntas->clbod_preguntas_fecha_modificacion = $dia->format('d-m-y');

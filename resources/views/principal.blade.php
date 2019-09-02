@@ -121,13 +121,13 @@
                                     <td class="text-center">                                
                                         @if($perfil <> 10)
                                             @if($tabla->clbod_tipo == 1)
-                                                <a class="btn btn-sm mr-1 text-left bg-info" href="{{ URL::route('editOldBodega',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="Ver Checklist Semanal"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                                <a class="btn btn-sm mr-1 text-left bg-info" href="{{ URL::route('editOldAlmacen',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="Ver Checklist Semanal"><i class="glyphicon glyphicon-eye-open"></i></a>
                                             @else
                                                 <a class="btn btn-sm mr-1 text-left bg-info" href="{{ URL::route('editOldVisita',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="Ver Checklist Semanal"><i class="glyphicon glyphicon-eye-open"></i></a>
                                             @endif
                                         @elseif($perfil == 10)
                                             @if($tabla->clbod_tipo == 1)
-                                            <a class="btn btn-sm text-left <?php echo (isset($tabla->clbod_validate_user))?'btn-success':'btn-danger';?> mr-1" href="{{ URL::route('editOldBodega',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="<?php echo (isset($tabla->clbod_validate_user))?'Checklist Semanal Validado':'Validar Checklist Semanal';?>"><i class="glyphicon glyphicon-<?php echo (isset($tabla->clbod_validate_user))?'ok':'remove-sign'; ?>"></i></a>
+                                            <a class="btn btn-sm text-left <?php echo (isset($tabla->clbod_validate_user))?'btn-success':'btn-danger';?> mr-1" href="{{ URL::route('editOldAlmacen',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="<?php echo (isset($tabla->clbod_validate_user))?'Checklist Semanal Validado':'Validar Checklist Semanal';?>"><i class="glyphicon glyphicon-<?php echo (isset($tabla->clbod_validate_user))?'ok':'remove-sign'; ?>"></i></a>
                                             @else
                                             <a class="btn btn-sm text-left <?php echo (isset($tabla->clbod_validate_user))?'btn-success':'btn-danger';?> mr-1" href="{{ URL::route('editOldVisita',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="<?php echo (isset($tabla->clbod_validate_user))?'Checklist Semanal Validado':'Validar Checklist Semanal';?>"><i class="glyphicon glyphicon-<?php echo (isset($tabla->clbod_validate_user))?'ok':'remove-sign'; ?>"></i></a>
                                             @endif    
@@ -283,7 +283,6 @@
                         if(item.clbod_validate_date != null) {
                             fecha_valida = (item.clbod_validate_date).replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
                         }else{
-                            console.log('No Validado');
                             fecha_valida = '<b>No Validado</b>'
                         }
 

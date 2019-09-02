@@ -16,7 +16,6 @@ $(document).on('init.dt', function ( e, settings ) {
 } );
 
 $( document ).ready(function() {
-   
     //llamar a los modales independientes
     jQuery(document).on("click", ".showAjaxModal", function(){
         var url = $(this).data('enlace');
@@ -35,6 +34,7 @@ $( document ).ready(function() {
                 $('#modal_ajax .modal-body').html(response);
                 $('#inputId').val(idPadre);
                 if(tipo != ''){
+                  $("#selectTipo").prop('disabled',true);
                   $("#selectTipo").val(tipo);
                 }else{
                   $("#selectTipo").removeAttr('readonly');

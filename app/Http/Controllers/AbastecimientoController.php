@@ -57,6 +57,7 @@ class AbastecimientoController extends Controller
 
                             $proyectos = DB::connection('pgsqlProye')->select("select * from ggo.ggo_proyecto where cod_proyecto='$ob'");
                             foreach($proyectos as $pry){
+                                $pry->cod_proyecto = trim($pry->cod_proyecto);
                                 if($pry->id_unidad_negocio == '0004'){
                                     $pry->id_unidad_negocio = 'DVC';
                                 }else if($pry->id_unidad_negocio == '0006'){
@@ -128,6 +129,8 @@ class AbastecimientoController extends Controller
                     $key_proyecto = array_search($bod->clbod_obra_id, array_column($array_proyec, 'cod_proyecto'));
                     $bod->unidad_negocio = $array_proyec[$key_proyecto]->id_unidad_negocio;
                     $bod->obra = $array_proyec[$key_proyecto]->id_unidad_negocio.' - '.$array_proyec[$key_proyecto]->nombre_proyecto; 
+                }else{
+                	
                 }
             }
             return view('principal',compact('week','año','historicoCheckList','rol','roles','perfil','tabla_bodega'));
@@ -220,7 +223,6 @@ class AbastecimientoController extends Controller
                 }
             }
         }
-        //print(json_encode($busquedaList));
         return $busquedaList;
     }
 
@@ -228,6 +230,7 @@ class AbastecimientoController extends Controller
     public function bodega(){
         if(auth()->user()->rol[0]->id_rol != 12){    
             $email = auth()->user()->username;
+            $id_usuario = auth()->user()->id_aplicacion_usuario;
             $hoy = date('Y-m-d');
             $año = date('Y');
             $now = date('d/m/Y');
@@ -263,6 +266,9 @@ class AbastecimientoController extends Controller
                     }
                 }
 
+                $proyectos_realizados = DB::select("select clbod_obra_id from abastecimiento.clbod where clbod_semana = $week and clbod_ano = $año and clbod_create_user = '$id_usuario'");
+
+
                 if(count($objetos) > 0){
                     $obras_listas = '\'';
                     $proyectos = [];
@@ -293,7 +299,7 @@ class AbastecimientoController extends Controller
                         }
                     }
                 }else{
-                    $$proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto');
+                    $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto');
                     foreach($proyectos as $pry){
                         if($pry->id_unidad_negocio == '0004'){
                             $pry->id_unidad_negocio = 'DVC';
@@ -325,7 +331,7 @@ class AbastecimientoController extends Controller
                 array_push($arreglo,$detalle);
             }
 
-            return view('bodega',compact('week','now','proyectos','email','arreglo'));
+            return view('bodega',compact('week','now','proyectos','email','arreglo','proyectos_realizados'));
         }else{
             abort('401');
         }

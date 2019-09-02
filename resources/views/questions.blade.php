@@ -79,7 +79,7 @@
               <div class="modal-body" style="max-height: 71vh;overflow-y: auto;overflow-x: hidden;">
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                   <input type="submit" class="btn btn-default bg-success text-white" value="Guardar" />
               </div>
             </form>
