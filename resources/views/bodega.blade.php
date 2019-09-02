@@ -73,11 +73,13 @@
                                                 $count ="";
                                                 if(count($tbl_p->hijo)!=0){
                                                     $count = count($tbl_p->hijo)+1;
+                                                    $ancho = "rowspan = $count";
                                                 }else{
                                                     $count = count($tbl_p->hijo)+2;
+                                                    $ancho = "colspan = $count";
                                                 }
                                             ?>
-                                            <td rowspan="<?php echo $count ?>" style="font-weight: bold">{{ $tbl_p->cabecera }}</td>
+                                            <td <?php echo $ancho ?> style="font-weight: bold">{{ $tbl_p->cabecera }}</td>
                                             @if(!empty($tbl_p->hijo))
                                             @foreach($tbl_p->hijo as $tbl_h)
                                             <tr>
@@ -92,10 +94,7 @@
                                         <?php $contador++; ?>
                                             @endforeach
                                             @else
-                                            <tr>
-                                                <td style="text-align: left;" ></td>
                                                 <td><input data-id="<?php echo $tbl_p->id_cabecera ?>" type="number" min="0" max="100" step=".01" name="rev[<?php echo $tbl_p->id_cabecera ?>]" id="{{ $tbl_p->id_cabecera }}" class="form-control req id-question"><small>Debe ingresar el porcentaje sin <b>%</b> y el separador decimal con <b>.</b></small></td>
-                                            </tr>
                                             @endif
                                         </tr>
                                         @endforeach

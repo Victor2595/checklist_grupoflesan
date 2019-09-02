@@ -61,5 +61,5 @@ Route::post('/verificateVisitaWeekItem','AbastecimientoController@verificateWeek
 Route::post('/validateVisitaWeekItem','AbastecimientoController@validateWeekVisita')->name('validateVisita');
 
 //KPIS
-Route::get('/reportesweek','AbastecimientoController@reportWeek')->name('reports');
+Route::get('/reportesweek','ReportesController@reportWeek')->name('reports');
 

@@ -1,8 +1,6 @@
 $(document).ready(function() {
   $('select').selectpicker();
   $(".preloader-wrapper").removeClass('active');
-  $("#nav-gpreguntas").addClass('menu-active');
-    $("#nav-ad").removeClass('menu-active');
 });
 
 $(document).on('init.dt', function ( e, settings ) {

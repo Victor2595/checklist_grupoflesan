@@ -15,8 +15,6 @@ jQuery(document).on("change", ".rd_obra", function(){
 $(document).ready(function() {
   $('select').selectpicker();
   $(".preloader-wrapper").removeClass('active');
-  $("#nav-guser").addClass('menu-active');
-	  $("#nav-ad").removeClass('menu-active');
 });
 
 $(document).on( 'init.dt', function ( e, settings ) {

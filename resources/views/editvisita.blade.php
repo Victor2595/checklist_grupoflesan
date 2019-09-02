@@ -116,22 +116,13 @@
                                                     $count = 'rowspan="'.$variable.'"';
                                                     $numero='<b></b>';
                                                 }else{
-                                                    $variable = count($tbl_p->hijo)+1;
+                                                    $variable = count($tbl_p->hijo)+2;
                                                     $count = 'colspan="'.$variable.'"';
-                                                    $numero='<b>'.$contador.'. </b>';
+                                                    $numero='<b></b>';
                                                 }
                                             ?>
-                                            <?php 
-                                                if(count($tbl_p->hijo)!=0){
-                                                    $td = '';
-                                                    $style = '';
-                                                }else{
-                                                    $td = '<td></td>';
-                                                    $style = 'text-align:left';
-                                                }
-                                            ?>
-                                            <?php echo $td; ?>
-                                            <td <?php echo $count ?> style="font-weight: bold;<?php echo $style; ?>"><?php echo $numero; ?>{{ $tbl_p->cabecera }}</td>
+                                            
+                                            <td <?php echo $count ?> style="font-weight: bold;"><?php echo $numero; ?>{{ $tbl_p->cabecera }}</td>
                                             
                                             @if(!empty($tbl_p->hijo))
                                             @foreach($tbl_p->hijo as $tbl_h)

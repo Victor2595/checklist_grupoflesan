@@ -44,3 +44,14 @@ $(document).click(function(e) {
 } else if ($("#mobile-nav, #mobile-nav-toggle").length) {
 $("#mobile-nav, #mobile-nav-toggle").hide();
 }
+
+$(function () {
+ var url = window.location.pathname;
+ var activePage = url.substring(url.lastIndexOf('/') + 1);
+ $('.nav-menu li a').each(function () {
+   var linkPage = this.href.substring(this.href.lastIndexOf('/') + 1);
+   if (activePage == linkPage) {
+       $(this).parents('li').addClass('menu-active');
+   }
+ });
+})

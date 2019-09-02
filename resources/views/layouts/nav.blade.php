@@ -7,8 +7,9 @@
             <ul class="nav-menu">
                 <li class="menu-has-children" id="nav-ad"><a href="{{ route('principal') }}"> Checklist Semanal</a></li>
                 @if(Auth::user()->rol[0]->id_rol == '10')
-                <li class="menu-has-children" id="nav-gpreguntas"><a href="{{ route('questions') }}"> Gestión Preguntas</a>
-                <li class="menu-has-children" id="nav-guser"><a href="{{ route('gestion_user') }}"> Gestión Usuarios</a>
+                <li class="menu-has-children" id="nav-gpreguntas"><a href="{{ route('questions') }}"> Gestión Preguntas</a></li>
+                <li class="menu-has-children" id="nav-guser"><a href="{{ route('gestion_user') }}"> Gestión Usuarios</a></li>
+                <li class="menu-has-children" id="nav-report"><a href="{{ route('reports') }}"> Reportes</a></li>
                 @endif
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">

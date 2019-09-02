@@ -190,8 +190,6 @@
     $(document).ready(function() {
         $('select').selectpicker();
         $(".preloader-wrapper").removeClass('active');
-        $("#nav-ad").addClass('menu-active');
-        $("#nav-guser").removeClass('menu-active');
         $('#dataTableCheck').removeAttr('style');
         $("#dataTableCheck").DataTable({
             'paging'      : true,
