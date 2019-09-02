@@ -47,7 +47,9 @@
                                 <select id="comboObra" required="true" class="form-control" name="comboObra" data-live-search="true">
                                     <option value="" selected="selected">Seleccione</option>
                                     @foreach($proyectos as $pry)
-                                    <option value="{{ $pry->cod_proyecto }}">{{ $pry->id_unidad_negocio.' - '.strtoupper($pry->nombre_proyecto) }}</option>
+                                    @if(array_search(trim($pry->cod_proyecto), array_column($proyectos_realizados, 'clbod_obra_id'))=== false)
+                                    <option value="{{ trim($pry->cod_proyecto) }}">{{ $pry->id_unidad_negocio.' - '.strtoupper($pry->nombre_proyecto) }}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                             </div>

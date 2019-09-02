@@ -212,6 +212,11 @@ class AbastecimientoController extends Controller
             $where = " ";
         }
 
+        if(auth()->user()->rol[0]->id_rol != 10 ){
+            $id_usuario = auth()->user()->id_aplicacion_usuario;
+            $where .= " and clbod_create_user = '$id_usuario'";
+        }
+
         $busquedaList = DB::select("select p.clbod_id,p.clbod_obra_id,p.clbod_tipo,p.clbod_semana,p.clbod_ano,p.clbod_create_date,a.username clbod_create_user,p.clbod_validate_date,b.username clbod_validate_user,p.clbod_cumplimiento from abastecimiento.clbod p left join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = CAST( p.clbod_create_user AS integer) left join seguridadapp.aplicacion_usuario b on b.id_aplicacion_usuario = CAST( p.clbod_validate_user AS integer ) where clbod_semana = $week and clbod_ano=$año and clbod_tipo=$tipo $where ");
 
         if(!empty($busquedaList)){
@@ -266,7 +271,7 @@ class AbastecimientoController extends Controller
                     }
                 }
 
-                $proyectos_realizados = DB::select("select clbod_obra_id from abastecimiento.clbod where clbod_semana = $week and clbod_ano = $año and clbod_create_user = '$id_usuario'");
+                $proyectos_realizados = DB::select("select clbod_obra_id from abastecimiento.clbod where clbod_semana = $week and clbod_ano = $año and clbod_tipo = 1 and clbod_create_user = '$id_usuario'");
 
 
                 if(count($objetos) > 0){
@@ -595,6 +600,7 @@ class AbastecimientoController extends Controller
     //CARGA DE PANTALLA DEL MODULO DE BODEGA
     public function visita(){
         $email = auth()->user()->username;
+        $id_usuario = auth()->user()->id_aplicacion_usuario;
         $hoy = date('Y-m-d');
         $año = date('Y');
         $now = date('d/m/Y');
@@ -603,6 +609,8 @@ class AbastecimientoController extends Controller
         $week = $week - 1;
         $arreglo = array();
         $objetos = array();
+
+        $proyectos_realizados = DB::select("select clbod_obra_id from abastecimiento.clbod where clbod_semana = $week and clbod_ano = $año and clbod_tipo = 2 and clbod_create_user = '$id_usuario'");
 
         if(auth()->user()->rol[0]->id_rol == 10){
             $proyectos = DB::connection('pgsqlProye')->select("select * from ggo.ggo_proyecto");
@@ -640,61 +648,6 @@ class AbastecimientoController extends Controller
             }
 
         }else{
-            /*$accesos_permitidos = DB::select('select * from abastecimiento.accesos_permitidos where username =\''.$email.'\'');
-            foreach($accesos_permitidos as $accesos){
-                $obj_permitido = explode(';',$accesos->objeto_permitido);
-                foreach($obj_permitido as $obj){
-                    array_push($objetos, $obj);
-                }
-            }
-
-            if(count($objetos) > 0){
-                $obras_listas = '\'';
-                $proyectos = [];
-
-                foreach($objetos as $key => $ob){
-                    if(count($objetos) == ($key + 1)){
-                        $obras_listas .= $ob;
-                    }else{
-                        $obras_listas .= $ob."','";
-                    }
-
-                    $proy = DB::connection('pgsqlProye')->select("select * from ggo.ggo_proyecto where cod_proyecto='$ob'");
-                    foreach($proy as $pry){
-                        if($pry->id_unidad_negocio == '0004'){
-                            $pry->id_unidad_negocio = 'DVC';
-                        }else if($pry->id_unidad_negocio == '0006'){
-                            $pry->id_unidad_negocio = 'FE';
-                        }else if($pry->id_unidad_negocio == '0010'){
-                            $pry->id_unidad_negocio = 'FA';
-                        }else if($pry->id_unidad_negocio == '0018'){
-                            $pry->id_unidad_negocio = 'FP';
-                        }else if($pry->id_unidad_negocio == '0019'){
-                            $pry->id_unidad_negocio = 'FAI';
-                        }else if($pry->id_unidad_negocio == '0020'){
-                            $pry->id_unidad_negocio = 'FT';
-                        }
-                        array_push($proyectos, $pry);
-                    }
-                }
-            }else{
-                $proyectos = DB::connection('pgsqlProye')->select("select * from ggo.ggo_proyecto");
-                foreach($proyectos as $pry){
-                    if($pry->id_unidad_negocio == '0004'){
-                        $pry->id_unidad_negocio = 'DVC';
-                    }else if($pry->id_unidad_negocio == '0006'){
-                        $pry->id_unidad_negocio = 'FE';
-                    }else if($pry->id_unidad_negocio == '0010'){
-                        $pry->id_unidad_negocio = 'FA';
-                    }else if($pry->id_unidad_negocio == '0018'){
-                        $pry->id_unidad_negocio = 'FP';
-                    }else if($pry->id_unidad_negocio == '0019'){
-                        $pry->id_unidad_negocio = 'FAI';
-                    }else if($pry->id_unidad_negocio == '0020'){
-                        $pry->id_unidad_negocio = 'FT';
-                    }
-                }
-            }*/
             abort('401');
         }
 
@@ -710,7 +663,8 @@ class AbastecimientoController extends Controller
             );
             array_push($arreglo,$detalle);
         }
-        return view('visita',compact('week','now','proyectos','email','arreglo'));
+        return view('visita',compact('week','now','proyectos','email','arreglo','proyectos_realizados'));
+        //print(json_encode($proyectos_realizados));
     }
 
     //VERIFICAR SI EXISTE CHECKLIST VISITA EN CLBOD
@@ -773,23 +727,23 @@ class AbastecimientoController extends Controller
 
             $proyectos = DB::connection('pgsqlProye')->select("select * from ggo.ggo_proyecto where cod_proyecto='$obra'");
             foreach($proyectos as $pry){
-                if($pry->cod_empresa == '0004'){
-                    $pry->cod_empresa = 'DVC - '.$pry->nombre_proyecto;
-                }else if($pry->cod_empresa == '0006'){
-                    $pry->cod_empresa = 'FE - '.$pry->nombre_proyecto;
-                }else if($pry->cod_empresa == '0010'){
-                    $pry->cod_empresa = 'FA - '.$pry->nombre_proyecto;
-                }else if($pry->cod_empresa == '0018'){
-                    $pry->cod_empresa = 'FP - '.$pry->nombre_proyecto;
-                }else if($pry->cod_empresa == '0019'){
-                    $pry->cod_empresa = 'FAI - '.$pry->nombre_proyecto;
-                }else if($pry->cod_empresa == '0020'){
-                    $pry->cod_empresa = 'FT - '.$pry->nombre_proyecto;
+                if($pry->id_unidad_negocio == '0004'){
+                    $pry->id_unidad_negocio = 'DVC - '.$pry->nombre_proyecto;
+                }else if($pry->id_unidad_negocio == '0006'){
+                    $pry->id_unidad_negocio = 'FE - '.$pry->nombre_proyecto;
+                }else if($pry->id_unidad_negocio == '0010'){
+                    $pry->id_unidad_negocio = 'FA - '.$pry->nombre_proyecto;
+                }else if($pry->id_unidad_negocio == '0018'){
+                    $pry->id_unidad_negocio = 'FP - '.$pry->nombre_proyecto;
+                }else if($pry->id_unidad_negocio == '0019'){
+                    $pry->id_unidad_negocio = 'FAI - '.$pry->nombre_proyecto;
+                }else if($pry->id_unidad_negocio == '0020'){
+                    $pry->id_unidad_negocio = 'FT - '.$pry->nombre_proyecto;
                 }
 
             }
 
-            $cod_empresa = $proyectos[0]->cod_empresa;
+            $cod_empresa = $proyectos[0]->id_unidad_negocio;
             $cheklist = [
                 "cod_empresa" => $cod_empresa,
                 "tipo" => 'Checklist Visita',
