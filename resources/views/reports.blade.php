@@ -810,7 +810,7 @@ $(document).ready(function () {
             dataLabels: {
                 enabled: true,
                 formatter: function (val) {
-                    return val + "%";
+                    return val;
                 },
                 style: {
                     fontSize: '12px',
