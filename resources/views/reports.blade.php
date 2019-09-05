@@ -49,7 +49,7 @@
             <section id="contact" class="section-bg wow">
                 <div class="container">
                     <header class="section-header">
-                        <h3>Checklist semanal - logística</h3>
+                        <h3>Reportes - logística</h3>
                     </header>
                     <br>    
                     <form id="change_semana" method="POST" >
