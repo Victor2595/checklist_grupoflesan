@@ -164,7 +164,7 @@
                                         <br>
                                         <div class="box">
                                             <table  class="table table-bordered table-striped" width="100%">
-                                                <thead class="thead-dark hidden-xs hidden-sm">
+                                                <thead class="thead-dark">
                                                     <tr>
                                                         <th scope="col" class="text-center">COD-PROYECTO</th>
                                                         <th scope="col" class="text-center">PROYECTO</th>
@@ -173,7 +173,7 @@
                                                         <th scope="col" class="text-center">VISITA</th>     
                                                       </tr>
                                                 </thead>
-                                                <tbody id="body_validacion" class="hidden-xs hidden-sm">
+                                                <tbody id="body_validacion">
                                                     @foreach($tabla_visita as $table) 
                                                     <tr class="{{ $table->clbod_obra_id }}">
                                                         <td>{{ $table->clbod_obra_id }}</td>
