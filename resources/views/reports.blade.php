@@ -163,28 +163,30 @@
                                     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">  
                                         <br>
                                         <div class="box">
-                                            <table  class="table table-bordered table-striped" width="100%">
-                                                <thead class="thead-dark">
-                                                    <tr>
-                                                        <th scope="col" class="text-center">COD-PROYECTO</th>
-                                                        <th scope="col" class="text-center">PROYECTO</th>
-                                                        <th scope="col" class="text-center">SEMANA - AÑO</th>
-                                                        <th scope="col" class="text-center">ALMACEN</th>  
-                                                        <th scope="col" class="text-center">VISITA</th>     
-                                                      </tr>
-                                                </thead>
-                                                <tbody id="body_validacion">
-                                                    @foreach($tabla_visita as $table) 
-                                                    <tr class="{{ $table->clbod_obra_id }}">
-                                                        <td>{{ $table->clbod_obra_id }}</td>
-                                                        <td>{{ $table->nombre_proyecto }}</td>
-                                                        <td>{{ $table->clbod_semana.' - '.$table->clbod_ano }}</td>
-                                                        <td><?php echo (!empty($table->almacen))?'<a class="btn btn-sm text-left text-white btn-success mr-1" title="Validado"><i class="glyphicon glyphicon-ok"></i></a>':'<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>'?></td>
-                                                        <td><?php echo (!empty($table->visita))?'<a class="btn btn-sm text-left text-white btn-success mr-1" title="Validado"><i class="glyphicon glyphicon-ok"></i></a>':'<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>'?></td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped" width="100%">
+                                                    <thead class="thead-dark">
+                                                        <tr>
+                                                            <th scope="col" class="text-center">COD-PROYECTO</th>
+                                                            <th scope="col" class="text-center">PROYECTO</th>
+                                                            <th scope="col" class="text-center">SEMANA - AÑO</th>
+                                                            <th scope="col" class="text-center">ALMACEN</th>  
+                                                            <th scope="col" class="text-center">VISITA</th>     
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="body_validacion">
+                                                        @foreach($tabla_visita as $table) 
+                                                        <tr class="{{ $table->clbod_obra_id }}">
+                                                            <td>{{ $table->clbod_obra_id }}</td>
+                                                            <td>{{ $table->nombre_proyecto }}</td>
+                                                            <td>{{ $table->clbod_semana.' - '.$table->clbod_ano }}</td>
+                                                            <td><?php echo (!empty($table->almacen))?'<a class="btn btn-sm text-left text-white btn-success mr-1" title="Validado"><i class="glyphicon glyphicon-ok"></i></a>':'<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>'?></td>
+                                                            <td><?php echo (!empty($table->visita))?'<a class="btn btn-sm text-left text-white btn-success mr-1" title="Validado"><i class="glyphicon glyphicon-ok"></i></a>':'<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>'?></td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                     

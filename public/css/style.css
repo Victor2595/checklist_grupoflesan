@@ -1892,7 +1892,7 @@ h1 {
     border-spacing: 0;
   }
   .table thead {
-    position: absolute;
+    /*position: absolute;*/
     clip: rect(1px, 1px, 1px, 1px);
     padding: 0;
     border: 0;
@@ -1915,7 +1915,7 @@ h1 {
   .table tr,
   .table th,
   .table td {
-    display: block;
+    /*display: block;*/
     padding: 0;
     text-align: left;
     white-space: normal;
