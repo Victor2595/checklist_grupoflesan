@@ -516,7 +516,7 @@ btn-get-started:hover {
 }
 
 #mobile-nav ul li a {
-  color: #fff;
+  /*color: #fff;*/
   font-size: 13px;
   text-transform: uppercase;
   overflow: hidden;
