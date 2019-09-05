@@ -204,9 +204,6 @@
 @section('script')
 <script type="text/javascript" src="{{asset('apexcharts/dist/apexcharts.min.js')}}"></script>
 <script>
-  
-</script>
-<script>
 $('select').selectpicker();
 
 $(document).ready(function () {
