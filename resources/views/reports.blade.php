@@ -817,15 +817,12 @@ $(document).ready(function () {
                     colors: ["#ffffff"]
                 }
             },
-            series: [{
-                name:'VISITAS',
-                data: acumu
-            }],
+            series: visit,
             fill: {
               colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
             },
             xaxis: {
-                categories: nombres,
+                categories: ['TOTAL'],
 
                 axisBorder: {
                     show: false
