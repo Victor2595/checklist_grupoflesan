@@ -418,7 +418,7 @@ $(document).ready(function () {
 
                 chart2.updateOptions({ 
                     title: {
-                        text: 'PROYECTO - '+ nombre2[0],
+                        text: proy2[0],
                         align: 'center'
                     },
                     xaxis: {
@@ -541,7 +541,7 @@ $(document).ready(function () {
                     }
                 ],
                 title: {
-                    text: ' PROYECTO - '+ nombre2[0],
+                    text:  proy2[0],
                     align: 'center',
 
                 },
@@ -740,6 +740,10 @@ $(document).ready(function () {
                     columnWidth: '55%',
                 },
             },
+            title: {
+                text: 'N° Visitas Semanales',
+                align: 'center',
+            },   
             colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
             dataLabels: {
                 enabled: false
@@ -752,11 +756,6 @@ $(document).ready(function () {
             series: visitador,
             xaxis: {
                 categories: fecha_visi,
-            },
-            yaxis: {
-                title: {
-                    text: 'N° Visitas Semanales'
-                }
             },
             fill: {
                 opacity: 1
@@ -806,6 +805,11 @@ $(document).ready(function () {
                     columnWidth: '55%',
                 }
             },
+            title:{
+                text: 'N° Total Visitas',
+                align: 'center',
+            }
+            ,
             colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
             dataLabels: {
                 enabled: true,
@@ -847,15 +851,7 @@ $(document).ready(function () {
                 row: {
                   colors: ['#fff', '#f2f2f2']
                 }
-            },
-            yaxis: {
-                labels: {
-                    show: true,
-                },
-                title: {
-                    text: 'N° Total Visitas'
-                }
-            },
+            }
         }
 
         var chartVisitaAcu = new ApexCharts(
