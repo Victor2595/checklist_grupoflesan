@@ -795,8 +795,6 @@ $(document).ready(function () {
           acumu.push(parseFloat(item.NUMERO));
         });
 
-        console.log(visit)
-        console.log(acumu)
         var optionsVisitaAcu = {
             chart: {
                 height: 350,
@@ -824,8 +822,8 @@ $(document).ready(function () {
                 data: acumu
             }],
             fill: {
-  colors: ['#1A73E8', '#B32824']
-},
+              colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
+            },
             xaxis: {
                 categories: nombres,
 
