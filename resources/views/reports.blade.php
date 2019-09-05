@@ -25,6 +25,21 @@
     $Coleccion_1[] = json_encode(array( 'SEMANA' => 0, 'ALMACEN' => 0, 'VISITA' => 0, 'PROYECTO' => 0, 'CODIGO' =>0, 'NOMBRE_PROYECTO' => 0 , 'FECHA' => 0));
   }
 
+  if(!empty($segui_visit)){
+    foreach ($segui_visit as $uf) { 
+        $Visitador[] = json_encode(array('USUARIO'=> $uf->name,'FECHA'=>$uf->fecha,'NUMERO'=>$uf->numero));
+    }
+  }else{
+        $Visitador[] = json_encode(array('USUARIO'=>0 ,'FECHA'=>0 ,'NUMERO'=>0 ));
+  }
+
+  if(!empty($segui_visit_acu)){
+    foreach ($segui_visit_acu as $uf) { 
+        $Acumulado[] = json_encode(array('USUARIO'=> $uf->name,'NUMERO'=>$uf->numero));
+    }
+  }else{
+        $Acumulado[] = json_encode(array('USUARIO'=>0 ,'NUMERO'=>0 ));
+  }
 ?>
 <br><br>
 </section>
@@ -130,11 +145,11 @@
                                         </select>
                                     </div> 
                                 </div>
-                                <div class="row .d-print">
+                                <div class="row">
                                     <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">  
                                         <br>
                                         <div class="box">
-                                            <div class="containerReport" id="chart_3x">
+                                            <div class="containerReport" id="chart_visitador_acu">
 
                                             </div>
                                         </div>
@@ -142,7 +157,7 @@
                                     <div class="col-md-8 col-sm-12 col-xs-12 col-lg-8">  
                                         <br>
                                         <div class="box">
-                                            <div class="containerReport" id="chart_avancex">
+                                            <div class="containerReport" id="chart_visitador">
 
                                             </div>
                                         </div>
@@ -153,46 +168,33 @@
                             <div id="reports_segui_vali" class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
                             <br class="hidden-md hidden-lg">
                                 <div class="row">
-                                <div class="col-md-12 text-left bg-dark text-white p-2 mb-3" style="font-size: 15px;">
-                                      <b>Pendiente de Validación</b>
-                                </div>
-                                    <div class="col col-md-4 col-lg-4 col-sm-12 col-xs-12 input-group input-group-sm">
-                                        <select id="combobox_semana" class="form-control" name="ano_semana" data-live-search="true">
-                                        @if(!empty($historicoVisitaWeek))
-                                            <option  value="{{ $año.'_'.$week }}">{{ $año.' Semana '.$week }}</option>
-                                            @foreach($historicoVisitaWeek as $historico)
-                                                @if($historico->clbod_semana <> $week)
-                                                <option value="{{ $historico->clbod_ano.'_'.$historico->clbod_semana }}">{{ $historico->clbod_ano.' Semana '.$historico->clbod_semana }}</option>
-                                                @endif
-                                            @endforeach
-                                        @else
-                                            <option  value="{{ $año.'_'.$week }}">{{ $año.' Semana '.$week }}</option>
-                                        @endif     
-                                        </select>
-                                    </div> 
+                                    <div class="col-md-12 text-left bg-dark text-white p-2 mb-3" style="font-size: 15px;">
+                                          <b>Pendiente de Validación</b>
+                                    </div>
+                                    
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">  
                                         <br>
                                         <div class="box">
-                                            <table class="table table-bordered table-striped" width="100%">
+                                            <table  class="table table-bordered table-striped" width="100%">
                                                 <thead class="thead-dark hidden-xs hidden-sm">
                                                     <tr>
                                                         <th scope="col" class="text-center">COD-PROYECTO</th>
                                                         <th scope="col" class="text-center">PROYECTO</th>
                                                         <th scope="col" class="text-center">SEMANA - AÑO</th>
                                                         <th scope="col" class="text-center">ALMACEN</th>  
-                                                        <th scope="col" class="text-center">VALIDACIÓN</th>     
+                                                        <th scope="col" class="text-center">VISITA</th>     
                                                       </tr>
                                                 </thead>
-                                                <tbody class="hidden-xs hidden-sm">
+                                                <tbody id="body_validacion" class="hidden-xs hidden-sm">
                                                     @foreach($tabla_visita as $table) 
                                                     <tr class="{{ $table->clbod_obra_id }}">
                                                         <td>{{ $table->clbod_obra_id }}</td>
                                                         <td>{{ $table->nombre_proyecto }}</td>
                                                         <td>{{ $table->clbod_semana.' - '.$table->clbod_ano }}</td>
-                                                        <td style="<?php echo (empty($table->almacen))?'background-color: #dd4b39;color: white':''?>"><?php echo (!empty($table->almacen))?'<a class="btn btn-sm text-left text-white btn-success mr-1"><i class="glyphicon glyphicon-ok"></i></a>':'FALTA DE VALIDAR'?></td>
-                                                        <td style="<?php echo (empty($table->visita))?'background-color: #dd4b39;color: white':''?>"><?php echo (!empty($table->visita))?'<a class="btn btn-sm text-left text-white btn-success mr-1"><i class="glyphicon glyphicon-ok"></i></a>':'FALTA DE VALIDAR'?></td>
+                                                        <td><?php echo (!empty($table->almacen))?'<a class="btn btn-sm text-left text-white btn-success mr-1" title="Validado"><i class="glyphicon glyphicon-ok"></i></a>':'<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>'?></td>
+                                                        <td><?php echo (!empty($table->visita))?'<a class="btn btn-sm text-left text-white btn-success mr-1" title="Validado"><i class="glyphicon glyphicon-ok"></i></a>':'<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>'?></td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
@@ -655,7 +657,220 @@ $(document).ready(function () {
             
             chart3.render();
         }
+
+
+        var ColeccionVisitador = [];
+        ColeccionVisitador.push([<?php echo implode(',',$Visitador); ?>]);
+
+        var fecha_visi =[];
+        $.each(ColeccionVisitador[0], function( x, item ) {
+            var filtrado2 = filteredWeek(fecha_visi,item.FECHA);
+            if( filtrado2 == ''){
+                fecha_visi.push(item.FECHA);
+            }
+        });
+
+        var nro =[];
+        $.each(ColeccionVisitador[0], function( x, item ) {
+            
+                nro.push(parseFloat(item.NUMERO));
+            
+        });
+
+        var visitador =[];
+        $.each(ColeccionVisitador[0],function(x, item){
+            var filtrado = filterByProperty(visitador,'name',item.USUARIO);
+            if( filtrado == ''){
+                visitador.push({name:item.USUARIO,data:fecha_visi});
+            }
+        });
+        $.each(visitador,function(x, item){
+            var visi = [];
+            var filtrado = filterByProperty(ColeccionVisitador[0],'USUARIO',item.name);
+            $.each(filtrado,function(e, sub){
+                var detalle = [];
+                detalle.push(sub.FECHA);
+                detalle.push(sub.NUMERO);
+                visi.push(detalle);
+            });
+            var datos_nw = [];
+            $.each(fecha_visi,function(e, sub){
+                var index = visi.findIndex(x => x[0] === sub);
+                if (index != -1) {
+                    datos_nw.push(visi[index][1]);
+                }else{
+                    datos_nw.push(null);
+                }
+            });
+
+            item.data = datos_nw;
+        });
+
+        
+        function filterByProperty(array, prop, value){
+           var filtered = [];
+           for(var i = 0; i < array.length; i++){
+             var obj = array[i];
+             if (obj[prop]==value) {
+                filtered.push(obj);
+              }
+           }
+           return filtered;
+         }
+
+         function filteredWeek(array,value){
+            var filteredx = [];
+            for(var i=0;i<array.length;i++){
+                var obj = array[i];
+                if(obj == value){
+                    filteredx.push(obj);
+                }
+            }
+            return filteredx;
+         }
+
+        var optionsVisita = {
+            chart: {
+                height: 350,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                },
+            },
+            colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            series: visitador,
+            xaxis: {
+                categories: fecha_visi,
+            },
+            yaxis: {
+                title: {
+                    text: 'N° Visitas Semanales'
+                }
+            },
+            fill: {
+                opacity: 1
+
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return  + val + " visita"
+                    }
+                }
+            }
+        }
+
+        var chartVisita = new ApexCharts(
+            document.querySelector("#chart_visitador"),
+            optionsVisita
+        );
+
+        chartVisita.render();
+
+
+
+        var ColeccionAcumulado= [];
+        ColeccionAcumulado.push([<?php echo implode(',',$Acumulado); ?>]);
+
+        var visit =[];
+        var nombres = [];
+        $.each(ColeccionAcumulado[0],function(x, item){
+            nombres.push(item.USUARIO);
+            visit.push({name:item.USUARIO,data:[item.NUMERO]});
+        });
+
+        var acumu =[];
+        $.each(ColeccionAcumulado[0], function( x, item ) {
+          acumu.push(parseFloat(item.NUMERO));
+        });
+
+        console.log(visit)
+        console.log(acumu)
+        var optionsVisitaAcu = {
+            chart: {
+                height: 350,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                }
+            },
+            colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
+            dataLabels: {
+                enabled: true,
+                formatter: function (val) {
+                    return val + "%";
+                },
+                style: {
+                    fontSize: '12px',
+                    colors: ["#ffffff"]
+                }
+            },
+            series: [{
+                name:'VISITAS',
+                data: acumu
+            }],
+            fill: {
+  colors: ['#1A73E8', '#B32824']
+},
+            xaxis: {
+                categories: nombres,
+
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                },
+                crosshairs: {
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            colorFrom: '#D8E3F0',
+                            colorTo: '#BED1E6',
+                            stops: [0, 100],
+                            opacityFrom: 0.4,
+                            opacityTo: 0.5,
+                        }
+                    }
+                },
+            },
+            grid: {
+                row: {
+                  colors: ['#fff', '#f2f2f2']
+                }
+            },
+            yaxis: {
+                labels: {
+                    show: true,
+                },
+                title: {
+                    text: 'N° Total Visitas'
+                }
+            },
+        }
+
+        var chartVisitaAcu = new ApexCharts(
+            document.querySelector("#chart_visitador_acu"),
+            optionsVisitaAcu
+        );
+
+        chartVisitaAcu.render();
 });
+
 
 </script>
 @endsection
