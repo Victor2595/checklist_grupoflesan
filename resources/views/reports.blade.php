@@ -127,23 +127,9 @@
                             <div id="reports_segui_visit" class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
                             <br class="hidden-md hidden-lg">
                                 <div class="row">
-                                <div class="col-md-12 text-left bg-dark text-white p-2 mb-3" style="font-size: 15px;">
-                                      <b>Seguimiento por Visitador</b>
-                                </div>
-                                    <div class="col col-md-4 col-lg-4 col-sm-12 col-xs-12 input-group input-group-sm">
-                                        <select id="combobox_semana" class="form-control" name="ano_semana" data-live-search="true">
-                                        @if(!empty($historicoVisitaWeek))
-                                            <option class=".d-print-none" value="{{ $año.'_'.$week }}">{{ $año.' Semana '.$week }}</option>
-                                            @foreach($historicoVisitaWeek as $historico)
-                                                @if($historico->clbod_semana <> $week)
-                                                <option value="{{ $historico->clbod_ano.'_'.$historico->clbod_semana }}">{{ $historico->clbod_ano.' Semana '.$historico->clbod_semana }}</option>
-                                                @endif
-                                            @endforeach
-                                        @else
-                                            <option  value="{{ $año.'_'.$week }}">{{ $año.' Semana '.$week }}</option>
-                                        @endif     
-                                        </select>
-                                    </div> 
+                                    <div class="col-md-12 text-left bg-dark text-white p-2 mb-3" style="font-size: 15px;">
+                                          <b>Seguimiento por Visitador</b>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">  
