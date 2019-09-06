@@ -18,7 +18,6 @@ class PreguntasController extends Controller
             $detalle = (object) array(
                 'id_cabecera' => $rl->clbod_preguntas_item_id,
                 'cabecera' => $rl->clbod_preguntas_nombre,
-                'tipo'=> $rl->clbod_preguntas_tipo,
                 'estado'=> $rl->clbod_preguntas_estado,
                 'hijo'=>  DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_item_padre = $rl->clbod_preguntas_item_id order by clbod_preguntas_item_id asc")
             );
@@ -38,7 +37,6 @@ class PreguntasController extends Controller
         
         if($request->inputId == 0){
             $preguntas->clbod_preguntas_item_padre = $request->inputId;
-            $preguntas->clbod_preguntas_tipo = $request->selectTipo;
             $preguntas->clbod_preguntas_nombre = $request->inputNombre;
             $preguntas->clbod_preguntas_usuario_creacion = auth()->user()->id_aplicacion_usuario;
             $preguntas->clbod_preguntas_fecha_creacion = $dia->format('d-m-y');
@@ -47,7 +45,6 @@ class PreguntasController extends Controller
         }else{
             $padre = Preguntas::where('clbod_preguntas_item_id',$request->inputId)->first();
             $preguntas->clbod_preguntas_item_padre = $request->inputId;
-            $preguntas->clbod_preguntas_tipo = $padre->clbod_preguntas_tipo;
             $preguntas->clbod_preguntas_nombre = $request->inputNombre;
             $preguntas->clbod_preguntas_usuario_creacion = auth()->user()->id_aplicacion_usuario;
             $preguntas->clbod_preguntas_fecha_creacion = $dia->format('d-m-y');

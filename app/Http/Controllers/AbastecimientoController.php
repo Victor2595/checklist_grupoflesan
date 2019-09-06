@@ -19,11 +19,11 @@ class AbastecimientoController extends Controller
             $email = auth()->user()->username;
             $perfil = auth()->user()->rol[0]->id_rol;
             $id_usuario = auth()->user()->id_aplicacion_usuario;
-        	$hoy = date('Y-m-d');
-        	$año = date('Y');
-        	$date = new DateTime($hoy);
-    		$week = $date->format("W");
-    		$week = $week - 1;
+            $hoy = date('Y-m-d');
+            $año = date('Y');
+            $date = new DateTime($hoy);
+            $week = $date->format("W");
+            $week = $week - 1;
          
             if($perfil != 10){
                 $condicional_semana  = " where clbod_create_user = '$id_usuario'";
@@ -31,8 +31,8 @@ class AbastecimientoController extends Controller
                 $condicional_semana  = " ";
             }
 
-        	$historicoCheckList = DB::select("select clbod_ano,clbod_semana from abastecimiento.clbod $condicional_semana GROUP BY clbod_ano,clbod_semana ORDER BY clbod_ano DESC,clbod_semana DESC");
-        	
+            $historicoCheckList = DB::select("select clbod_ano,clbod_semana from abastecimiento.clbod $condicional_semana GROUP BY clbod_ano,clbod_semana ORDER BY clbod_ano DESC,clbod_semana DESC");
+            
             $accesos_permitidos = DB::select('select * from abastecimiento.accesos_permitidos where username =\''.$email.'\'');       
             $roles = DB::select('select * from seguridadapp.rol_aplicacion where id_aplicacion=4');
             $obj_permitido = '';
@@ -145,10 +145,10 @@ class AbastecimientoController extends Controller
                     $bod->unidad_negocio = $array_proyec[$key_proyecto]->id_unidad_negocio;
                     $bod->obra = $array_proyec[$key_proyecto]->id_unidad_negocio.' - '.$array_proyec[$key_proyecto]->nombre_proyecto; 
                 }else{
-                	
+                    
                 }
             }
-            return view('principal',compact('week','año','historicoCheckList','rol','roles','perfil','tabla_bodega'));
+            return view('principal',compact('week','año','historicoCheckList','rol','roles','perfil','tabla_bodega','objetos'));
     }
 
     //BUSCAR CHECKLIST PANTALLA PRINCIPAL
@@ -338,15 +338,14 @@ class AbastecimientoController extends Controller
                 }
             }
 
-            $checklist_padre = DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_estado = 1 and clbod_preguntas_tipo = 1 and clbod_preguntas_item_padre = 0 order by clbod_preguntas_nombre asc");
+            $checklist_padre = DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_estado = 1 and clbod_preguntas_item_padre = 0 order by clbod_preguntas_nombre asc");
             
             foreach ($checklist_padre as $chk_p) {
                  $detalle = (object) array(
                     'id_cabecera' => $chk_p->clbod_preguntas_item_id,
                     'cabecera' => $chk_p->clbod_preguntas_nombre,
-                    'tipo'=> $chk_p->clbod_preguntas_tipo,
                     'estado'=> $chk_p->clbod_preguntas_estado,
-                    'hijo'=>  DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_estado = 1 and clbod_preguntas_tipo = 1 and clbod_preguntas_item_padre = $chk_p->clbod_preguntas_item_id order by clbod_preguntas_item_id asc")
+                    'hijo'=>  DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_estado = 1 and clbod_preguntas_item_padre = $chk_p->clbod_preguntas_item_id order by clbod_preguntas_item_id asc")
                 );
                 array_push($arreglo,$detalle);
             }
@@ -593,16 +592,15 @@ class AbastecimientoController extends Controller
 
              $checklist = DB::select("select clbod_create_user,clbod_create_date,clbod_cumplimiento,clbod_validate_user from abastecimiento.clbod i where clbod_obra_id='$id_obra' and clbod_semana=$semana and clbod_ano=$year and clbod_tipo = 1");
 
-            $checklist_padre = DB::select("select p.clbod_preguntas_item_id, p.clbod_preguntas_item_padre,clbod_preguntas_nombre,p.clbod_preguntas_estado, p.clbod_preguntas_tipo,r.clbod_item_cumple from abastecimiento.clbod_preguntas p left join( select clbod_preguntas_item_id,clbod_preguntas_item_padre,clbod_item_preguntas_id,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id and p.clbod_preguntas_item_padre = 0 where i.clbod_item_obra_id='$id_obra' and i.clbod_item_semana=$semana and i.clbod_item_ano = $year)r on r.clbod_preguntas_item_id = p.clbod_preguntas_item_id where p.clbod_preguntas_tipo = 1 and p.clbod_preguntas_item_padre = 0 and p.clbod_preguntas_estado = 1 order by p.clbod_preguntas_nombre asc");
+            $checklist_padre = DB::select("select p.clbod_preguntas_item_id, p.clbod_preguntas_item_padre,clbod_preguntas_nombre,p.clbod_preguntas_estado, r.clbod_item_cumple from abastecimiento.clbod_preguntas p left join( select clbod_preguntas_item_id,clbod_preguntas_item_padre,clbod_item_preguntas_id,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id and p.clbod_preguntas_item_padre = 0 where i.clbod_item_obra_id='$id_obra' and i.clbod_item_semana=$semana and i.clbod_item_ano = $year)r on r.clbod_preguntas_item_id = p.clbod_preguntas_item_id where  p.clbod_preguntas_item_padre = 0 and p.clbod_preguntas_estado = 1 order by p.clbod_preguntas_nombre asc");
 
              foreach ($checklist_padre as $chk_p) {
                  $detalle = (object) array(
                     'id_cabecera' => $chk_p->clbod_preguntas_item_id,
                     'cabecera' => $chk_p->clbod_preguntas_nombre,
-                    'tipo'=> $chk_p->clbod_preguntas_tipo,
                     'estado'=> $chk_p->clbod_preguntas_estado,
                     'value' => $chk_p->clbod_item_cumple,
-                    'hijo'=>  DB::select("select clbod_item_preguntas_id,clbod_preguntas_nombre,p.clbod_preguntas_item_padre,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id where clbod_item_obra_id='$id_obra' and clbod_item_semana=$semana and clbod_item_ano=$year and clbod_item_tipo = 1 and clbod_preguntas_item_padre = $chk_p->clbod_preguntas_item_id order by clbod_preguntas_item_id asc")
+                    'hijo'=>  DB::select("select clbod_item_preguntas_id,clbod_preguntas_nombre,p.clbod_preguntas_item_padre,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id where clbod_item_obra_id='$id_obra' and clbod_item_semana=$semana and clbod_item_ano=$year and clbod_preguntas_item_padre = $chk_p->clbod_preguntas_item_id order by clbod_preguntas_item_id asc")
                 );
                 array_push($arreglo,$detalle);
             }
@@ -666,15 +664,14 @@ class AbastecimientoController extends Controller
             abort('401');
         }
 
-        $checklist_padre = DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_estado = 1 and clbod_preguntas_tipo = 2 and clbod_preguntas_item_padre = 0 order by clbod_preguntas_nombre asc");
+        $checklist_padre = DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_estado = 1 and clbod_preguntas_item_padre = 0 order by clbod_preguntas_nombre asc");
         
         foreach ($checklist_padre as $chk_p) {
              $detalle = (object) array(
                 'id_cabecera' => $chk_p->clbod_preguntas_item_id,
                 'cabecera' => $chk_p->clbod_preguntas_nombre,
-                'tipo'=> $chk_p->clbod_preguntas_tipo,
                 'estado'=> $chk_p->clbod_preguntas_estado,
-                'hijo'=>  DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_estado = 1 and clbod_preguntas_tipo = 2 and clbod_preguntas_item_padre = $chk_p->clbod_preguntas_item_id order by clbod_preguntas_item_id asc")
+                'hijo'=>  DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_estado = 1 and clbod_preguntas_item_padre = $chk_p->clbod_preguntas_item_id order by clbod_preguntas_item_id asc")
             );
             array_push($arreglo,$detalle);
         }
@@ -738,6 +735,10 @@ class AbastecimientoController extends Controller
             $chk->clbod_ano = $año;
             $chk->clbod_create_date = $fecha_hoy;
             $chk->clbod_create_user = $user->id_aplicacion_usuario;
+            if(auth()->user()->rol[0]->id_rol == 10){
+                $chk->clbod_validate_date = $fecha_hoy;
+                $chk->clbod_validate_user = $user->id_aplicacion_usuario;
+            }
             $chk->save();
 
             $proyectos = DB::connection('pgsqlProye')->select("select * from ggo.ggo_proyecto where cod_proyecto='$obra'");
@@ -912,16 +913,15 @@ class AbastecimientoController extends Controller
 
              $checklist = DB::select("select clbod_create_user,clbod_create_date,clbod_cumplimiento,clbod_validate_user from abastecimiento.clbod i where clbod_obra_id='$id_obra' and clbod_semana=$semana and clbod_ano=$year and clbod_tipo = 2");
 
-            $checklist_padre = DB::select("select p.clbod_preguntas_item_id, p.clbod_preguntas_item_padre,clbod_preguntas_nombre,p.clbod_preguntas_estado, p.clbod_preguntas_tipo,r.clbod_item_cumple from abastecimiento.clbod_preguntas p left join( select clbod_preguntas_item_id,clbod_preguntas_item_padre,clbod_item_preguntas_id,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id and p.clbod_preguntas_item_padre = 0 where i.clbod_item_obra_id='$id_obra' and i.clbod_item_semana=$semana and i.clbod_item_ano = $year)r on r.clbod_preguntas_item_id = p.clbod_preguntas_item_id where p.clbod_preguntas_tipo = 2 and p.clbod_preguntas_item_padre = 0 and p.clbod_preguntas_estado = 1 order by p.clbod_preguntas_nombre asc");
+            $checklist_padre = DB::select("select p.clbod_preguntas_item_id, p.clbod_preguntas_item_padre,clbod_preguntas_nombre,p.clbod_preguntas_estado,r.clbod_item_cumple from abastecimiento.clbod_preguntas p left join( select clbod_preguntas_item_id,clbod_preguntas_item_padre,clbod_item_preguntas_id,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id and p.clbod_preguntas_item_padre = 0 where i.clbod_item_obra_id='$id_obra' and i.clbod_item_semana=$semana and i.clbod_item_ano = $year)r on r.clbod_preguntas_item_id = p.clbod_preguntas_item_id where  p.clbod_preguntas_item_padre = 0 and p.clbod_preguntas_estado = 1 order by p.clbod_preguntas_nombre asc");
 
              foreach ($checklist_padre as $chk_p) {
                  $detalle = (object) array(
                     'id_cabecera' => $chk_p->clbod_preguntas_item_id,
                     'cabecera' => $chk_p->clbod_preguntas_nombre,
-                    'tipo'=> $chk_p->clbod_preguntas_tipo,
                     'estado'=> $chk_p->clbod_preguntas_estado,
                     'value' => $chk_p->clbod_item_cumple,
-                    'hijo'=>  DB::select("select clbod_item_preguntas_id,clbod_preguntas_nombre,p.clbod_preguntas_item_padre,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id where clbod_item_obra_id='$id_obra' and clbod_item_semana=$semana and clbod_item_ano=$year and clbod_item_tipo = 2 and clbod_preguntas_item_padre = $chk_p->clbod_preguntas_item_id order by clbod_preguntas_item_id asc")
+                    'hijo'=>  DB::select("select clbod_item_preguntas_id,clbod_preguntas_nombre,p.clbod_preguntas_item_padre,clbod_item_cumple from abastecimiento.clbod_item i inner join abastecimiento.clbod_preguntas p on p.clbod_preguntas_item_id = i.clbod_item_preguntas_id where clbod_item_obra_id='$id_obra' and clbod_item_semana=$semana and clbod_item_ano=$year and clbod_preguntas_item_padre = $chk_p->clbod_preguntas_item_id order by clbod_preguntas_item_id asc")
                 );
                 array_push($arreglo,$detalle);
             }

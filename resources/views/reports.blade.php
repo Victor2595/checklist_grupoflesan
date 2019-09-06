@@ -180,8 +180,25 @@
                                                             <td>{{ $table->clbod_obra_id }}</td>
                                                             <td>{{ $table->nombre_proyecto }}</td>
                                                             <td>{{ $table->clbod_semana.' - '.$table->clbod_ano }}</td>
-                                                            <td><?php echo (!empty($table->almacen))?'<a class="btn btn-sm text-left text-white btn-success mr-1" title="Validado"><i class="glyphicon glyphicon-ok"></i></a>':'<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>'?></td>
-                                                            <td><?php echo (!empty($table->visita))?'<a class="btn btn-sm text-left text-white btn-success mr-1" title="Validado"><i class="glyphicon glyphicon-ok"></i></a>':'<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>'?></td>
+                                                            <?php 
+                                                                if($table->almacen == 'no_existe'){
+                                                                    $text_alm = '';
+                                                                }else if($table->almacen == 'pendiente'){
+                                                                    $text_alm = '<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>';
+                                                                }else{
+                                                                    $text_alm = '<a class="btn btn-sm text-left text-white btn-success mr-1" title="VALIDADO"><i class="glyphicon glyphicon-ok"></i></a>';
+                                                                }
+
+                                                                if($table->visita == 'no_existe'){
+                                                                    $text_visi = '';
+                                                                }else if($table->visita == 'pendiente'){
+                                                                    $text_visi = '<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>';
+                                                                }else{
+                                                                    $text_visi = '<a class="btn btn-sm text-left text-white btn-success mr-1" title="VALIDADO"><i class="glyphicon glyphicon-ok"></i></a>';
+                                                                }
+                                                            ?>
+                                                            <td><?php echo $text_alm ?></td>
+                                                            <td><?php echo $text_visi ?></td>
                                                         </tr>
                                                         @endforeach
                                                     </tbody>

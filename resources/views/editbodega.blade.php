@@ -134,7 +134,7 @@
                                         <?php $contador++; ?>
                                             @endforeach
                                             @else
-                                                <td><input data-id="<?php echo $tbl_p->id_cabecera ?>" readonly="true" type="number" min="0" max="100" step=".01" name="rev[<?php echo $tbl_p->id_cabecera ?>]" disabled id="{{ $tbl_p->id_cabecera }}" value="{{ $tbl_p->value }}" class="form-control req id-question"><small>Debe ingresar el porcentaje sin <b>%</b> y el separador decimal con <b>.</b></small></td>
+                                                <td><input data-id="<?php echo $tbl_p->id_cabecera ?>" readonly="true" type="number" min="1" max="5"  name="rev[<?php echo $tbl_p->id_cabecera ?>]" disabled id="{{ $tbl_p->id_cabecera }}" value="{{ $tbl_p->value }}" class="form-control req id-question"></td>
                                             @endif
                                         </tr>
                                         @endforeach

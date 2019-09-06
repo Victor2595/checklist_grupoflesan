@@ -26,9 +26,11 @@
                                         <small style="margin-top: .9em;text-transform: uppercase;display: block;font-weight: bold;">{{ $rol }}</small>
                                     </div>-->
                                     @if($perfil == 11)
-                                    <a class="btn btn-sm btn-default" href="{{ route('almacen') }}"><i class="glyphicon glyphicon-plus"></i> Almacén</a>
+                                        @if(count($objetos) != count($tabla_bodega))
+                                        <a class="btn btn-sm btn-default" href="{{ route('almacen') }}"><i class="glyphicon glyphicon-plus"></i> Almacén</a>
+                                        @endif
                                     @endif
-                                    @if($perfil == 12)
+                                    @if($perfil != 11)
                                     <a class="btn btn-sm btn-default" href="{{ route('visita') }}"><i class="glyphicon glyphicon-plus"></i> Visita</a>
                                     @endif
                                                  

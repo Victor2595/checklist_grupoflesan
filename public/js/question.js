@@ -25,18 +25,8 @@ $( document ).ready(function() {
             success: function(response)
             {
                 $('#modal_ajax .modal-body').html(response);
-                $("#selectTipo").val(pregunta);
-                if(pregunta != undefined){
-                  $("#selectTipo").addClass('hidden');
-                  $("#labelTipo").addClass('hidden');
-                }
+                console.log(pregunta);
                 $('#inputId').val(idPadre);
-                if(tipo != ''){
-                  $("#selectTipo").prop('disabled',true);
-                  $("#selectTipo").val(tipo);
-                }else{
-                  $("#selectTipo").removeAttr('readonly');
-                }
             }
         });
     });
