@@ -85,8 +85,8 @@
                                             <tr>
                                                 <td style="text-align: left;" ><b><?php echo $contador.'. ' ?></b>{{ $tbl_h->clbod_preguntas_nombre }}</td>
                                                 <td>
-                                                    <select data-id="<?php echo $tbl_h->clbod_preguntas_item_id ?>" name="rev[<?php echo $tbl_h->clbod_preguntas_item_id ?>]" id="{{ $tbl_h->clbod_preguntas_item_id }}" class="form-control id-question"  >
-                                                        <option value="S" >SI</option>
+                                                    <select data-id="<?php echo $tbl_h->clbod_preguntas_item_id ?>" name="rev[<?php echo $tbl_h->clbod_preguntas_item_id ?>]" id="{{ $tbl_h->clbod_preguntas_item_id }}" class="form-control id-question select-preg"  >
+                                                        <option value="S" >SI</option> 
                                                         <option value="N" >NO</option>
                                                     </select>
                                                 </td>
@@ -94,7 +94,7 @@
                                         <?php $contador++; ?>
                                             @endforeach
                                             @else
-                                                <td><input type="number" name="rev[<?php echo $tbl_p->id_cabecera ?>]" id="{{ $tbl_p->id_cabecera }}" required="true" class="form-control req id-question" data-id="<?php echo $tbl_p->id_cabecera ?>" value="" min="1" max="5"></td>
+                                                <td><input type="number" name="rev[<?php echo $tbl_p->id_cabecera ?>]" id="{{ $tbl_p->id_cabecera }}" required="true" class="form-control req id-question select-input" readonly="true" data-id="<?php echo $tbl_p->id_cabecera ?>" value="" min="1" max="5"></td>
                                             @endif
                                         </tr>
                                         @endforeach
@@ -120,7 +120,7 @@
               <div class="modal-body" id="contenedor_validacion" style="max-height: 71vh;overflow-y: auto;overflow-x: hidden;">
               </div>            
           </div>
-        </div>
+        </div>hasClass
     </div>
 </section>
 @endsection
@@ -129,9 +129,39 @@
 <script>
 $('#comboObra').selectpicker();
 
+$(".select-preg").change(function() {
+    var total_sl = $('.select-preg').length;
+    var total_sl_s = 0;
+    var total_sl_n = 0;    
+    $(".select-preg").each(function(){
+        if ($('option:selected',this).val() == 'S') {
+            total_sl_s++;
+        }else if ($('option:selected',this).val() == 'N'){
+            total_sl_n++; 
+        }
+    })
+    var ponderado = 0;
+    var porcen_tot = total_sl_s * 100/total_sl;
+    if(porcen_tot <= 20 && porcen_tot >=0){
+        ponderado = 1;
+    }else if(porcen_tot <= 50 && porcen_tot >20){
+        ponderado = 2;
+    }else if(porcen_tot <= 70 && porcen_tot >50){
+        ponderado = 3;
+    }else if(porcen_tot <= 90 && porcen_tot >70){
+        ponderado = 4;
+    }else if(porcen_tot <= 1000 && porcen_tot >90){
+        ponderado = 5;
+    }
+    var ubicacion_total = $('.select-input').attr('id');
+    $('#'+ubicacion_total).val(ponderado);
+});
+
 $(document).ready(function () {
     $(".preloader-wrapper").removeClass('active');
     $("#nav-ad").addClass('menu-active');
+    var ubicacion_total = $('.select-input').attr('id');
+    $('#'+ubicacion_total).val(5);
     $('#form_bodega').bind("submit",function(e) {
         e.preventDefault();
         var formData = new FormData(this);

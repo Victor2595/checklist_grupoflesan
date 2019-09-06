@@ -13,13 +13,13 @@ class PreguntasController extends Controller
 {
 	public function generateQuestions(){
         $arreglo = array();
-        $tabla_padre = DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_item_padre = 0 order by clbod_preguntas_item_id asc");
+        $tabla_padre = DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_item_padre = 0  and clbod_preguntas_estado = 1 order by clbod_preguntas_nombre asc");
         foreach ($tabla_padre as $rl) {
             $detalle = (object) array(
                 'id_cabecera' => $rl->clbod_preguntas_item_id,
                 'cabecera' => $rl->clbod_preguntas_nombre,
                 'estado'=> $rl->clbod_preguntas_estado,
-                'hijo'=>  DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_item_padre = $rl->clbod_preguntas_item_id order by clbod_preguntas_item_id asc")
+                'hijo'=>  DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_item_padre = $rl->clbod_preguntas_item_id and clbod_preguntas_estado = 1 order by clbod_preguntas_item_id asc")
             );
             array_push($arreglo,$detalle);
         }

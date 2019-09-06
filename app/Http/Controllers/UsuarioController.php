@@ -30,7 +30,7 @@ class UsuarioController extends Controller
         $empresa = json_decode($response->getBody( )->getContents());
         $response1 = $client->request('GET','unidades_negocio');
         $unidades_negocio = json_decode($response1->getBody( )->getContents());
-        $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto');
+        $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto where es_vigente = 1 order by id_unidad_negocio asc');
         foreach($proyectos as $pry){
             if($pry->id_unidad_negocio == '0004'){
                 $pry->id_unidad_negocio = 'DVC';
@@ -128,7 +128,7 @@ class UsuarioController extends Controller
             }else{
                 $obj_permitido = '0';
             }
-            $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto');
+            $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto where es_vigente = 1 order by id_unidad_negocio asc');
             foreach($proyectos as $pry){
                 if($pry->id_unidad_negocio == '0004'){
                     $pry->id_unidad_negocio = 'DVC';

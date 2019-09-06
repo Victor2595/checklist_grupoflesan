@@ -25,7 +25,6 @@ $( document ).ready(function() {
             success: function(response)
             {
                 $('#modal_ajax .modal-body').html(response);
-                console.log(pregunta);
                 $('#inputId').val(idPadre);
             }
         });

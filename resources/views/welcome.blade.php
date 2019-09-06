@@ -57,7 +57,7 @@
                                         <a href="{{ url('auth/google') }}" class="btn btn-primary" style="font-family: Open Sans Light,Open Sans,arial;">
                                             <i class="fab fa-google text-danger" style="background: white;padding: 5px; border-radius: 3px;"></i> Sign in with Google
                                         </a>
-                                        <div style="margin: auto; margin-top:5px; font-size: 12px; border-radius: 10px;" class="col-lg-6 p-3 mb-2 bg-secondary text-white"><i class="fab fa-chrome"></i> Sistema optimizado para navegador Google Chrome.</div>
+                                        <div style="margin: auto; margin-top:5px; font-size: 12px; border-radius: 10px;" class="col-lg-9 p-3 mb-2 bg-secondary text-white"><i class="fab fa-chrome"></i> Sistema optimizado para navegador Google Chrome.</div>
                                     </div>
                                 </div>
                             </div>    
@@ -66,9 +66,9 @@
                     <div class="col-sm-12 text-center" style="top: -60px;">
                         <img src="{{ asset('img/logo_blanco_flesan_grupo.png') }}" class="logo_grupo_flesan" alt="grupo_flesan">
                     </div>
-                    <div class="col-sm-12 text-center" style="top: -60px;">
+                    <!--<div class="col-sm-12 text-center" style="top: -60px;">
                         <img   class="rounded mx-auto d-block" src="{{ asset('img/logos_fdvc.png') }}" > 
-                    </div>
+                    </div>-->
                 </div>
             </div>
          </div>

@@ -49,7 +49,7 @@
             <section id="contact" class="section-bg wow">
                 <div class="container">
                     <header class="section-header">
-                        <h3>Reportes - logística</h3>
+                        <h3>Reportes - CheckList</h3>
                     </header>
                     <br>    
                     <form id="change_semana" method="POST" >
@@ -194,7 +194,7 @@
                                                                 }else if($table->visita == 'pendiente'){
                                                                     $text_visi = '<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>';
                                                                 }else{
-                                                                    $text_visi = '<a class="btn btn-sm text-left text-white btn-success mr-1" title="VALIDADO"><i class="glyphicon glyphicon-ok"></i></a>';
+                                                                    $text_visi = '<a class="btn btn-sm text-left text-white btn-primary mr-1" title="VALIDADO"><i class="glyphicon glyphicon-ok"></i></a>';
                                                                 }
                                                             ?>
                                                             <td><?php echo $text_alm ?></td>
@@ -228,6 +228,7 @@ $('select').selectpicker();
 $(document).ready(function () {
     $(".preloader-wrapper").removeClass('active');
     id_combo = $("#combobox_semana").val();
+    var colors = ['#5b9bd5','#808080','#ffd966','#333f4f','#548235','#c65911'];
     $("#combobox_semana" ).change(function() {
         id_combo = $("#combobox_semana").val();
         function esSuficientementeGrande(elemento) {
@@ -314,7 +315,7 @@ $(document).ready(function () {
                     height: 350,
                     type: 'bar',
                 },
-                colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
+                colors:colors,
                 plotOptions: {
                     bar: {
                         horizontal: false,
@@ -528,7 +529,7 @@ console.log(Coleccion[tipo_dato]);
                       enabled: false
                     }
                 },
-                colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
+                colors:colors,
                 dataLabels: {
                     enabled: true,
                 },
@@ -600,7 +601,7 @@ console.log(Coleccion[tipo_dato]);
                       color:  '#263238',
                     },
                 },
-                colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
+                colors:colors,
                 plotOptions: {
                     radialBar: {
                         offsetY: -10,
@@ -748,7 +749,7 @@ console.log(Coleccion[tipo_dato]);
                 text: 'N° Visitas Semanales',
                 align: 'center',
             },   
-            colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
+            colors:colors,
             dataLabels: {
                 enabled: true,
                 formatter: function (val, opts) {
@@ -814,7 +815,7 @@ console.log(Coleccion[tipo_dato]);
                 text: 'N° Total Visitas',
                 align: 'center',
             },
-            colors: ['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
+            colors: colors,
             dataLabels: {
                 enabled: true,
                 formatter: function (val) {
@@ -832,7 +833,7 @@ console.log(Coleccion[tipo_dato]);
                 categories: nombres,
                 labels: {
                     style: {
-                        colors: ['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
+                        colors: colors,
                         fontSize: '14px'
                     }
                 }

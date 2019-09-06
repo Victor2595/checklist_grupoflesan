@@ -261,7 +261,7 @@ class AbastecimientoController extends Controller
             $objetos = array();
 
             if(auth()->user()->rol[0]->id_rol == 10){
-                $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto');
+                $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto where es_vigente = 1 order by id_unidad_negocio asc');
                 foreach($proyectos as $pry){
                     if($pry->id_unidad_negocio == '0004'){
                         $pry->id_unidad_negocio = 'DVC';
@@ -319,7 +319,7 @@ class AbastecimientoController extends Controller
                         }
                     }
                 }else{
-                    $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto');
+                    $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto where es_vigente = 1');
                     foreach($proyectos as $pry){
                         if($pry->id_unidad_negocio == '0004'){
                             $pry->id_unidad_negocio = 'DVC';
@@ -626,7 +626,7 @@ class AbastecimientoController extends Controller
         $proyectos_realizados = DB::select("select clbod_obra_id from abastecimiento.clbod where clbod_semana = $week and clbod_ano = $año and clbod_tipo = 2");
 
         if(auth()->user()->rol[0]->id_rol == 10){
-            $proyectos = DB::connection('pgsqlProye')->select("select * from ggo.ggo_proyecto");
+            $proyectos = DB::connection('pgsqlProye')->select("select * from ggo.ggo_proyecto where es_vigente = 1 order by id_unidad_negocio asc");
             foreach($proyectos as $pry){
                 if($pry->id_unidad_negocio == '0004'){
                     $pry->id_unidad_negocio = 'DVC';
@@ -643,7 +643,7 @@ class AbastecimientoController extends Controller
                 }
             }
         }else if(auth()->user()->rol[0]->id_rol == 12){
-            $proyectos = DB::connection('pgsqlProye')->select("select * from ggo.ggo_proyecto");
+            $proyectos = DB::connection('pgsqlProye')->select("select * from ggo.ggo_proyecto where es_vigente = 1 order by id_unidad_negocio asc");
             foreach($proyectos as $pry){
                 if($pry->id_unidad_negocio == '0004'){
                     $pry->id_unidad_negocio = 'DVC';
