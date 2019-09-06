@@ -314,7 +314,7 @@ $(document).ready(function () {
                     height: 350,
                     type: 'bar',
                 },
-                colors:['#CA482F', '#0584A5'],
+                colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
                 plotOptions: {
                     bar: {
                         horizontal: false,
@@ -326,11 +326,6 @@ $(document).ready(function () {
                     formatter: function (val, opts) {
                         return val + "%"
                     },
-                },
-                stroke: {
-                    show: false,
-                    width: 1,
-                    colors: ['transparent']
                 },
                 series: [{
                     name: 'ALMACEN',
@@ -347,10 +342,6 @@ $(document).ready(function () {
                     title: {
                         text: '% Cumplimiento'
                     }
-                },
-                fill: {
-                    opacity: 1
-
                 },
                 tooltip: {
                     y: {
@@ -380,12 +371,16 @@ $(document).ready(function () {
             if(result2 != null){
                 var almac2 =[];
                 $.each(result2,function(x, item){
-                    almac2.push(parseFloat(item.ALMACEN));
+                    if(item.ALMACEN !=null){
+                        almac2.push(parseFloat(item.ALMACEN));
+                    }
                 });
 
                 var visit2 =[];
                 $.each(result2, function( x, item ) {
-                  visit2.push(parseFloat(item.VISITA));
+                    if(item.VISITA !=null){
+                        visit2.push(parseFloat(item.VISITA));
+                    }
                 });
 
                 var seman2 =[];
@@ -464,16 +459,20 @@ $(document).ready(function () {
         }
 
         const result2 = Coleccion[tipo_dato].filter(esSuficientemente);
-
+console.log(Coleccion[tipo_dato]);
         if(result2 != null){
             var almac2 =[];
             $.each(result2,function(x, item){
-                almac2.push(parseFloat(item.ALMACEN));
+                if(item.ALMACEN !=null){
+                    almac2.push(parseFloat(item.ALMACEN));
+                }
             });
 
             var visit2 =[];
             $.each(result2, function( x, item ) {
-              visit2.push(parseFloat(item.VISITA));
+                if(item.VISITA !=null){
+                    visit2.push(parseFloat(item.VISITA));
+                }
             });
 
             var seman2 =[];
@@ -506,6 +505,9 @@ $(document).ready(function () {
                 visit_redo.push(0);
             }
 
+            console.log(almac2);
+            console.log(visit2)
+
 
             var options2 = {
                 chart: {
@@ -526,7 +528,7 @@ $(document).ready(function () {
                       enabled: false
                     }
                 },
-                colors:['#CA482F', '#0584A5'],
+                colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
                 dataLabels: {
                     enabled: true,
                 },
@@ -598,7 +600,7 @@ $(document).ready(function () {
                       color:  '#263238',
                     },
                 },
-                colors:['#CA482F', '#0584A5'],
+                colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
                 plotOptions: {
                     radialBar: {
                         offsetY: -10,
@@ -748,7 +750,10 @@ $(document).ready(function () {
             },   
             colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
             dataLabels: {
-                enabled: false
+                enabled: true,
+                formatter: function (val, opts) {
+                    return val
+                },
             },
             stroke: {
                 show: true,
@@ -759,10 +764,7 @@ $(document).ready(function () {
             xaxis: {
                 categories: fecha_visi,
             },
-            fill: {
-                opacity: 1
-
-            },
+            
             tooltip: {
                 y: {
                     formatter: function (val) {
@@ -805,14 +807,14 @@ $(document).ready(function () {
                 bar: {
                     horizontal: false,
                     columnWidth: '55%',
+                    distributed: true
                 }
             },
             title:{
                 text: 'N° Total Visitas',
                 align: 'center',
-            }
-            ,
-            colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
+            },
+            colors: ['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
             dataLabels: {
                 enabled: true,
                 formatter: function (val) {
@@ -823,36 +825,18 @@ $(document).ready(function () {
                     colors: ["#ffffff"]
                 }
             },
-            series: visit,
-            fill: {
-              colors:['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
-            },
+            series: [{
+                name: 'Total',
+                data: acumu }],
             xaxis: {
-                categories: ['TOTAL'],
-
-                axisBorder: {
-                    show: false
-                },
-                axisTicks: {
-                    show: false
-                },
-                crosshairs: {
-                    fill: {
-                        type: 'gradient',
-                        gradient: {
-                            colorFrom: '#D8E3F0',
-                            colorTo: '#BED1E6',
-                            stops: [0, 100],
-                            opacityFrom: 0.4,
-                            opacityTo: 0.5,
-                        }
+                categories: nombres,
+                labels: {
+                    style: {
+                        colors: ['#CA482F', '#0584A5','#6F4E79','#F6C85F','#9DD867'],
+                        fontSize: '14px'
                     }
-                },
-            },
-            grid: {
-                row: {
-                  colors: ['#fff', '#f2f2f2']
                 }
+           
             }
         }
 

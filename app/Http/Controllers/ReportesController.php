@@ -33,7 +33,7 @@ class ReportesController extends Controller
 
 		$segui_visit = DB::select("select u.name,clbod_semana||'-'||clbod_ano as fecha,count(clbod_semana)numero from abastecimiento.clbod b inner join seguridadapp.aplicacion_usuario u on u.id_aplicacion_usuario = CAST(b.clbod_create_user as integer) inner join ggo.ggo_proyecto p on trim(p.cod_proyecto) = b.clbod_obra_id where b.clbod_tipo = 2 group by u.name,clbod_semana,clbod_ano order by b.clbod_semana asc");
 
-		$segui_visit_acu = DB::select("select u.name,count(clbod_semana)numero from abastecimiento.clbod b inner join seguridadapp.aplicacion_usuario u on u.id_aplicacion_usuario = CAST(b.clbod_create_user as integer) inner join ggo.ggo_proyecto p on trim(p.cod_proyecto) = b.clbod_obra_id where b.clbod_tipo = 2 group by u.name");
+		$segui_visit_acu = DB::select("select u.name,count(clbod_semana)numero from abastecimiento.clbod b inner join seguridadapp.aplicacion_usuario u on u.id_aplicacion_usuario = CAST(b.clbod_create_user as integer) inner join ggo.ggo_proyecto p on trim(p.cod_proyecto) = b.clbod_obra_id where b.clbod_tipo = 2 group by u.name order by u.name");
 		//print(json_encode($tabla_visita));
         return view('reports',compact('año','historicoCheckList','week','reporte_seguimiento','historicoProy','historicoVisitaWeek','tabla_visita','segui_visit','segui_visit_acu'));
     }
