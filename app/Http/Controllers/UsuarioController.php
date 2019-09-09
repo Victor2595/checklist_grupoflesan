@@ -71,7 +71,8 @@ class UsuarioController extends Controller
                 $proyectos = array_values($proyectos);
             }
         }
-        return view('usuarios/addNew',compact('perfil','empresa','unidades_negocio','proyectos','array_cod'));
+        print(json_encode($array_cod));
+        //return view('usuarios/addNew',compact('perfil','empresa','unidades_negocio','proyectos','array_cod'));
     }
 
     public function setEstado($id){
