@@ -8,10 +8,7 @@
               font-family: Roboto, sans-serif;
             }
 
-            #chart {
-              max-width: 650px;
-              margin: 35px auto;
-            }
+            
         </style>
 @endsection
 
