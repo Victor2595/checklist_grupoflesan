@@ -20,7 +20,7 @@
                     </header>
                     <br>    
                     <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
-                        <thead class="thead-dark hidden-xs hidden-sm">
+                        <thead class="thead-dark">
                           <tr>
                             <th scope="col" class="text-center">Obra</th>
                             <th scope="col" class="text-center">Correo</th>
@@ -29,7 +29,7 @@
                             <th scope="col" class="text-center">Acción</th>     
                           </tr>
                         </thead>
-                        <tbody class="hidden-xs hidden-sm">
+                        <tbody>
                             @foreach($table_usuario as $table) 
                                 <?php $array_obj = explode(';', $table->objeto_permitido);
                                     $obj_permitido = '';
