@@ -63,11 +63,11 @@ class UsuarioController extends Controller
             if ($codigos != '') {
                 $array_cod = explode(";",substr($codigos,0,-1));
             }
-            foreach($array_cod as $cod){
-                $en_uso = array_search($cod, array_column($proyectos, 'cod_proyecto'));
-                unset($proyectos[$en_uso]);
-                $proyectos = array_values($proyectos);
-            }
+        }
+        foreach($array_cod as $cod){
+            $en_uso = array_search($cod, array_column($proyectos, 'cod_proyecto'));
+            unset($proyectos[$en_uso]);
+            $proyectos = array_values($proyectos);
         }
         return view('usuarios/addNew',compact('perfil','empresa','unidades_negocio','proyectos','array_cod'));
     }
