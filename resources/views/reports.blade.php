@@ -312,6 +312,32 @@ $(document).ready(function () {
                     height: 350,
                     type: 'bar',
                 },
+                annotations: {
+                  yaxis: [{
+                    y: 71,
+                    borderColor: '#dd4b39',
+                    label: {
+                      show: true,
+                      text: '71',
+                      style: {
+                        color: "#fff",
+                        background: '#dd4b39'
+                      }
+                    }
+                  },
+                  {
+                    y: 93,
+                    borderColor: '#f39c12',
+                    label: {
+                      show: true,
+                      text: '93',
+                      style: {
+                        color: "#fff",
+                        background: '#f39c12'
+                      }
+                    }
+                  }]
+                },
                 colors:colors,
                 plotOptions: {
                     bar: {
@@ -508,6 +534,32 @@ console.log(Coleccion[tipo_dato]);
 
 
             var options2 = {
+                annotations: {
+                  yaxis: [{
+                    y: 71,
+                    borderColor: '#dd4b39',
+                    label: {
+                      show: true,
+                      text: '71',
+                      style: {
+                        color: "#fff",
+                        background: '#dd4b39'
+                      }
+                    }
+                  },
+                  {
+                    y: 93,
+                    borderColor: '#f39c12',
+                    label: {
+                      show: true,
+                      text: '93',
+                      style: {
+                        color: "#fff",
+                        background: '#f39c12'
+                      }
+                    }
+                  }]
+                },
                 chart: {
                     height: 350,
                     type: 'line',
