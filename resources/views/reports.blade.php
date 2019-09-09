@@ -177,25 +177,24 @@
                                                             <td>{{ $table->clbod_obra_id }}</td>
                                                             <td>{{ $table->nombre_proyecto }}</td>
                                                             <td>{{ $table->clbod_semana.' - '.$table->clbod_ano }}</td>
-                                                            <?php 
-                                                                if($table->almacen == 'no_existe'){
-                                                                    $text_alm = '';
-                                                                }else if($table->almacen == 'pendiente'){
-                                                                    $text_alm = '<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>';
-                                                                }else{
-                                                                    $text_alm = '<a class="btn btn-sm text-left text-white btn-success mr-1" title="VALIDADO"><i class="glyphicon glyphicon-ok"></i></a>';
-                                                                }
-
-                                                                if($table->visita == 'no_existe'){
-                                                                    $text_visi = '';
-                                                                }else if($table->visita == 'pendiente'){
-                                                                    $text_visi = '<a class="btn btn-sm text-left text-white btn-danger mr-1" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>';
-                                                                }else{
-                                                                    $text_visi = '<a class="btn btn-sm text-left text-white btn-primary mr-1" title="VALIDADO"><i class="glyphicon glyphicon-ok"></i></a>';
-                                                                }
-                                                            ?>
-                                                            <td><?php echo $text_alm ?></td>
-                                                            <td><?php echo $text_visi ?></td>
+                                                            <td <?php if($table->almacen == 'no_existe') echo 'class="text-danger"' ?>>
+                                                                @if($table->almacen == 'no_existe')
+                                                                    <b>Pendiente de CheckList</b>
+                                                                @elseif($table->almacen == 'pendiente')
+                                                                    <a class="btn btn-sm text-left text-white btn-warning mr-1" href="{{ URL::route('editOldAlmacen',['id' => $table->clbod_obra_id,'week'=> $table->clbod_semana,'año'=> $table->clbod_ano]) }}" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                                                                @else
+                                                                    <a class="btn btn-sm text-left text-white btn-primary mr-1" title="VALIDADO"><i class="glyphicon glyphicon-ok"></i></a>
+                                                                @endif
+                                                            </td>
+                                                            <td <?php if($table->visita == 'no_existe') echo 'class="text-danger"' ?>>
+                                                                @if($table->visita == 'no_existe')
+                                                                    <b>Pendiente de CheckList</b>
+                                                                @elseif($table->visita == 'pendiente')
+                                                                    <a class="btn btn-sm text-left text-white btn-warning mr-1" href="{{ URL::route('editOldVisita',['id' => $table->clbod_obra_id,'week'=> $table->clbod_semana,'año'=> $table->clbod_ano]) }}" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                                                                @else
+                                                                    <a class="btn btn-sm text-left text-white btn-primary mr-1" title="VALIDADO"><i class="glyphicon glyphicon-ok"></i></a>
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                         @endforeach
                                                     </tbody>
@@ -358,9 +357,14 @@ $(document).ready(function () {
                     name: 'VISITA',
                     data: visit
                 }],
+                legend: {
+                    show: true,
+                    position: 'top',
+                },
                 xaxis: {
                     categories: proy,
                     tickAmount: 0,
+
                 },
                 yaxis: {
                     title: {
@@ -534,6 +538,24 @@ console.log(Coleccion[tipo_dato]);
 
 
             var options2 = {
+                chart: {
+                    height: 350,
+                    type: 'line',
+                    shadow: {
+                        enabled: true,
+                        color: '#000',
+                        top: 18,
+                        left: 7,
+                        blur: 10,
+                        opacity: 1
+                    },
+                    toolbar: {
+                        show: true
+                    },
+                    zoom: {
+                      enabled: false
+                    }
+                },
                 annotations: {
                   yaxis: [{
                     y: 71,
@@ -560,23 +582,9 @@ console.log(Coleccion[tipo_dato]);
                     }
                   }]
                 },
-                chart: {
-                    height: 350,
-                    type: 'line',
-                    shadow: {
-                        enabled: true,
-                        color: '#000',
-                        top: 18,
-                        left: 7,
-                        blur: 10,
-                        opacity: 1
-                    },
-                    toolbar: {
-                        show: true
-                    },
-                    zoom: {
-                      enabled: false
-                    }
+                legend: {
+                    show: true,
+                    position: 'top',
                 },
                 colors:colors,
                 dataLabels: {
@@ -623,9 +631,6 @@ console.log(Coleccion[tipo_dato]);
                     min: 0,
                     max: 110               
                 },
-                legend: {
-                    show: true
-                }
             }
 
             var chart2 = new ApexCharts(
@@ -805,6 +810,10 @@ console.log(Coleccion[tipo_dato]);
                     return val
                 },
             },
+            legend: {
+                    show: true,
+                    position: 'top',
+                },
             stroke: {
                 show: true,
                 width: 2,
