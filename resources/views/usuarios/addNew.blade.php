@@ -61,9 +61,12 @@
         <div class="section-select hidden">
             <select id="selectObra" name="selectObra[]" class="form-control"  multiple="multiple">
             @foreach($proyectos as $proy)
-                @if(array_search($proy->cod_proyecto, $array_cod)==false)
-                
-                <option style="font-size: 90%;text-transform: uppercase;" value="{{ trim($proy->cod_proyecto) }}">{{ $proy->id_unidad_negocio }} - {{ strtoupper($proy->nombre_proyecto) }}</option>
+                @if(!empty($array_cod))
+                    @if(array_search($proy->cod_proyecto, $array_cod)==false)
+                    <option style="font-size: 90%;text-transform: uppercase;" value="{{ trim($proy->cod_proyecto) }}">{{ $proy->id_unidad_negocio }} - {{ strtoupper($proy->nombre_proyecto) }}</option>
+                    @endif
+                @else
+                    <option style="font-size: 90%;text-transform: uppercase;" value="{{ trim($proy->cod_proyecto) }}">{{ $proy->id_unidad_negocio }} - {{ strtoupper($proy->nombre_proyecto) }}</option>
                 @endif
             @endforeach
             </select>
