@@ -360,8 +360,13 @@ class AbastecimientoController extends Controller
     public function verificateWeekB(Request $request){
         if(auth()->user()->rol[0]->id_rol != 12){
             $obra = $request->comboObra;
-
-            $verificate = Checklist_Bodega::where('clbod_obra_id',$obra)->where('clbod_tipo',1)->first();
+            $week = $request->semana;
+            $año = $request->año;
+            $verificate = Checklist_Bodega::where('clbod_obra_id',$obra)
+                ->where('clbod_tipo',1)
+                ->where('clbod_semana',$week)
+                ->where('clbod_ano',$año)
+                ->first();
             return $verificate;
         }else{
             abort('401');
@@ -493,21 +498,10 @@ class AbastecimientoController extends Controller
             $porcentaje_total = 0;
             foreach ($array_item as $key) {
                 if($key == 'S' || $key == 'N'){
-                    $porcen = 0.75;
+                    $porcen = 1;
                     if($key == 'S'){
                         $porcent_ind = round((($porcen / $preguntas_select)*100),2);
                     }else if($key == 'N'){
-                        $porcent_ind = 0;
-                    }
-                }else{
-                    $porcen = 0.25;
-                    if($key == null){
-                        $key = 0;
-                    }
-
-                    if($key < 5){
-                        $porcent_ind = round((($porcen / $preguntas_input)*100),2);
-                    }else{
                         $porcent_ind = 0;
                     }
                 }
@@ -545,9 +539,62 @@ class AbastecimientoController extends Controller
             $email = auth()->user()->id_aplicacion_usuario;
             $obra = $request->obra_id;
             $week = $request->week;
+            $id_usuario = auth()->user()->id_aplicacion_usuario;
             $año = $request->year;
             $dia = new DateTime();
             $fecha_hoy = $dia->format('d-m-Y');
+            $array_item = $request->rev;
+
+            $buenas = 0;
+            $preguntas_input = 0;
+            $preguntas_select = 0;
+
+            foreach($array_item as $rev){
+                if($rev == 'S' || $rev == 'N'){
+                    $preguntas_select++;
+                }else{
+                    $preguntas_input++;
+                }
+            }
+            $preguntas_totales = $preguntas_input + $preguntas_select;
+
+            $count = 0;
+            $porcentaje_total = 0;
+            foreach ($array_item as $key) {
+                
+                if($key == 'S' || $key == 'N'){
+                    $porcen = 1;
+                    if($key == 'S'){
+                        $porcent_ind = round((($porcen / $preguntas_select)*100),2);
+                    }else if($key == 'N'){
+                        $porcent_ind = 0;
+                    }
+                }
+                
+                $item = Checklist_Item::where('clbod_item_obra_id',$obra)
+                                                ->where('clbod_item_tipo',1)
+                                                ->where('clbod_item_semana',$week)
+                                                ->where('clbod_item_ano',$año)
+                                                ->where('clbod_item_preguntas_id',$request->id[$count])
+                                                ->first();   
+                if(empty($item->clbod_item_validate_date)){
+                    $item->clbod_item_obra_id = $obra;
+                    $item->clbod_item_tipo = 1;
+                    $item->clbod_item_semana = $week;
+                    $item->clbod_item_ano = $año;
+                    $item->clbod_item_cumple = $key;
+                    $item->clbod_item_por = $porcent_ind;
+                    $item->clbod_item_validate_date = $fecha_hoy;
+                    $item->clbod_item_validate_user = $id_usuario;
+                    $item->save();
+                }
+                
+                $porcentaje_total = $porcentaje_total + $porcent_ind;
+                if($porcentaje_total > 100){
+                    $porcentaje_total = 100;
+                }
+                $count++;
+            }
 
             $check_bodega = Checklist_Bodega::where('clbod_obra_id',$obra)
                                                     ->where('clbod_tipo',1)
@@ -555,10 +602,13 @@ class AbastecimientoController extends Controller
                                                     ->where('clbod_ano',$año)
                                                     ->first();
 
-            $check_bodega->clbod_validate_user = $email;
-            $check_bodega->clbod_validate_date = $fecha_hoy;
-            $check_bodega->save();
-
+            if(empty($check_bodega->clbod_validate_date)){
+                $check_bodega->clbod_validate_user = $email;
+                $check_bodega->clbod_validate_date = $fecha_hoy;
+                $check_bodega->clbod_cumplimiento = $porcentaje_total;
+                $check_bodega->save();
+            }
+  
             return $check_bodega;
         }else{
             return response( 'Permissions insuffisantes !', 401 );
@@ -604,7 +654,7 @@ class AbastecimientoController extends Controller
                 );
                 array_push($arreglo,$detalle);
             }
-            return view('editbodega',compact('semana','arreglo','checklist','proyectos'));
+            return view('editbodega',compact('semana','arreglo','checklist','proyectos','year','id_obra'));
         }else{
             abort('401');
         }
@@ -817,18 +867,11 @@ class AbastecimientoController extends Controller
             $porcentaje_total = 0;
             foreach ($array_item as $key) {
                 if($key == 'S' || $key == 'N'){
-                    $porcen = 95;
+                    $porcen = 100;
                     if($key == 'S'){
                         $porcent_ind = ($porcen / $preguntas_select);
                     }else if($key == 'N'){
                         $porcent_ind = 0;
-                    }
-                }else{
-                    $porcen = 5;
-                    if($key == null){
-                        $key = 1;
-                    }else{
-                        $porcent_ind = $key;
                     }
                 }
 

@@ -120,7 +120,7 @@
               <div class="modal-body" id="contenedor_validacion" style="max-height: 71vh;overflow-y: auto;overflow-x: hidden;">
               </div>            
           </div>
-        </div>hasClass
+        </div>
     </div>
 </section>
 @endsection
@@ -159,6 +159,7 @@ $(".select-preg").change(function() {
 
 $(document).ready(function () {
     $(".preloader-wrapper").removeClass('active');
+    var ano = (new Date).getFullYear()
     $("#nav-ad").addClass('menu-active');
     var ubicacion_total = $('.select-input').attr('id');
     $('#'+ubicacion_total).val(5);
@@ -168,6 +169,8 @@ $(document).ready(function () {
         <?php $perfil = Auth::user()->rol[0]->id_rol; ?>
         perfil = <?php echo $perfil ?>;
         formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        formData.append('semana',<?php echo $week ?>);
+        formData.append('año',ano);
         var count = 0;
         $('.id-question').each(function(){
             formData.append('id['+count++ +']', $(this).attr('data-id'));

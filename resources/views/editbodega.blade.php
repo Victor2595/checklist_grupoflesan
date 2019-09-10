@@ -125,7 +125,7 @@
                                             <tr>
                                                 <td style="text-align: left;" ><b><?php echo $contador.'. ' ?></b>{{ $tbl_h->clbod_preguntas_nombre }}</td>
                                                 <td>
-                                                    <select data-id="<?php echo $tbl_h->clbod_item_preguntas_id ?>" readonly="true" name="rev[<?php echo $tbl_h->clbod_item_preguntas_id ?>]" disabled id="{{ $tbl_h->clbod_item_preguntas_id }}" class="form-control id-question"  >
+                                                    <select data-id="<?php echo $tbl_h->clbod_item_preguntas_id ?>"  name="rev[<?php echo $tbl_h->clbod_item_preguntas_id ?>]" <?php if(Auth::user()->rol[0]->id_rol != 10 || (!empty($checklist[0]->clbod_validate_user))) echo 'disabled readonly="true"' ?> id="{{ $tbl_h->clbod_item_preguntas_id }}" class="form-control id-question select-preg"  >
                                                         <option value="S" <?php echo ($tbl_h->clbod_item_cumple == 'S')?'selected':'' ?>>SI</option>
                                                         <option value="N" <?php echo ($tbl_h->clbod_item_cumple == 'N')?'selected':'' ?>>NO</option>
                                                     </select>
@@ -134,7 +134,7 @@
                                         <?php $contador++; ?>
                                             @endforeach
                                             @else
-                                                <td><input data-id="<?php echo $tbl_p->id_cabecera ?>" readonly="true" type="number" min="1" max="5"  name="rev[<?php echo $tbl_p->id_cabecera ?>]" disabled id="{{ $tbl_p->id_cabecera }}" value="{{ $tbl_p->value }}" class="form-control req id-question"></td>
+                                                <td><input data-id="<?php echo $tbl_p->id_cabecera ?>" readonly="true" type="number" min="1" max="5"  name="rev[<?php echo $tbl_p->id_cabecera ?>]" id="{{ $tbl_p->id_cabecera }}"  value="{{ $tbl_p->value }}" class="form-control req id-question select-input"></td>
                                             @endif
                                         </tr>
                                         @endforeach
@@ -153,17 +153,63 @@
         </div>
     </div>
 </section>
+<section>
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_ajax" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg" role="document" style="overflow-y: initial !important; margin: 0px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+          <div class="modal-content">
+              <div class="modal-body" id="contenedor_validacion" style="max-height: 71vh;overflow-y: auto;overflow-x: hidden;">
+              </div>            
+          </div>
+        </div>
+    </div>
+</section>
 @endsection
 
 @section('script')
 <script>
+
 $(document).ready(function () {
     $(".preloader-wrapper").removeClass('active');
     $("#nav-ad").addClass('menu-active');
+    $(".select-preg").change(function() {
+    var total_sl = $('.select-preg').length;
+    var total_sl_s = 0;
+    var total_sl_n = 0;    
+    $(".select-preg").each(function(){
+        if ($('option:selected',this).val() == 'S') {
+            total_sl_s++;
+        }else if ($('option:selected',this).val() == 'N'){
+            total_sl_n++; 
+        }
+    })
+    var ponderado = 0;
+    var porcen_tot = total_sl_s * 100/total_sl;
+    if(porcen_tot <= 20 && porcen_tot >=0){
+        ponderado = 1;
+    }else if(porcen_tot <= 50 && porcen_tot >20){
+        ponderado = 2;
+    }else if(porcen_tot <= 70 && porcen_tot >50){
+        ponderado = 3;
+    }else if(porcen_tot <= 90 && porcen_tot >70){
+        ponderado = 4;
+    }else if(porcen_tot <= 1000 && porcen_tot >90){
+        ponderado = 5;
+    }
+    var ubicacion_total = $('.select-input').attr('id');
+        $('#'+ubicacion_total).val(ponderado);
+    });
     $('#form_bodega_edit').bind("submit",function(e) {
         e.preventDefault();
         var formData = new FormData(this);
         formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        var count = 0;
+        $('.id-question').each(function(){
+            formData.append('id['+count++ +']', $(this).attr('data-id'));
+        });
+        $('#modal_ajax .modal-body').html('<div class="preloader text-center"><br><br><img class="center-block" src="https://www.gestionflesan.cl/controlflujo/images/grupo_flesan.png" style="width: 250px;"><br><br><p><img src="https://www.gestionflesan.cl/controlflujo/images/preloader_2019.gif" style="width: 25px;"><strong style="color: #adadad!important;font-size:13px;"> OBTENIENDO DATOS</strong></p></div>');
+
+        $('#modal_ajax').modal('show', {backdrop: 'static', keyboard: true});
+        @if(empty($checklist[0]->clbod_validate_user))
         $.ajax({
             url:'/validateAlmacenWeekItem',
             data:formData,
@@ -173,13 +219,19 @@ $(document).ready(function () {
             type: 'POST',
             datatype: 'JSON',
             success: function (response) {
-                
-                swal('¡Exito!','Se valido el ChekList Almacén de la semana '+response.clbod_semana,'success');
+                $('#modal_ajax').modal('hide');
                 location.reload();
+                swal('¡Exito!','Se valido el ChekList Almacén de la semana '+response.clbod_semana,'success');
             },error: function(jqXHR, text, error){
+                $('#modal_ajax').modal('hide');
                 swal('Error!','No se pudo validar ningún ChecList Almacén para esta semana para el proyecto seleccionado.','error');
             }
         });
+        @else
+            $('#modal_ajax').modal('hide');
+            swal('Error!','El ChecList Almacén de esta semana para el proyecto seleccionado ya se encuentra validado.','error');
+            location.reload();
+        @endif
     });
 }); 
 </script>
