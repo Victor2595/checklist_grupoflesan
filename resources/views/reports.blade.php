@@ -523,20 +523,19 @@ console.log(Coleccion[tipo_dato]);
             var almac_redo = [];
             var visit_redo = [];
             var fecha_redo = [];
-            fecha_redo.push(result2[result2.length-1].FECHA);
-            if(result2[result2.length-1].ALMACEN != null){
-                almac_redo.push(parseFloat(result2[result2.length-1].ALMACEN));
-            }else{
-                almac_redo.push(0);
-            }
-            if(result2[result2.length-1].VISITA != null){
-                visit_redo.push(parseFloat(result2[result2.length-1].VISITA));
-            }else{
-                visit_redo.push(0);
-            }
-
-            console.log(almac2);
-            console.log(visit2)
+            if(result2 != null){
+                fecha_redo.push(result2[result2.length-1].FECHA);
+                if(result2[result2.length-1].ALMACEN != null){
+                    almac_redo.push(parseFloat(result2[result2.length-1].ALMACEN));
+                }else{
+                    almac_redo.push(0);
+                }
+                if(result2[result2.length-1].VISITA != null){
+                    visit_redo.push(parseFloat(result2[result2.length-1].VISITA));
+                }else{
+                    visit_redo.push(0);
+                }
+            }   
 
 
             var options2 = {
