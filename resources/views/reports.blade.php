@@ -428,52 +428,55 @@ $(document).ready(function () {
                 var almac_redo = [];
                 var visit_redo = [];
                 var fecha_redo = [];
-                fecha_redo.push(result2[result2.length-1].FECHA);
-                if(result2[result2.length-1].ALMACEN != null){
-                    almac_redo.push(parseFloat(result2[result2.length-1].ALMACEN));
-                }else{
-                    almac_redo.push(0);
-                }
-                if(result2[result2.length-1].VISITA != null){
-                    visit_redo.push(parseFloat(result2[result2.length-1].VISITA));
-                }else{
-                    visit_redo.push(0);
-                }
+                if(result2 != null){
+                    fecha_redo.push(result2[result2.length-1].FECHA);
+                    if(result2[result2.length-1].ALMACEN != null){
+                        almac_redo.push(parseFloat(result2[result2.length-1].ALMACEN));
+                    }else{
+                        almac_redo.push(0);
+                    }
+                    if(result2[result2.length-1].VISITA != null){
+                        visit_redo.push(parseFloat(result2[result2.length-1].VISITA));
+                    }else{
+                        visit_redo.push(0);
+                    }
 
-                chart2.updateOptions({ 
-                    title: {
-                        text: proy2[0],
-                        align: 'center'
-                    },
-                    xaxis: {
-                        categories: seman2,
+
+                    chart2.updateOptions({ 
                         title: {
-                            text: 'Semana'
-                        }
-                    },
-                },true);
-
-
-                chart2.updateSeries([{
-                        data: almac2
-                    }, {
-                        data: visit2
-                    }],true
-                );
-
-                chart3.updateSeries([almac_redo, visit_redo],true
-                );
-
-                chart3.updateOptions({
-                    title: {
-                        text: 'SEMANA: '+ fecha_redo,
-                        align: 'center',
-                        style: {
-                          fontSize:  '16px',
-                          color:  '#263238',
+                            text: proy2[0],
+                            align: 'center'
                         },
-                    },
-                },true);
+                        xaxis: {
+                            categories: seman2,
+                            title: {
+                                text: 'Semana'
+                            }
+                        },
+                    },true);
+
+
+                    chart2.updateSeries([{
+                            data: almac2
+                        }, {
+                            data: visit2
+                        }],true
+                    );
+                
+                    chart3.updateSeries([almac_redo, visit_redo],true
+                    );
+
+                    chart3.updateOptions({
+                        title: {
+                            text: 'SEMANA: '+ fecha_redo,
+                            align: 'center',
+                            style: {
+                              fontSize:  '16px',
+                              color:  '#263238',
+                            },
+                        },
+                    },true);
+                }
             }
         });
 
