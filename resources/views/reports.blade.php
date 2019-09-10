@@ -68,7 +68,8 @@
                                                 <option value="{{ $historico->clbod_ano.'_'.$historico->clbod_semana }}">{{ $historico->clbod_ano.' Semana '.$historico->clbod_semana }}</option>
                                                 @endif
                                             @endforeach
-                                    
+                                        @else
+                                            <option value="{{ $año.'_'.$week }}">{{ $año.' Semana '.$week }}</option>
                                         @endif                                 
                                     </select>
                                 </div> 
