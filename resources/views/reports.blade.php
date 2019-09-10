@@ -74,6 +74,7 @@
                                     </select>
                                 </div> 
                                 </div>
+                                @if(!empty($reporte_seguimiento))
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">  
                                         <br>
@@ -84,6 +85,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                             <div id="reports_avance" class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
                             <br class="hidden-md hidden-lg">
@@ -101,6 +103,7 @@
                                         @endif  
                                     </div> 
                                 </div>
+                                @if(!empty($reporte_seguimiento))
                                 <div class="row .d-print">
                                     <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">  
                                         <br>
@@ -120,6 +123,7 @@
                                     </div>
                                     
                                 </div>
+                                @endif
                             </div>
                             <div id="reports_segui_visit" class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
                             <br class="hidden-md hidden-lg">
@@ -128,6 +132,7 @@
                                           <b>Seguimiento por Visitador</b>
                                     </div>
                                 </div>
+                                @if(!empty($segui_visit))
                                 <div class="row">
                                     <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">  
                                         <br>
@@ -147,6 +152,7 @@
                                     </div>
                                     
                                 </div>
+                                @endif
                             </div>
                             <div id="reports_segui_vali" class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
                             <br class="hidden-md hidden-lg">
@@ -161,6 +167,7 @@
                                         <br>
                                         <div class="box">
                                             <div class="table-responsive">
+                                                @if(!empty($tabla_visita))
                                                 <table class="table table-bordered table-striped" width="100%">
                                                     <thead class="thead-dark">
                                                         <tr>
@@ -199,6 +206,7 @@
                                                         @endforeach
                                                     </tbody>
                                                 </table>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -523,7 +531,6 @@ $(document).ready(function () {
             var almac_redo = [];
             var visit_redo = [];
             var fecha_redo = [];
-            console.log(result2.length);
             if(result2.length > 0){
                 fecha_redo.push(result2[result2.length-1].FECHA);
                 if(result2[result2.length-1].ALMACEN != null){
