@@ -523,6 +523,7 @@ console.log(Coleccion[tipo_dato]);
             var almac_redo = [];
             var visit_redo = [];
             var fecha_redo = [];
+            console.log(result2);
             if(result2 != null){
                 fecha_redo.push(result2[result2.length-1].FECHA);
                 if(result2[result2.length-1].ALMACEN != null){
