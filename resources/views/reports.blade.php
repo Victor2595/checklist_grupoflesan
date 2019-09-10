@@ -428,7 +428,7 @@ $(document).ready(function () {
                 var almac_redo = [];
                 var visit_redo = [];
                 var fecha_redo = [];
-                if(result2 != null){
+                if(result2.length > 0){
                     fecha_redo.push(result2[result2.length-1].FECHA);
                     if(result2[result2.length-1].ALMACEN != null){
                         almac_redo.push(parseFloat(result2[result2.length-1].ALMACEN));
@@ -489,7 +489,6 @@ $(document).ready(function () {
         }
 
         const result2 = Coleccion[tipo_dato].filter(esSuficientemente);
-console.log(Coleccion[tipo_dato]);
         if(result2 != null){
             var almac2 =[];
             $.each(result2,function(x, item){
@@ -523,8 +522,8 @@ console.log(Coleccion[tipo_dato]);
             var almac_redo = [];
             var visit_redo = [];
             var fecha_redo = [];
-            console.log(result2);
-            if(result2 != null){
+            console.log(result2.length);
+            if(result2.length > 0){
                 fecha_redo.push(result2[result2.length-1].FECHA);
                 if(result2[result2.length-1].ALMACEN != null){
                     almac_redo.push(parseFloat(result2[result2.length-1].ALMACEN));
