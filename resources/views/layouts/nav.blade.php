@@ -33,7 +33,7 @@
                                 }else if(Auth::user()->rol[0]->id_rol == 11){
                                     $rol = 'Jefe/Asistente Almacén';
                                 }else{
-                                    $rol = 'Visitador';
+                                    $rol = 'Auditor';
                                 }
                             ?>
                             <?php echo strtoupper($rol); ?></span></p>
