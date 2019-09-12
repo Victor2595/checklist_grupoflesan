@@ -9,7 +9,7 @@
                 @if(Auth::user()->rol[0]->id_rol == '10')
                 <li class="menu-has-children" id="nav-gpreguntas"><a href="{{ route('questions') }}"> Gestión Preguntas</a></li>
                 <li class="menu-has-children" id="nav-guser"><a href="{{ route('gestion_user') }}"> Gestión Usuarios</a></li>
-                <li class="menu-has-children" id="nav-report"><a href="{{ route('reports') }}"> Dashboards</a></li>
+                <li class="menu-has-children" id="nav-report"><a href="{{ route('reports') }}"> Reportes</a></li>
                 @endif
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
