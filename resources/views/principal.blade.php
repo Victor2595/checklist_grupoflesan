@@ -27,11 +27,11 @@
                                     </div>-->
                                     @if($perfil == 11)
                                         @if(count($objetos) != count($tabla_bodega))
-                                        <a class="btn btn-sm btn-default" href="{{ route('almacen') }}"><i class="glyphicon glyphicon-plus"></i> Almacén</a>
+                                        <a class="btn btn-sm btn-secondary" href="{{ route('almacen') }}"><i class="fas fa-plus"></i> Almacén</a>
                                         @endif
                                     @endif
                                     @if($perfil != 11)
-                                    <a class="btn btn-sm btn-default" href="{{ route('visita') }}"><i class="glyphicon glyphicon-plus"></i> Visita</a>
+                                    <a class="btn btn-sm btn-secondary" href="{{ route('visita') }}"><i class="fas fa-plus"></i> Visita</a>
                                     @endif
                                                  
                                 </div>
@@ -43,25 +43,25 @@
                         <meta name="csrf-token" content="{{ csrf_token() }}">
                         <div class="form-grou row">
                             <div class="col col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                 <select id="combobox_tipo" class="form-control" name="tipo_check" data-live-search="true">
-                                    <option class="<?php echo (Auth::user()->rol[0]->id_rol == 12)?'hidden':'' ?>" value="1" <?php if(Auth::user()->rol[0]->id_rol == 10){ echo 'selected';}elseif (Auth::user()->rol[0]->id_rol == 11) {echo 'selected';}?>>Checklist de Almacén</option>
-                                    <option class="<?php echo (Auth::user()->rol[0]->id_rol == 11)?'hidden':'' ?>" value="2" <?php if (Auth::user()->rol[0]->id_rol == 12) {echo 'selected';}?>>Checklist de Visita</option>
+                                 <select id="combobox_tipo" class="form-control" style="font-size: 80%" name="tipo_check" data-live-search="true">
+                                    <option style="font-size: 80%" class="<?php echo (Auth::user()->rol[0]->id_rol == 12)?'hidden':'' ?>" value="1" <?php if(Auth::user()->rol[0]->id_rol == 10){ echo 'selected';}elseif (Auth::user()->rol[0]->id_rol == 11) {echo 'selected';}?>>Checklist de Almacén</option>
+                                    <option style="font-size: 80%" class="<?php echo (Auth::user()->rol[0]->id_rol == 11)?'hidden':'' ?>" value="2" <?php if (Auth::user()->rol[0]->id_rol == 12) {echo 'selected';}?>>Checklist de Visita</option>
                                 </select>
                             </div>
                             <div class="col col-md-6 col-lg-6 col-sm-12 col-xs-12 input-group input-group-sm">
-                                <select id="combobox_semana" class="form-control" name="ano_semana" data-live-search="true">
+                                <select id="combobox_semana" class="form-control" style="font-size: 80%" name="ano_semana" data-live-search="true">
                                     @if(!empty($historicoCheckList))
-                                        <option value="{{ $año.'_'.$week }}">{{ $año.' Semana '.$week }}</option>
+                                        <option value="{{ $año.'_'.$week }}" style="font-size: 80%">{{ $año.' Semana '.$week }}</option>
                                         @foreach($historicoCheckList as $historico)
                                             @if($historico->clbod_semana <> $week)
-                                            <option value="{{ $historico->clbod_ano.'_'.$historico->clbod_semana }}">{{ $historico->clbod_ano.' Semana '.$historico->clbod_semana }}</option>
+                                            <option value="{{ $historico->clbod_ano.'_'.$historico->clbod_semana }}" style="font-size: 80%">{{ $historico->clbod_ano.' Semana '.$historico->clbod_semana }}</option>
                                             @endif
                                         @endforeach
                                     @else
-                                        <option value="{{ $año.'_'.$week }}">{{ $año.' Semana '.$week }}</option>
+                                        <option value="{{ $año.'_'.$week }}" style="font-size: 80%">{{ $año.' Semana '.$week }}</option>
                                     @endif                                       
                                 </select>
-                                <span class="input-group-btn"><button type="button" id="filter_cl" alt="filtrar" title="filtrar" class="btn btn-default btn-flesan"><i class="glyphicon glyphicon-search"></i></button></span>
+                                <span class="input-group-btn"><button type="button" id="filter_cl" alt="filtrar" title="filtrar" class="btn btn-default btn-flesan"><i class="fas fa-search"></i></button></span>
                             </div>
                         </div>
                     </form>
@@ -123,15 +123,15 @@
                                     <td class="text-center">                                
                                         @if($perfil <> 10)
                                             @if($tabla->clbod_tipo == 1)
-                                                <a class="btn btn-sm mr-1 text-left bg-info" href="{{ URL::route('editOldAlmacen',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="Ver Checklist Semanal"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                                <a class="btn btn-sm mr-1 text-left bg-info" href="{{ URL::route('editOldAlmacen',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="Ver Checklist Semanal"><i class="far fa-eye"></i></a>
                                             @else
-                                                <a class="btn btn-sm mr-1 text-left bg-info" href="{{ URL::route('editOldVisita',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="Ver Checklist Semanal"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                                <a class="btn btn-sm mr-1 text-left bg-info" href="{{ URL::route('editOldVisita',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="Ver Checklist Semanal"><i class="far fa-eye"></i></a>
                                             @endif
                                         @elseif($perfil == 10)
                                             @if($tabla->clbod_tipo == 1)
-                                            <a class="btn btn-sm text-left <?php echo (isset($tabla->clbod_validate_user))?'btn-success':'btn-danger';?> mr-1" href="{{ URL::route('editOldAlmacen',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="<?php echo (isset($tabla->clbod_validate_user))?'Checklist Semanal Validado':'Validar Checklist Semanal';?>"><i class="glyphicon glyphicon-<?php echo (isset($tabla->clbod_validate_user))?'ok':'remove-sign'; ?>"></i></a>
+                                            <a class="btn btn-sm text-left <?php echo (isset($tabla->clbod_validate_user))?'btn-success':'btn-danger';?> mr-1" href="{{ URL::route('editOldAlmacen',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="<?php echo (isset($tabla->clbod_validate_user))?'Checklist Semanal Validado':'Validar Checklist Semanal';?>"><i class="fas fa-<?php echo (isset($tabla->clbod_validate_user))?'check':'times-circle'; ?>"></i></a>
                                             @else
-                                            <a class="btn btn-sm text-left <?php echo (isset($tabla->clbod_validate_user))?'btn-success':'btn-danger';?> mr-1" href="{{ URL::route('editOldVisita',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="<?php echo (isset($tabla->clbod_validate_user))?'Checklist Semanal Validado':'Validar Checklist Semanal';?>"><i class="glyphicon glyphicon-<?php echo (isset($tabla->clbod_validate_user))?'ok':'remove-sign'; ?>"></i></a>
+                                            <a class="btn btn-sm text-left <?php echo (isset($tabla->clbod_validate_user))?'btn-success':'btn-danger';?> mr-1" href="{{ URL::route('editOldVisita',['id' => $tabla->clbod_obra_id,'week'=> $week,'año'=> $año]) }}" title="<?php echo (isset($tabla->clbod_validate_user))?'Checklist Semanal Validado':'Validar Checklist Semanal';?>"><i class="fas fa-<?php echo (isset($tabla->clbod_validate_user))?'check':'times-circle'; ?>"></i></a>
                                             @endif    
                                         @endif
                                         <?php echo $tabla->clbod_validate_user; ?>   
@@ -160,7 +160,7 @@
                                         }
                                     ?>
                                     <td class="text-center">
-                                        <a class="btn btn-sm center-block <?php echo $color ?>" style="padding-left: 8px" role="button" data-toggle="tooltip" title="{{ $tabla->clbod_cumplimiento }}%" data-placement="top"><span class="text-bold <?php echo $textcolor ?>">{{ $tabla->clbod_cumplimiento }}%</span></a>
+                                        <a class="btn btn-sm center-block font-weight-bold <?php echo $color ?>" style="padding-left: 8px" role="button" data-toggle="tooltip" title="{{ $tabla->clbod_cumplimiento }}%" data-placement="top"><span class="text-bold <?php echo $textcolor ?>">{{ $tabla->clbod_cumplimiento }}%</span></a>
                                     </td>       
                                 </tr>
                                 @endforeach                                
@@ -258,17 +258,17 @@
                             }else{
                                 url = 'http://127.0.0.1:8000/editOldVisita/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano;
                             }
-                            etiqueta = '<a class="btn btn-sm mr-1 text-left bg-info" href="'+url+'" title="Ver Checklist Semanal"><i class="glyphicon glyphicon-eye-open"></i></a>'+user;
+                            etiqueta = '<a class="btn btn-sm mr-1 text-left bg-info" href="'+url+'" title="Ver Checklist Semanal"><i class="far fa-eye"></i></a>'+user;
                         }else if(perfil == 10){
                             if (item.clbod_validate_user != null){
                                 clas = 'btn-success';
                                 title = 'Checklist Semanal Validado';
-                                icon = 'ok';
+                                icon = 'check';
                                 user = item.clbod_validate_user;
                             }else{
                                 clas = 'btn-danger';
                                 title = 'Validar Checklist Semanal';
-                                icon = 'remove-sign';
+                                icon = 'times-circle';
                                 user = '';
                             }
                             if(item.clbod_tipo == 1){
@@ -277,7 +277,7 @@
                                 url = 'http://127.0.0.1:8000/editOldVisita/'+item.clbod_obra_id+'?week='+item.clbod_semana+'&&año='+item.clbod_ano;
                             }
 
-                            etiqueta = '<a class="btn btn-sm text-left '+clas+' mr-1" href="'+url+'" title="'+title+'"><i class="glyphicon glyphicon-'+icon+'"></i></a>'+user;
+                            etiqueta = '<a class="btn btn-sm text-left '+clas+' mr-1" href="'+url+'" title="'+title+'"><i class="fas fa-'+icon+'"></i></a>'+user;
                         }
 
                         if(item.clbod_validate_date != null) {
@@ -310,7 +310,7 @@
                         dataTD.push(fecha_c);
                         dataTD.push(etiqueta);
                         dataTD.push(fecha_valida);
-                        dataTD.push('<a class="btn btn-sm center-block '+color+'" style="padding-left: 8px" role="button" data-toggle="tooltip" title="'+item.clbod_cumplimiento+'" data-placement="top"><span class="text-bold '+textcolor +'">'+item.clbod_cumplimiento+'</span></a>');
+                        dataTD.push('<a class="btn btn-sm center-block font-weight-bold '+color+'" style="padding-left: 8px" role="button" data-toggle="tooltip" title="'+item.clbod_cumplimiento+'" data-placement="top"><span class="text-bold '+textcolor +'">'+item.clbod_cumplimiento+'</span></a>');
                         dataSet.push(dataTD);
                     });
 
