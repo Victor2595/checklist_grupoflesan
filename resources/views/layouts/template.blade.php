@@ -22,11 +22,11 @@
         <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('img/favicon/favicon-96x96.png') }}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon/favicon-16x16.png') }}">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" >
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <!--<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">-->
         <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/ionicons.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
+        <!--<link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">-->
         <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/_all-skins.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/checkflu.css') }}">
