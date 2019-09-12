@@ -228,7 +228,7 @@ $('select').selectpicker();
 $(document).ready(function () {
     $(".preloader-wrapper").removeClass('active');
     id_combo = $("#combobox_semana").val();
-    var colors = ['#dc3545','#808080','#ffd966','#333f4f','#548235','#c65911'];
+    var colors = ['#dc3545','#595959','#ffd966','#333f4f','#548235','#c65911'];
     $("#combobox_semana" ).change(function() {
         id_combo = $("#combobox_semana").val();
         function esSuficientementeGrande(elemento) {
