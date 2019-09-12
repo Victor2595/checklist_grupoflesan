@@ -150,6 +150,7 @@
                                     
                                 </div>
                             </div>
+                            @if(Auth::user()->rol[0]->id_rol == 10)
                             <div id="reports_segui_vali" class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
                             <br class="hidden-md hidden-lg">
                                 <div class="row">
@@ -186,7 +187,7 @@
                                                                 @elseif($table->almacen == 'pendiente')
                                                                     <a class="btn btn-sm text-left text-white btn-danger mr-1" href="{{ URL::route('editOldAlmacen',['id' => $table->clbod_obra_id,'week'=> $table->clbod_semana,'año'=> $table->clbod_ano]) }}" title="FALTA DE VALIDAR"><i class="fas fa-times-circle"></i></a>
                                                                 @else
-                                                                    <a class="btn btn-sm text-left text-white btn-primary mr-1" title="VALIDADO"><i class="glyphicon glyphicon-ok"></i></a>
+                                                                    <a class="btn btn-sm text-left text-white btn-primary mr-1" title="VALIDADO"><i class="fas fa-check"></i></a>
                                                                 @endif
                                                             </td>
                                                             <td <?php if($table->visita == 'no_existe') echo 'class="text-danger"' ?>>
@@ -209,7 +210,7 @@
                                     
                                 </div>
                             </div>
-
+                            @endif
                         </div>
                     </form>
                     <br>

@@ -9,6 +9,8 @@
                 @if(Auth::user()->rol[0]->id_rol == '10')
                 <li class="menu-has-children" id="nav-gpreguntas"><a href="{{ route('questions') }}"> Gestión Preguntas</a></li>
                 <li class="menu-has-children" id="nav-guser"><a href="{{ route('gestion_user') }}"> Gestión Usuarios</a></li>
+                @endif
+                @if(Auth::user()->rol[0]->id_rol == '10' || Auth::user()->rol[0]->id_rol == '12')
                 <li class="menu-has-children" id="nav-report"><a href="{{ route('reports') }}"> Reportes</a></li>
                 @endif
                 <li class="nav-item dropdown">
@@ -40,7 +42,7 @@
                         </div>
                         <div class="user-footer text-right" style="padding: 10px;">
                             
-                              <a href="{{ route('logout') }}" class="btn btn-default btn-flat" style="padding-top: 10px" onclick="event.preventDefault();document.getElementById('logout-form').submit();" ><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                              <a href="{{ route('logout') }}" class="btn btn-danger text-white btn-flat" style="padding-top: 10px" onclick="event.preventDefault();document.getElementById('logout-form').submit();" ><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                                 </form>
