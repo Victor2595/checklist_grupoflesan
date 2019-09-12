@@ -60,8 +60,8 @@
 
         ?>
         <div class="radio">
-            <label ><input class="rd_obra" type="radio" name="optradio" value="0"  id="radioT"<?php if(isset($checkedTodas)){ echo $checkedTodas; } ?>>Todas</label>
-            <label class="rd_visit <?php if($usuario_app[0]->id_rol == 12){echo 'hidden';}  ?>"><input class="rd_obra" id="radioE" type="radio" name="optradio" value="1" <?php if(isset($checkedEsp)){ echo $checkedEsp; } ?>>Especificar</label>
+            <label ><input class="rd_obra" type="radio" name="optradio" value="0"  id="radioT"<?php if(isset($checkedTodas)){ echo $checkedTodas; } ?> style="margin: auto">Todas</label>
+            <label class="rd_visit <?php if($usuario_app[0]->id_rol == 12){echo 'hidden';}  ?>"><input class="rd_obra" id="radioE" type="radio" name="optradio" value="1" <?php if(isset($checkedEsp)){ echo $checkedEsp; } ?> style="margin: auto">Especificar</label>
         </div>
         <div class="section-select <?php  if(isset($checkedTodas)){ echo $hidden; } ?>">
             <select id="selectObra"  name="selectObra[]" class="form-control "  multiple="multiple">

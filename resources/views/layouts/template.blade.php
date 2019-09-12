@@ -22,11 +22,11 @@
         <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('img/favicon/favicon-96x96.png') }}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon/favicon-16x16.png') }}">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" >
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <!--<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">-->
         <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/ionicons.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
+        <!--<link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">-->
         <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/_all-skins.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/checkflu.css') }}">
@@ -54,6 +54,8 @@
             @yield('content')
         </div>
 
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/jquery.slimscroll.min.js') }}"></script>

@@ -55,8 +55,8 @@
     <div class=" align-self-center col col-md-6 col-lg-6 col-sm-12 col-xs-12">
         <label for="selectObra">Obra</label>
         <div class="radio">
-            <label><input class="rd_obra" type="radio" id="radioT" name="optradio" value="0" checked>Todas</label>
-            <label class="rd_visit"><input class="rd_obra" id="radioE" type="radio" name="optradio" value="1">Especificar</label>
+            <label><input class="rd_obra" type="radio" id="radioT" name="optradio" value="0" checked style="margin: auto">Todas</label>
+            <label class="rd_visit"><input class="rd_obra" id="radioE" type="radio" name="optradio" value="1" style="margin: auto">Especificar</label>
         </div>
         <div class="section-select hidden">
             <select id="selectObra" name="selectObra[]" class="form-control"  multiple="multiple">

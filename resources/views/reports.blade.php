@@ -184,7 +184,7 @@
                                                                 @if($table->almacen == 'no_existe')
                                                                     <b>Pendiente de CheckList</b>
                                                                 @elseif($table->almacen == 'pendiente')
-                                                                    <a class="btn btn-sm text-left text-white btn-warning mr-1" href="{{ URL::route('editOldAlmacen',['id' => $table->clbod_obra_id,'week'=> $table->clbod_semana,'año'=> $table->clbod_ano]) }}" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                                                                    <a class="btn btn-sm text-left text-white btn-danger mr-1" href="{{ URL::route('editOldAlmacen',['id' => $table->clbod_obra_id,'week'=> $table->clbod_semana,'año'=> $table->clbod_ano]) }}" title="FALTA DE VALIDAR"><i class="fas fa-times-circle"></i></a>
                                                                 @else
                                                                     <a class="btn btn-sm text-left text-white btn-primary mr-1" title="VALIDADO"><i class="glyphicon glyphicon-ok"></i></a>
                                                                 @endif
@@ -193,9 +193,9 @@
                                                                 @if($table->visita == 'no_existe')
                                                                     <b>Pendiente de CheckList</b>
                                                                 @elseif($table->visita == 'pendiente')
-                                                                    <a class="btn btn-sm text-left text-white btn-warning mr-1" href="{{ URL::route('editOldVisita',['id' => $table->clbod_obra_id,'week'=> $table->clbod_semana,'año'=> $table->clbod_ano]) }}" title="FALTA DE VALIDAR"><i class="glyphicon glyphicon-remove-sign"></i></a>
+                                                                    <a class="btn btn-sm text-left text-white btn-danger mr-1" href="{{ URL::route('editOldVisita',['id' => $table->clbod_obra_id,'week'=> $table->clbod_semana,'año'=> $table->clbod_ano]) }}" title="FALTA DE VALIDAR"><i class="fas fa-times-circle"></i></a>
                                                                 @else
-                                                                    <a class="btn btn-sm text-left text-white btn-primary mr-1" title="VALIDADO"><i class="glyphicon glyphicon-ok"></i></a>
+                                                                    <a class="btn btn-sm text-left text-white btn-primary mr-1" title="VALIDADO"><i class="fas fa-check"></i></a>
                                                                 @endif
                                                             </td>
                                                         </tr>
@@ -318,25 +318,25 @@ $(document).ready(function () {
                 annotations: {
                   yaxis: [{
                     y: 71,
-                    borderColor: '#dd4b39',
+                    borderColor: '#f39c12',
                     label: {
                       show: true,
                       text: '71',
                       style: {
                         color: "#fff",
-                        background: '#dd4b39'
+                        background: '#f39c12'
                       }
                     }
                   },
                   {
                     y: 93,
-                    borderColor: '#f39c12',
+                    borderColor: '#007BFF',
                     label: {
                       show: true,
                       text: '93',
                       style: {
                         color: "#fff",
-                        background: '#f39c12'
+                        background: '#007BFF'
                       }
                     }
                   }]
@@ -564,25 +564,25 @@ $(document).ready(function () {
                 annotations: {
                   yaxis: [{
                     y: 71,
-                    borderColor: '#dd4b39',
+                    borderColor: '#f39c12',
                     label: {
                       show: true,
                       text: '71',
                       style: {
                         color: "#fff",
-                        background: '#dd4b39'
+                        background: '#f39c12'
                       }
                     }
                   },
                   {
                     y: 93,
-                    borderColor: '#f39c12',
+                    borderColor: '#007BFF',
                     label: {
                       show: true,
                       text: '93',
                       style: {
                         color: "#fff",
-                        background: '#f39c12'
+                        background: '#007BFF'
                       }
                     }
                   }]
