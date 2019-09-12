@@ -74,7 +74,7 @@
                                     </select>
                                 </div> 
                                 </div>
-                                @if(!empty($reporte_seguimiento))
+                                
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">  
                                         <br>
@@ -85,7 +85,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endif
                             </div>
                             <div id="reports_avance" class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
                             <br class="hidden-md hidden-lg">
@@ -103,7 +102,7 @@
                                         @endif  
                                     </div> 
                                 </div>
-                                @if(!empty($reporte_seguimiento))
+                                
                                 <div class="row .d-print">
                                     <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">  
                                         <br>
@@ -123,7 +122,6 @@
                                     </div>
                                     
                                 </div>
-                                @endif
                             </div>
                             <div id="reports_segui_visit" class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
                             <br class="hidden-md hidden-lg">
@@ -132,7 +130,6 @@
                                           <b>Seguimiento por Visitador</b>
                                     </div>
                                 </div>
-                                @if(!empty($segui_visit))
                                 <div class="row">
                                     <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">  
                                         <br>
@@ -152,7 +149,6 @@
                                     </div>
                                     
                                 </div>
-                                @endif
                             </div>
                             <div id="reports_segui_vali" class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
                             <br class="hidden-md hidden-lg">
