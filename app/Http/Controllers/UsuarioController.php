@@ -162,10 +162,12 @@ class UsuarioController extends Controller
                     $array_cod = explode(";",substr($codigos,0,-1));
                 }
             }
-            foreach($array_cod as $cod){
-                $en_uso = array_search($cod, array_column($proyectos, 'cod_proyecto'));
-                unset($proyectos[$en_uso]);
-                $proyectos = array_values($proyectos);
+            if(!empty($array_cod)){
+                foreach($array_cod as $cod){
+                    $en_uso = array_search($cod, array_column($proyectos, 'cod_proyecto'));
+                    unset($proyectos[$en_uso]);
+                    $proyectos = array_values($proyectos);
+                }
             }
 
             if (!empty($usuario_directorio)) {
