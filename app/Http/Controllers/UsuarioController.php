@@ -229,7 +229,7 @@ class UsuarioController extends Controller
             }
             $usuario_rol->save();
 
-            //Mail::to($correo)->send(new CorreoConfirmacion($nombre));
+            Mail::to($correo)->send(new CorreoConfirmacion($nombre));
             Alert::success('El usuario se guardo correctamente','Guardado');
             return redirect()->route("gestion_user");
         }else {
