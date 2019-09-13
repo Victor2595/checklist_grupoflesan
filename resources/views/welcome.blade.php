@@ -55,7 +55,7 @@
                                         <a href="{{ url('auth/google') }}" class="btn btn-primary" style="font-family: Open Sans Light,Open Sans,arial;">
                                             <i class="fab fa-google text-danger" style="background: white;padding: 5px; border-radius: 3px;"></i> Sign in with Google
                                         </a>
-                                        <div style="margin: auto; margin-top:5px; font-size: 15px; border-radius: 10px;" class="col-lg-8 p-3 mb-2 bg-secondary text-white"><i class="fab fa-chrome"></i> Sistema optimizado para navegador Google Chrome.</div>
+                                        <div style="margin: auto; margin-top:5px; font-size: 15px; border-radius: 10px;" class="col-lg-8 p-2 mb-2 bg-secondary text-white"><i class="fab fa-chrome"></i> Sistema optimizado para navegador Google Chrome.</div>
                                         <img src="{{ asset('img/logo_negro_flesan_grupo.png') }}" class="logo_grupo_flesan" alt="grupo_flesan">
                                     </div>
                                 </div>
