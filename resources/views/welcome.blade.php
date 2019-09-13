@@ -48,27 +48,20 @@
                     <div class="col-sm-12 text-center">
                         <img src="{{ asset('img/login-icono.png') }}" class="brand_logo" alt="Logo"  style="z-index: 7;position: inherit;">
                         <div class="d-flex justify-content-center  login_container" style="height: 200px;">
-                            <!--<button type="submit" value="Entrar" name="button" class="btn login_btn" >{{ __('Iniciar Sesión') }}</button>-->
-                            <!--<a href="javascript:nuevaventana('{{ url('auth/google') }}')"  target="_parent" class="btn_google"><img src="{{ asset('img/logo_google.jpg') }}" class="btn_g"> Signed in with Google</a>-->
-                            <div class="col-lg-6 col-md-8">
-                                <div class="user_card" style="top: -60px;">
+                            <div class="col-lg-5 col-md-5">
+                                <div class="user_card" style="top: -50px;">
                                     <div class="text-center">
                                         <br><br>
                                         <a href="{{ url('auth/google') }}" class="btn btn-primary" style="font-family: Open Sans Light,Open Sans,arial;">
                                             <i class="fab fa-google text-danger" style="background: white;padding: 5px; border-radius: 3px;"></i> Sign in with Google
                                         </a>
-                                        <div style="margin: auto; margin-top:5px; font-size: 12px; border-radius: 10px;" class="col-lg-9 p-3 mb-2 bg-secondary text-white"><i class="fab fa-chrome"></i> Sistema optimizado para navegador Google Chrome.</div>
+                                        <div style="margin: auto; margin-top:5px; font-size: 15px; border-radius: 10px;" class="col-lg-8 p-3 mb-2 bg-secondary text-white"><i class="fab fa-chrome"></i> Sistema optimizado para navegador Google Chrome.</div>
+                                        <img src="{{ asset('img/logo_negro_flesan_grupo.png') }}" class="logo_grupo_flesan mb-2" alt="grupo_flesan">
                                     </div>
                                 </div>
                             </div>    
                         </div>
                     </div>
-                    <div class="col-sm-12 text-center" style="top: -60px;">
-                        <img src="{{ asset('img/logo_blanco_flesan_grupo.png') }}" class="logo_grupo_flesan" alt="grupo_flesan">
-                    </div>
-                    <!--<div class="col-sm-12 text-center" style="top: -60px;">
-                        <img   class="rounded mx-auto d-block" src="{{ asset('img/logos_fdvc.png') }}" > 
-                    </div>-->
                 </div>
             </div>
          </div>

@@ -319,25 +319,25 @@ $(document).ready(function () {
                 annotations: {
                   yaxis: [{
                     y: 71,
-                    borderColor: '#dd4b39',
+                    borderColor: '#ff0000',
                     label: {
                       show: true,
                       text: '71',
                       style: {
                         color: "#fff",
-                        background: '#dd4b39'
+                        background: '#ff0000'
                       }
                     }
                   },
                   {
                     y: 93,
-                    borderColor: '#007BFF',
+                    borderColor: '#87868a',
                     label: {
                       show: true,
                       text: '93',
                       style: {
                         color: "#fff",
-                        background: '#007BFF'
+                        background: '#87868a'
                       }
                     }
                   }]
@@ -565,25 +565,25 @@ $(document).ready(function () {
                 annotations: {
                   yaxis: [{
                     y: 71,
-                    borderColor: '#dd4b39',
+                    borderColor: '#ff0000',
                     label: {
                       show: true,
                       text: '71',
                       style: {
                         color: "#fff",
-                        background: '#dd4b39'
+                        background: '#ff0000'
                       }
                     }
                   },
                   {
                     y: 93,
-                    borderColor: '#007BFF',
+                    borderColor: '#87868a',
                     label: {
                       show: true,
                       text: '93',
                       style: {
                         color: "#fff",
-                        background: '#007BFF'
+                        background: '#87868a'
                       }
                     }
                   }]
