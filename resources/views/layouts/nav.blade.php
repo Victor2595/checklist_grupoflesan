@@ -34,6 +34,8 @@
                                     $rol = 'Administrador Logística';
                                 }else if(Auth::user()->rol[0]->id_rol == 11){
                                     $rol = 'Jefe/Asistente Almacén';
+                                }else if(Auth::user()->rol[0]->id_rol == 14){
+                                    $rol = 'Invitado';
                                 }else{
                                     $rol = 'Auditor';
                                 }
