@@ -28,6 +28,8 @@ class UserRol extends Authenticatable
    	return $this->belongsTo(User::class,'id_aplicacion_usuario');
    }
 
-   
+    public function rolaplicacion(){
+      return $this->belongsTo(RolAplicacion::class,'id_rol');
+    }
 
 }

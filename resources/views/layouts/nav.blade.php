@@ -30,19 +30,7 @@
                             @else
                             <img src="{{ asset('img/login-icono.png') }}" class="img-circle" alt="User Image" style="z-index: 5;height: 90px;width: 90px;border: 3px solid;border-color: transparent;border-color: rgba(255,255,255,0.2);    border-radius: 50%;vertical-align: middle;">
                             @endif
-                            <p class="text-white" style="z-index: 5;color: #000;font-size: 17px;margin-top: 10px;-webkit-box-sizing: border-box;display:block;text-transform: inherit;font-weight: inherit;padding-right: 0;padding-left: 0;"> {{  Auth::user()->name }}  - <span class="nombreSide" style="font-style: inherit;">
-                            <?php 
-                                if(Auth::user()->rol[0]->id_rol == 10){
-                                    $rol = 'Administrador Logística';
-                                }else if(Auth::user()->rol[0]->id_rol == 11){
-                                    $rol = 'Jefe/Asistente Almacén';
-                                }else if(Auth::user()->rol[0]->id_rol == 14){
-                                    $rol = 'Invitado';
-                                }else{
-                                    $rol = 'Auditor';
-                                }
-                            ?>
-                            <?php echo strtoupper($rol); ?></span></p>
+                            <p class="text-white" style="z-index: 5;color: #000;font-size: 17px;margin-top: 10px;-webkit-box-sizing: border-box;display:block;text-transform: inherit;font-weight: inherit;padding-right: 0;padding-left: 0;"> {{  Auth::user()->name }}  - <span class="nombreSide" style="font-style: inherit;">{{  strtoupper(Auth::user()->rol[0]->rolaplicacion->nombre) }}</span></p>
                         </div>
                         <div class="user-footer text-right" style="padding: 10px;">
                             
