@@ -1,6 +1,6 @@
 <header id="header">
     <div class="container-fluid">
-        <div id="logo" class="pull-left">
+        <div id="logo" class="pull-left mt-1">
             <a href="{{ route('principal') }}"><img src="https://www.gestionflesan.cl/controlflujo/images/grupo_flesan.png" alt="grupoflesan.png"  title="GRUPO FLESAN | Confianza que Construye" /></a>
         </div>
         <nav id="nav-menu-container">
