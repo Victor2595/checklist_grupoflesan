@@ -18,7 +18,11 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/principal');
+            if(Auth::user()->rol[0]->id_rol != 14){
+                return redirect('/principal');
+            }else{
+                return redirect('/reportesweek');    
+            }
         }
 
         return $next($request);

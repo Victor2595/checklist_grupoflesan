@@ -33,6 +33,7 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/principal';
+    protected $redirectTo2 = '/reportesweek';
 
     /**
      * Create a new controller instance.
@@ -81,7 +82,11 @@ class LoginController extends Controller
                 }
                 request()->session()->push('avatar',$user->avatar);
                 Auth::login($authUser,true);
-                return redirect($this->redirectTo);
+                if(Auth::user()->rol[0]->id_rol != 14){
+                    return redirect($this->redirectTo);
+                }else{
+                    return redirect($this->redirectTo2);
+                }
             }else if(count($correo) == 0){
                 Alert::error('Este usuario '.$user->email.' no se encuentra registrado en el sistema','Error');
                 return redirect('/');
