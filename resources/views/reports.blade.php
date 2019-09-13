@@ -319,13 +319,13 @@ $(document).ready(function () {
                 annotations: {
                   yaxis: [{
                     y: 71,
-                    borderColor: '#f39c12',
+                    borderColor: '#dd4b39',
                     label: {
                       show: true,
                       text: '71',
                       style: {
                         color: "#fff",
-                        background: '#f39c12'
+                        background: '#dd4b39'
                       }
                     }
                   },
