@@ -154,7 +154,11 @@ class AbastecimientoController extends Controller
                     
                 }
             }
-            return view('principal',compact('week','año','historicoCheckList','rol','roles','perfil','tabla_bodega','objetos'));
+            if(auth()->user()->rol[0]->id_rol == 14 ){
+                abort(401);
+            }else{
+                return view('principal',compact('week','año','historicoCheckList','rol','roles','perfil','tabla_bodega','objetos'));
+            }
         } catch (Exception $e) {
             abort(500);
         }
