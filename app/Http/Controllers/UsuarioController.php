@@ -17,8 +17,12 @@ use DateTime;
 class UsuarioController extends Controller
 {
 	public function usuariosListing(){
-    	$table_usuario = UsuarioModel::rol_aplicacion();
-        return view('usuario',compact('table_usuario'));
+    	if(auth()->user()->rol[0]->id_rol == 14 ){
+            abort(401);
+        }else{
+            $table_usuario = UsuarioModel::rol_aplicacion();
+            return view('usuario',compact('table_usuario'));
+        }
     }
 
     public function addNewUsuario(){
