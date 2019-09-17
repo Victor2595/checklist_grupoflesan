@@ -24,7 +24,11 @@ class PreguntasController extends Controller
                 );
                 array_push($arreglo,$detalle);
             }
-            return view('questions',compact('arreglo'));
+            if(auth()->user()->rol[0]->id_rol == 14 ){
+                abort(401);
+            }else{
+                return view('questions',compact('arreglo'));
+            }
         } catch (Exception $e) {
             abort(500);
         }
