@@ -12,48 +12,60 @@ use Alert;
 class PreguntasController extends Controller
 {
 	public function generateQuestions(){
-        $arreglo = array();
-        $tabla_padre = DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_item_padre = 0  and clbod_preguntas_estado = 1 order by clbod_preguntas_nombre asc");
-        foreach ($tabla_padre as $rl) {
-            $detalle = (object) array(
-                'id_cabecera' => $rl->clbod_preguntas_item_id,
-                'cabecera' => $rl->clbod_preguntas_nombre,
-                'estado'=> $rl->clbod_preguntas_estado,
-                'hijo'=>  DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_item_padre = $rl->clbod_preguntas_item_id and clbod_preguntas_estado = 1 order by clbod_preguntas_item_id asc")
-            );
-            array_push($arreglo,$detalle);
+        try {
+            $arreglo = array();
+            $tabla_padre = DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_item_padre = 0  and clbod_preguntas_estado = 1 order by clbod_preguntas_nombre asc");
+            foreach ($tabla_padre as $rl) {
+                $detalle = (object) array(
+                    'id_cabecera' => $rl->clbod_preguntas_item_id,
+                    'cabecera' => $rl->clbod_preguntas_nombre,
+                    'estado'=> $rl->clbod_preguntas_estado,
+                    'hijo'=>  DB::select("select * from abastecimiento.clbod_preguntas where clbod_preguntas_item_padre = $rl->clbod_preguntas_item_id and clbod_preguntas_estado = 1 order by clbod_preguntas_item_id asc")
+                );
+                array_push($arreglo,$detalle);
+            }
+            return view('questions',compact('arreglo'));
+        } catch (Exception $e) {
+            abort(500);
         }
-        return view('questions',compact('arreglo'));
     }
 
     public function addNewPregunta(){
-        return view('preguntas/addNewQ');
+        try {
+            return view('preguntas/addNewQ');
+        } catch (Exception $e) {
+            abort(500);
+        }
     }
 
     public function addPregunta(Request $request){
-        $dia = new DateTime();
-        $dia->format('d-m-y');
-        $preguntas = new Preguntas();
-        
-        if($request->inputId == 0){
-            $preguntas->clbod_preguntas_item_padre = $request->inputId;
-            $preguntas->clbod_preguntas_nombre = $request->inputNombre;
-            $preguntas->clbod_preguntas_usuario_creacion = auth()->user()->id_aplicacion_usuario;
-            $preguntas->clbod_preguntas_fecha_creacion = $dia->format('d-m-y');
-            $preguntas->clbod_preguntas_estado = 1;
-            $mnj_alerta = 'El Tópico fue registrado exictosamente';
-        }else{
-            $padre = Preguntas::where('clbod_preguntas_item_id',$request->inputId)->first();
-            $preguntas->clbod_preguntas_item_padre = $request->inputId;
-            $preguntas->clbod_preguntas_nombre = $request->inputNombre;
-            $preguntas->clbod_preguntas_usuario_creacion = auth()->user()->id_aplicacion_usuario;
-            $preguntas->clbod_preguntas_fecha_creacion = $dia->format('d-m-y');
-            $preguntas->clbod_preguntas_estado = 1;
-            $mnj_alerta = 'La Pregunta fue registrada exictosamente';
+        try {
+            $dia = new DateTime();
+            $dia->format('d-m-y');
+            $preguntas = new Preguntas();
+            
+            if($request->inputId == 0){
+                $preguntas->clbod_preguntas_item_padre = $request->inputId;
+                $preguntas->clbod_preguntas_nombre = $request->inputNombre;
+                $preguntas->clbod_preguntas_usuario_creacion = auth()->user()->id_aplicacion_usuario;
+                $preguntas->clbod_preguntas_fecha_creacion = $dia->format('d-m-y');
+                $preguntas->clbod_preguntas_estado = 1;
+                $mnj_alerta = 'El Tópico fue registrado exictosamente';
+            }else{
+                $padre = Preguntas::where('clbod_preguntas_item_id',$request->inputId)->first();
+                $preguntas->clbod_preguntas_item_padre = $request->inputId;
+                $preguntas->clbod_preguntas_nombre = $request->inputNombre;
+                $preguntas->clbod_preguntas_usuario_creacion = auth()->user()->id_aplicacion_usuario;
+                $preguntas->clbod_preguntas_fecha_creacion = $dia->format('d-m-y');
+                $preguntas->clbod_preguntas_estado = 1;
+                $mnj_alerta = 'La Pregunta fue registrada exictosamente';
+            }
+            $preguntas->save();
+            Alert::success($mnj_alerta,'GUARDADO');
+            return redirect('/preguntas_checklist');
+        } catch (Exception $e) {
+            abort(500);
         }
-        $preguntas->save();
-        Alert::success($mnj_alerta,'GUARDADO');
-        return redirect('/preguntas_checklist');
     }
 
     public function editOldPregunta($id){
@@ -95,39 +107,42 @@ class PreguntasController extends Controller
             Alert::success($mnj_alerta,'ACTUALIZADO');
             return redirect('/preguntas_checklist');
         } catch (Exception $e) {
-            Alert::error('Ocurrio un error, vuelva a intentarlo.','Error');
-            return redirect()->route("preguntas_checklist");
+            abort(500);
         }
     }
 
     public function setEstado($id){
-        $dia = new DateTime();
-        $dia->format('d-m-y');
-        $preguntas = Preguntas::where('clbod_preguntas_item_id',$id)->first();
-        $preguntas->clbod_preguntas_usuario_modificacion = auth()->user()->id_aplicacion_usuario;
-        $preguntas->clbod_preguntas_fecha_modificacion = $dia->format('d-m-y');
-        if($preguntas->clbod_preguntas_estado == 1){
-            $preguntas->clbod_preguntas_estado = 0;
-            if($preguntas->clbod_preguntas_item_padre == 1){
-                $mensaje = 'La pregunta fue desactivada';
-                $title = 'Desactivada';  
+        try {
+            $dia = new DateTime();
+            $dia->format('d-m-y');
+            $preguntas = Preguntas::where('clbod_preguntas_item_id',$id)->first();
+            $preguntas->clbod_preguntas_usuario_modificacion = auth()->user()->id_aplicacion_usuario;
+            $preguntas->clbod_preguntas_fecha_modificacion = $dia->format('d-m-y');
+            if($preguntas->clbod_preguntas_estado == 1){
+                $preguntas->clbod_preguntas_estado = 0;
+                if($preguntas->clbod_preguntas_item_padre == 1){
+                    $mensaje = 'La pregunta fue desactivada';
+                    $title = 'Desactivada';  
+                }else{
+                    $mensaje = 'El Tópico fue desactivado';
+                    $title = 'Desactivado';  
+                }
             }else{
-                $mensaje = 'El Tópico fue desactivado';
-                $title = 'Desactivado';  
+                $preguntas->clbod_preguntas_estado = 1;
+                if($preguntas->clbod_preguntas_item_padre == 1){
+                    $mensaje = 'La pregunta fue activada';
+                    $title = 'Activada';  
+                }else{
+                    $mensaje = 'El Tópico fue activado';
+                    $title = 'Activado';  
+                }
             }
-        }else{
-            $preguntas->clbod_preguntas_estado = 1;
-            if($preguntas->clbod_preguntas_item_padre == 1){
-                $mensaje = 'La pregunta fue activada';
-                $title = 'Activada';  
-            }else{
-                $mensaje = 'El Tópico fue activado';
-                $title = 'Activado';  
-            }
+            $preguntas->save();
+            Alert::success($mensaje,$title);
+            return redirect('/preguntas_checklist');
+        } catch (Exception $e) {
+            abort(500);
         }
-        $preguntas->save();
-        Alert::success($mensaje,$title);
-        return redirect('/preguntas_checklist');
     }
 
 }
