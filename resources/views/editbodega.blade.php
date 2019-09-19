@@ -37,7 +37,7 @@
                                         <a class="btn btn-sm btn-default" href="{{ route('principal') }}"><i class="glyphicon glyphicon-chevron-left"></i> Volver</a>
                                         @if(Auth::user()->rol[0]->id_rol ==10)
                                             @if((empty($checklist[0]->clbod_validate_user)))
-                                            <button type="submit" id="guardar_chckbdg" class="btn btn-sm btn-default"><i class="glyphicon glyphicon-ok"></i> Validar</button>
+                                            <button type="submit" id="guardar_chckbdg" class="btn btn-sm btn-default"><i class="far fa-save"></i> Validar</button>
                                             @endif
                                         @endif
                                     </div>
@@ -75,23 +75,23 @@
                                         $textcolor = 'text-white';
                                     }
                                 ?>    
-                                <span class="btn btn-sm center-block <?php echo $color; ?> text-bold <?php echo $textcolor ?>" style="padding-left: 6px">{{ $checklist[0]->clbod_cumplimiento }}%</span>
+                                <span class="btn btn-sm center-block <?php echo $color; ?> text-bold <?php echo $textcolor ?> font-weight-bold" style="padding-left: 6px">{{ round($checklist[0]->clbod_cumplimiento,0) }}%</span>
                             </div>
                         </div>
                         <br>
                         <?php 
                             if(!empty($checklist[0]->clbod_validate_user)){
                                 $estado_validacion = 'VALIDADO';
-                                $color = 'bg-green';
+                                $color = 'bg-success';
                             }else{
                                 $estado_validacion = 'NO VALIDADO';
-                                $color = 'bg-red';
+                                $color = 'bg-danger';
                             }
                         ?>
                         <div class="form-grou row">
                             <div class="col col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                 <label id="creador">Estado: </label>
-                                <span class="label <?php echo $color ?>" style="font-size: 100%;"><?php echo $estado_validacion; ?></span>
+                                <span class="label <?php echo $color ?> text-white font-weight-bold" style="font-size: 100%;"><?php echo $estado_validacion; ?></span>
                             </div>
                         </div>
                         <br>
