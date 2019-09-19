@@ -17,66 +17,73 @@ use DateTime;
 class UsuarioController extends Controller
 {
 	public function usuariosListing(){
-    	if(auth()->user()->rol[0]->id_rol == 14 ){
-            abort(401);
-        }else{
-            $table_usuario = UsuarioModel::rol_aplicacion();
-            return view('usuario',compact('table_usuario'));
+    	try {
+           if(auth()->user()->rol[0]->id_rol == 14 ){
+                abort(401);
+            }else{
+                $table_usuario = UsuarioModel::rol_aplicacion();
+                return view('usuario',compact('table_usuario'));
+            } 
+        } catch (Exception $e) {
+            abort(500);
         }
     }
 
     public function addNewUsuario(){
-        $perfil = DB::select('select id_rol,upper(nombre) as nombre from seguridadapp.rol_aplicacion where id_aplicacion = 4');
-        $client = new CLient([
-            'base_uri' => 'http://10.0.0.14:1337/datos_maestros/'
-        ]);
-        $response = $client->request('GET','empresa');
-        $empresa = json_decode($response->getBody( )->getContents());
-        $response1 = $client->request('GET','unidades_negocio');
-        $unidades_negocio = json_decode($response1->getBody( )->getContents());
-        $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto where es_vigente = 1 order by id_unidad_negocio asc');
-        foreach($proyectos as $pry){
-            if($pry->id_unidad_negocio == '0004'){
-                $pry->id_unidad_negocio = 'DVC';
-            }else if($pry->id_unidad_negocio == '0006'){
-                $pry->id_unidad_negocio = 'FE';
-            }else if($pry->id_unidad_negocio == '0010'){
-                $pry->id_unidad_negocio = 'FA';
-            }else if($pry->id_unidad_negocio == '0018'){
-                $pry->id_unidad_negocio = 'FP';
-            }else if($pry->id_unidad_negocio == '0018-OP'){
-                $pry->id_unidad_negocio = 'FOP';
-            }else if($pry->id_unidad_negocio == '0018-OC'){
-                $pry->id_unidad_negocio = 'FOC';
-            }else if($pry->id_unidad_negocio == '0019'){
-                $pry->id_unidad_negocio = 'FAI';
-            }else if($pry->id_unidad_negocio == '0020'){
-                $pry->id_unidad_negocio = 'FT';
-            }
-        }
-        $list_proy_exi = DB::select('select distinct(u.objeto_permitido) from seguridadapp.usuario_rol u inner join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = u.id_aplicacion_usuario where a.id_aplicacion = 4 and u.objeto_permitido is not null');
-        $array_cod = '';
-        if(!empty($list_proy_exi)){
-            $codigos = '';               
-            foreach($list_proy_exi as $list){
-                $item_list = explode(";",$list->objeto_permitido);          
-                foreach($item_list as $rl){
-                    $codigos .= $rl.';';
+        try {
+            $perfil = DB::select('select id_rol,upper(nombre) as nombre from seguridadapp.rol_aplicacion where id_aplicacion = 4');
+            $client = new CLient([
+                'base_uri' => 'http://10.0.0.14:1337/datos_maestros/'
+            ]);
+            $response = $client->request('GET','empresa');
+            $empresa = json_decode($response->getBody( )->getContents());
+            $response1 = $client->request('GET','unidades_negocio');
+            $unidades_negocio = json_decode($response1->getBody( )->getContents());
+            $proyectos = DB::connection('pgsqlProye')->select('select * from ggo.ggo_proyecto where es_vigente = 1 order by id_unidad_negocio asc');
+            foreach($proyectos as $pry){
+                if($pry->id_unidad_negocio == '0004'){
+                    $pry->id_unidad_negocio = 'DVC';
+                }else if($pry->id_unidad_negocio == '0006'){
+                    $pry->id_unidad_negocio = 'FE';
+                }else if($pry->id_unidad_negocio == '0010'){
+                    $pry->id_unidad_negocio = 'FA';
+                }else if($pry->id_unidad_negocio == '0018'){
+                    $pry->id_unidad_negocio = 'FP';
+                }else if($pry->id_unidad_negocio == '0018-OP'){
+                    $pry->id_unidad_negocio = 'FOP';
+                }else if($pry->id_unidad_negocio == '0018-OC'){
+                    $pry->id_unidad_negocio = 'FOC';
+                }else if($pry->id_unidad_negocio == '0019'){
+                    $pry->id_unidad_negocio = 'FAI';
+                }else if($pry->id_unidad_negocio == '0020'){
+                    $pry->id_unidad_negocio = 'FT';
                 }
             }
-            if ($codigos != '') {
-                $array_cod = explode(";",substr($codigos,0,-1));
+            $list_proy_exi = DB::select('select distinct(u.objeto_permitido) from seguridadapp.usuario_rol u inner join seguridadapp.aplicacion_usuario a on a.id_aplicacion_usuario = u.id_aplicacion_usuario where a.id_aplicacion = 4 and u.objeto_permitido is not null');
+            $array_cod = '';
+            if(!empty($list_proy_exi)){
+                $codigos = '';               
+                foreach($list_proy_exi as $list){
+                    $item_list = explode(";",$list->objeto_permitido);          
+                    foreach($item_list as $rl){
+                        $codigos .= $rl.';';
+                    }
+                }
+                if ($codigos != '') {
+                    $array_cod = explode(";",substr($codigos,0,-1));
+                }
             }
-        }
-        if(!empty($array_cod)){
-            foreach($array_cod as $cod){
-                $en_uso = array_search($cod, array_column($proyectos, 'cod_proyecto'));
-                unset($proyectos[$en_uso]);
-                $proyectos = array_values($proyectos);
+            if(!empty($array_cod)){
+                foreach($array_cod as $cod){
+                    $en_uso = array_search($cod, array_column($proyectos, 'cod_proyecto'));
+                    unset($proyectos[$en_uso]);
+                    $proyectos = array_values($proyectos);
+                }
             }
+            return view('usuarios/addNew',compact('perfil','empresa','unidades_negocio','proyectos','array_cod'));
+        } catch (Exception $e) {
+            abort(500);
         }
-        //print(json_encode($array_cod));
-        return view('usuarios/addNew',compact('perfil','empresa','unidades_negocio','proyectos','array_cod'));
     }
 
     public function setEstado($id){
