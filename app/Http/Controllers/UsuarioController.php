@@ -16,6 +16,12 @@ use DateTime;
 
 class UsuarioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
 	public function usuariosListing(){
     	try {
            if(auth()->user()->rol[0]->id_rol == 14 ){
