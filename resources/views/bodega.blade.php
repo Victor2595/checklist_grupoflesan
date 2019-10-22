@@ -34,7 +34,7 @@
                                 </div>
                             </div>
                         </header>
-                        <br>    
+                        <br>
                         <div class="form-grou row">
                             <div class="col col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                 <label id="creador">Creador: <b style="color:#000;text-transform: none;">{{ $email }}</b></label>
@@ -61,7 +61,7 @@
                                     <thead class="thead-dark bg-flesan-th">
                                         <th class="text-center">Tópico</th>
                                         <th>Revisión</th>
-                                        <th>Cumplimiento</th>                               
+                                        <th>Cumplimiento</th>
                                     </thead>
                                     <tbody>
                                         @if(!empty($arreglo))
@@ -69,7 +69,7 @@
                                         @foreach($arreglo as $tbl_p)
                                         <tr><td colspan="4" style="background-color: #dd4b39 !important; padding: 1px 0;"></td></tr>
                                         <tr class="{{ $tbl_p->id_cabecera }}">
-                                            <?php 
+                                            <?php
                                                 $count ="";
                                                 if(count($tbl_p->hijo)!=0){
                                                     $count = count($tbl_p->hijo)+1;
@@ -86,8 +86,9 @@
                                                 <td style="text-align: left;" ><b><?php echo $contador.'. ' ?></b>{{ $tbl_h->clbod_preguntas_nombre }}</td>
                                                 <td>
                                                     <select data-id="<?php echo $tbl_h->clbod_preguntas_item_id ?>" name="rev[<?php echo $tbl_h->clbod_preguntas_item_id ?>]" id="{{ $tbl_h->clbod_preguntas_item_id }}" class="form-control id-question select-preg"  >
-                                                        <option value="S" >SI</option> 
+                                                        <option value="S" >SI</option>
                                                         <option value="N" >NO</option>
+                                                        <option value="0" >N/A</option>
                                                     </select>
                                                 </td>
                                             </tr>
@@ -104,12 +105,12 @@
                                         </tr>
                                         @endif
                                     </tbody>
-                                </table>                        
+                                </table>
                             </div>
                         </div>
-                    </form>    
-                </div>      
-            </section>   
+                    </form>
+                </div>
+            </section>
         </div>
     </div>
 </section>
@@ -118,7 +119,7 @@
         <div class="modal-dialog  modal-lg" role="document" style="overflow-y: initial !important; margin: 0px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
           <div class="modal-content">
               <div class="modal-body" id="contenedor_validacion" style="max-height: 71vh;overflow-y: auto;overflow-x: hidden;">
-              </div>            
+              </div>
           </div>
         </div>
     </div>
@@ -132,12 +133,14 @@ $('#comboObra').selectpicker();
 $(".select-preg").change(function() {
     var total_sl = $('.select-preg').length;
     var total_sl_s = 0;
-    var total_sl_n = 0;    
+    var total_sl_n = 0;
     $(".select-preg").each(function(){
         if ($('option:selected',this).val() == 'S') {
             total_sl_s++;
         }else if ($('option:selected',this).val() == 'N'){
-            total_sl_n++; 
+            total_sl_n++;
+        }else{
+          total_sl = total_sl - 1;
         }
     })
     var ponderado = 0;
@@ -250,7 +253,7 @@ $(document).ready(function () {
             }
         });
     });
-}); 
+});
 
 </script>
 @endsection

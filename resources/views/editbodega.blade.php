@@ -22,7 +22,7 @@
                                 <div class="col-md-3">
                                     <small id="week" style="text-transform: uppercase;display: block;font-weight: bold;color:#e8000a;">semana de evaluación: {{ $semana }}</small>
                                     <input type="hidden" id="week" name="week" value="{{ $semana }}">
-                                    <?php 
+                                    <?php
                                         $date = new DateTime($checklist[0]->clbod_create_date);
                                         $year = date('Y');
                                     ?>
@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         </header>
-                        <br>    
+                        <br>
                         <div class="form-grou row">
                             <div class="col col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                 <label id="creador">Creador: <b style="color:#000;text-transform: none;">{{ $checklist[0]->clbod_create_user }}</b></label>
@@ -63,23 +63,23 @@
                             <div class="form-group">
                                 <label>Cumplimiento:</label>
                                 <br>
-                                <?php 
-                                    if($checklist[0]->clbod_cumplimiento <= 100 && $checklist[0]->clbod_cumplimiento >= 93){
+                                <?php
+                                    if($checklist[0]->clbod_cumplimiento <= 100 && $checklist[0]->clbod_cumplimiento >= 90){
                                         $color = 'btn-flesan-table-ok';
                                         $textcolor = 'text-white';
-                                    }else if($checklist[0]->clbod_cumplimiento <= 92 && $checklist[0]->clbod_cumplimiento >= 71){
+                                    }else if($checklist[0]->clbod_cumplimiento < 90 && $checklist[0]->clbod_cumplimiento >= 66){
                                         $color = 'btn-flesan-table-warning';
                                         $textcolor = 'text-black';
                                     }else{
                                         $color = 'btn-flesan-table';
                                         $textcolor = 'text-white';
                                     }
-                                ?>    
+                                ?>
                                 <span class="btn btn-sm center-block <?php echo $color; ?> text-bold <?php echo $textcolor ?> font-weight-bold" style="padding-left: 6px">{{ round($checklist[0]->clbod_cumplimiento,0) }}%</span>
                             </div>
                         </div>
                         <br>
-                        <?php 
+                        <?php
                             if(!empty($checklist[0]->clbod_validate_user)){
                                 $estado_validacion = 'VALIDADO';
                                 $color = 'bg-success';
@@ -101,7 +101,7 @@
                                     <thead class="thead-dark bg-flesan-th">
                                         <th class="text-center">Tópico</th>
                                         <th>Revisión</th>
-                                        <th>Cumplimiento</th>                               
+                                        <th>Cumplimiento</th>
                                     </thead>
                                     <tbody>
                                         @if(!empty($arreglo))
@@ -109,7 +109,7 @@
                                         @foreach($arreglo as $tbl_p)
                                         <tr><td colspan="4" style="background-color: #dd4b39 !important; padding: 1px 0;"></td></tr>
                                         <tr class="{{ $tbl_p->id_cabecera }}">
-                                            <?php 
+                                            <?php
                                                 $count ="";
                                                 if(count($tbl_p->hijo)!=0){
                                                     $count = count($tbl_p->hijo)+1;
@@ -128,6 +128,7 @@
                                                     <select data-id="<?php echo $tbl_h->clbod_item_preguntas_id ?>"  name="rev[<?php echo $tbl_h->clbod_item_preguntas_id ?>]" <?php if(Auth::user()->rol[0]->id_rol != 10 || (!empty($checklist[0]->clbod_validate_user))) echo 'disabled readonly="true"' ?> id="{{ $tbl_h->clbod_item_preguntas_id }}" class="form-control id-question select-preg"  >
                                                         <option value="S" <?php echo ($tbl_h->clbod_item_cumple == 'S')?'selected':'' ?>>SI</option>
                                                         <option value="N" <?php echo ($tbl_h->clbod_item_cumple == 'N')?'selected':'' ?>>NO</option>
+                                                        <option value="0" <?php echo ($tbl_h->clbod_item_cumple == '0')?'selected':'' ?>>N/A</option>
                                                     </select>
                                                 </td>
                                             </tr>
@@ -144,12 +145,12 @@
                                         </tr>
                                         @endif
                                     </tbody>
-                                </table>                        
+                                </table>
                             </div>
                         </div>
-                    </form>    
-                </div>      
-            </section>   
+                    </form>
+                </div>
+            </section>
         </div>
     </div>
 </section>
@@ -158,7 +159,7 @@
         <div class="modal-dialog  modal-lg" role="document" style="overflow-y: initial !important; margin: 0px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
           <div class="modal-content">
               <div class="modal-body" id="contenedor_validacion" style="max-height: 71vh;overflow-y: auto;overflow-x: hidden;">
-              </div>            
+              </div>
           </div>
         </div>
     </div>
@@ -174,12 +175,12 @@ $(document).ready(function () {
     $(".select-preg").change(function() {
     var total_sl = $('.select-preg').length;
     var total_sl_s = 0;
-    var total_sl_n = 0;    
+    var total_sl_n = 0;
     $(".select-preg").each(function(){
         if ($('option:selected',this).val() == 'S') {
             total_sl_s++;
         }else if ($('option:selected',this).val() == 'N'){
-            total_sl_n++; 
+            total_sl_n++;
         }
     })
     var ponderado = 0;
@@ -233,6 +234,6 @@ $(document).ready(function () {
             location.reload();
         @endif
     });
-}); 
+});
 </script>
 @endsection
